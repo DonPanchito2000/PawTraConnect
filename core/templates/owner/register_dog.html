@@ -22,7 +22,7 @@
             {% endif %}
 
             <div class="form-group text-center">
-                <img id="previewImage" src="{% static 'core/images/logo.jpg' %}" alt="pet preview" class="img-fluid mb-3" style="max-height: 200px;">
+                <img id="previewImage" src="../media/pet_profile/default_pet_profile.png" alt="pet preview" class="img-fluid mb-3" style="max-height: 200px;">
                 {{ form.pet_profile.label_tag }} 
                 {{ form.pet_profile }}
                 {% if form.pet_profile.errors %}

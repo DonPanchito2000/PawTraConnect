@@ -1,0 +1,21 @@
+.profile-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #6c757d;
+    margin-top: 20px;
+}
+.card-detail {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.vaccination-section {
+    margin-top: 40px;
+}
+.table thead {
+    background-color: #343a40;
+    color: white;
+}
