@@ -11,3 +11,6 @@ env/
 # Ignore IDE settings
 .vscode/
 .idea/
+
+
+media/
