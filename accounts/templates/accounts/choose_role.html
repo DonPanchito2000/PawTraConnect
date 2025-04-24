@@ -1,0 +1,52 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Choose Your Role{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Choose Your Role</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="row">
+
+                <div class="col-md-4 mb-4">
+                    <a href="{% url 'register_pet_owner' %}" class="text-decoration-none">
+                        <div class="card text-center shadow-sm h-100 role-card border-primary">
+                            <div class="card-body">
+                                <i class="fas fa-paw fa-2x text-primary mb-3"></i>
+                                <h5 class="card-title">Pet Owner</h5>
+                                <p class="card-text">Register to find clinics, clubs, and care for your pets.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="{% url 'register_vet_clinic' %}" class="text-decoration-none">
+                        <div class="card text-center shadow-sm h-100 role-card border-success">
+                            <div class="card-body">
+                                <i class="fas fa-clinic-medical fa-2x text-success mb-3"></i>
+                                <h5 class="card-title">Vet Clinic</h5>
+                                <p class="card-text">Join to offer medical services for animals and connect with pet owners.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="{% url 'register_club' %}" class="text-decoration-none">
+                        <div class="card text-center shadow-sm h-100 role-card border-warning">
+                            <div class="card-body">
+                                <i class="fas fa-users fa-2x text-warning mb-3"></i>
+                                <h5 class="card-title">Club</h5>
+                                <p class="card-text">Create a club for pet lovers and host events for the community.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

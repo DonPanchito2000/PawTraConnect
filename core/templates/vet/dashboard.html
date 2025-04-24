@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+<title>{% block title %}Vet Dashboard{% endblock %}</title>
+{% block content %}
+<h1>DASHBOARD VET</h1>
+
+    
+  
+{% if request.user.role == 'vet'%}
+<h1>HI VET</h1>
+
+{% if request.user.vetclinicprofile.is_city_vet %}
+<h1>You are a city vet</h1>
+{% endif %}
+  
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+body {
+    background: #f4f6f9;
+    font-family: 'Open Sans', sans-serif;
+}
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #007bff;
+}
+
+.role-card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s ease-in-out;
+}
+.role-card i {
+    font-size: 2rem;
+}

@@ -1,0 +1,88 @@
+<!-- register_pet_owner.html -->
+{% extends 'accounts/base.html' %}
+
+{% block title %}Register as Pet Owner{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-sm rounded-lg">
+                <div class="card-body p-5">
+                    <h3 class="card-title text-center mb-4">Register as Pet Owner</h3>
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <h5 class="text-primary mt-3 mb-3 border-bottom pb-2">Account Information</h5>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.username.label_tag }}
+                                {{ form.username }}
+                                <small class="text-danger">{{ form.username.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                                <small class="text-danger">{{ form.email.errors|striptags }}</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.password1.label_tag }}
+                                {{ form.password1 }}
+                                <small class="text-danger">{{ form.password1.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.password2.label_tag }}
+                                {{ form.password2 }}
+                                <small class="text-danger">{{ form.password2.errors|striptags }}</small>
+                            </div>
+                        </div>
+
+                        <h5 class="text-primary mt-4 mb-3 border-bottom pb-2">Profile Information</h5>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.first_name.label_tag }}
+                                {{ form.first_name }}
+                                <small class="text-danger">{{ form.first_name.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.last_name.label_tag }}
+                                {{ form.last_name }}
+                                <small class="text-danger">{{ form.last_name.errors|striptags }}</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.contact_number.label_tag }}
+                            {{ form.contact_number }}
+                            <small class="text-danger">{{ form.contact_number.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.bio.label_tag }}
+                            {{ form.bio }}
+                            <small class="text-danger">{{ form.bio.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.social_email.label_tag }}
+                            {{ form.social_email }}
+                            <small class="text-danger">{{ form.social_email.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.baranggay.label_tag }}
+                            {{ form.barangay }}
+                            <small class="text-danger">{{ form.barangay.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.profile_picture.label_tag }}
+                            {{ form.profile_picture }}
+                            <small class="text-danger">{{ form.profile_picture.errors|striptags }}</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-block mt-4">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,100 @@
+{% extends 'owner/base.html' %}
+{% load static %}3
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/register_dog.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container">
+    <div class="card register-card p-4">
+        <div class="text-center">
+            <!-- <img src="{% static 'core/images/logo.jpg' %}" alt="paw icon"> -->
+            <h3 class="mb-4">Register Your Dog</h3>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-group text-center">
+                <img id="previewImage" src="{% static 'core/images/logo.jpg' %}" alt="pet preview" class="img-fluid mb-3" style="max-height: 200px;">
+                {{ form.pet_profile.label_tag }} 
+                {{ form.pet_profile }}
+                {% if form.pet_profile.errors %}
+                    <small class="text-danger">{{ form.pet_profile.errors }}</small>
+                {% endif %}
+            </div>
+
+            <!-- <div class="form-group">
+                {{ form.pet_profile.label_tag }} {{ form.pet_profile }}
+                {% if form.pet_profile.errors %}
+                    <small class="text-danger">{{ form.pet_profile.errors }}</small>
+                {% endif %}
+            </div> -->
+
+            <div class="form-group">
+                {{ form.name.label_tag }} {{ form.name }}
+                {% if form.name.errors %}
+                    <small class="text-danger">{{ form.name.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.breed.label_tag }} {{ form.breed }}
+                {% if form.breed.errors %}
+                    <small class="text-danger">{{ form.breed.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.color.label_tag }} {{ form.color }}
+                {% if form.color.errors %}
+                    <small class="text-danger">{{ form.color.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.age.label_tag }} {{ form.age }}
+                {% if form.age.errors %}
+                    <small class="text-danger">{{ form.age.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.barangay.label_tag }} {{ form.barangay }}
+                {% if form.barangay.errors %}
+                    <small class="text-danger">{{ form.barangay.errors }}</small>
+                {% endif %}
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block">Register Dog</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("id_pet_profile");
+        const previewImage = document.getElementById("previewImage");
+
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.setAttribute("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
+
+{% endblock content %}

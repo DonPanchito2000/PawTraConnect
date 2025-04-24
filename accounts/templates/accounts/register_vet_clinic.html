@@ -1,0 +1,80 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Register as Vet Clinic{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-sm rounded-lg">
+                <div class="card-body p-5">
+                    <h3 class="card-title text-center mb-4">Register as Vet Clinic</h3>
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <h5 class="text-primary mt-3 mb-3 border-bottom pb-2">Account Information</h5>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.username.label_tag }}
+                                {{ form.username }}
+                                <small class="text-danger">{{ form.username.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                                <small class="text-danger">{{ form.email.errors|striptags }}</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.password1.label_tag }}
+                                {{ form.password1 }}
+                                <small class="text-danger">{{ form.password1.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.password2.label_tag }}
+                                {{ form.password2 }}
+                                <small class="text-danger">{{ form.password2.errors|striptags }}</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.profile_picture.label_tag }}
+                            {{ form.profile_picture }}
+                            <small class="text-danger">{{ form.profile_picture.errors|striptags }}</small>
+                        </div>
+
+                        <h5 class="text-primary mt-4 mb-3 border-bottom pb-2">Clinic Details</h5>
+                        <div class="form-group">
+                            {{ form.clinic_name.label_tag }}
+                            {{ form.clinic_name }}
+                            <small class="text-danger">{{ form.clinic_name.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.license_number.label_tag }}
+                            {{ form.license_number }}
+                            <small class="text-danger">{{ form.license_number.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.contact_number.label_tag }}
+                            {{ form.contact_number }}
+                            <small class="text-danger">{{ form.contact_number.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.location.label_tag }}
+                            {{ form.location }}
+                            <small class="text-danger">{{ form.location.errors|striptags }}</small>
+                        </div>
+                        <div class="form-group">
+                            {{ form.social_email.label_tag }}
+                            {{ form.social_email }}
+                            <small class="text-danger">{{ form.social_email.errors|striptags }}</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block mt-4">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

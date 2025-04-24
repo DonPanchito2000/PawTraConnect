@@ -1,0 +1,17 @@
+body {
+    background: #f8f9fa;
+}
+.register-card {
+    max-width: 600px;
+    margin: 40px auto;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.register-card img {
+    width: 80px;
+    margin-bottom: 20px;
+}
+.form-group label {
+    font-weight: 600;
+}
