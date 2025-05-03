@@ -1,0 +1,53 @@
+body {
+    background:  #273e47;
+    font-family: 'Open Sans', sans-serif;
+}
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #eae2b7 !important;
+    color: #f77f00;
+
+}
+
+
+.card-title{
+    color: #273e47;
+
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color:#eae2b7 !important;
+}
+
+.role-card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s ease-in-out;
+}
+.role-card i {
+    font-size: 2rem;
+}
+
+/* navbar */
+.navbar{
+    background-color: #273e47; 
+    z-index: 1; /* Ensures navbar is behind the overlay */
+}
+
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+    z-index: 2;
+    pointer-events: none; /* So clicks go through */
+  }
+
+.nav-link{
+    color:#eae2b7 !important;
+}
+

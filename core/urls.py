@@ -25,7 +25,18 @@ urlpatterns = [
     # VET URLS
     # -----------------------
     path('vet-clinic-dashboard/', views.vet_clinic_dashboard,name='vet-clinic-dashboard'),
+    path('pending-approval-page/', views.pending_approval_page, name="pending-approval-page"),
     # -----------------------
     # END VET URLS
     # -----------------------
+
+    # -----------------------
+    # CCVO URLS
+    # -----------------------
+    path('ccvo-announcement/', views.ccvo_announcement,name='ccvo-announcement'),
+    path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
+    # -----------------------
+    # CCVO VET URLS
+    # -----------------------
+
 ]

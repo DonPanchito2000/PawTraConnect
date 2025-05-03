@@ -34,9 +34,9 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <a class="navbar-brand d-flex align-items-center" href="{% url 'pet-owner-dashboard' %}">
-            <img src="{% static 'images/pawtraconnect_logo.png' %}" class="rounded-circle" alt="Logo">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark h-50">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'ccvo-announcement' %}">
+            <img src="{% static 'images/pawtraconnect_logo.png' %}" style="width: 90%; height: 90px;" class="rounded-circle" alt="Logo">
             <strong>PawTraConnect</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
@@ -45,7 +45,7 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-users"></i> Community Forum</a>
+                    <a class="nav-link" href="{% url 'approve-clinics-page' %}"><i class="fas fa-users"></i>Registered Clinics</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">City Vet</a>

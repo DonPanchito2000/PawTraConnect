@@ -1,18 +1,31 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/styles/register_club.css' %}">
+{% endblock extra_css %}
 
 {% block title %}Register as Club{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
-            <div class="card shadow-sm rounded-lg">
+        <div class="col-lg-10">
+            <div class="card shadow-none">
                 <div class="card-body p-5">
-                    <h3 class="card-title text-center mb-4">Register as Club</h3>
+                <!-- ✅ ADDED: Back arrow icon in top-left -->
+                <div class="arrow-back mb-4">
+                    <a href="{% url 'register' %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                </div>
+
+
+                    <h3 class="card-title text-center mb-5">REGISTER AS CLUB</h3>
                     <form method="post" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
 
-                        <h5 class="text-primary mt-3 mb-3 border-bottom pb-2">Account Information</h5>
+                        <div class="section-title mb-3">Account Information</div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.username.label_tag }}
@@ -43,34 +56,39 @@
                             <small class="text-danger">{{ form.profile_picture.errors|striptags }}</small>
                         </div>
 
-                        <h5 class="text-primary mt-4 mb-3 border-bottom pb-2">Club Details</h5>
-                        <div class="form-group">
+                        <div class="section-title mb-3">Club Details</div>
+                        <div class="form-row">
+                        <div class="form-group col-md-6">
                             {{ form.club_name.label_tag }}
                             {{ form.club_name }}
                             <small class="text-danger">{{ form.club_name.errors|striptags }}</small>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             {{ form.admin_name.label_tag }}
                             {{ form.admin_name }}
                             <small class="text-danger">{{ form.admin_name.errors|striptags }}</small>
                         </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
                             {{ form.contact_number.label_tag }}
                             {{ form.contact_number }}
                             <small class="text-danger">{{ form.contact_number.errors|striptags }}</small>
                         </div>
+                        <div class="form-group col-md-6">
+                            {{ form.admin_email.label_tag }}
+                            {{ form.admin_email }}
+                            <small class="text-danger">{{ form.admin_email.errors|striptags }}</small>
+                        </div>
+                    </div>
                         <div class="form-group">
                             {{ form.description.label_tag }}
                             {{ form.description }}
                             <small class="text-danger">{{ form.description.errors|striptags }}</small>
                         </div>
-                        <div class="form-group">
-                            {{ form.social_email.label_tag }}
-                            {{ form.social_email }}
-                            <small class="text-danger">{{ form.social_email.errors|striptags }}</small>
-                        </div>
+                    
 
-                        <button type="submit" class="btn btn-primary btn-block mt-4">Register</button>
+                        <button type="submit" class="btn btn-register btn-block mt-4 col-md-4 m-auto">REGISTER</button>
                     </form>
                 </div>
             </div>

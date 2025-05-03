@@ -1,10 +1,9 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm py-2">
     <div class="container">
       <!-- Logo and App Name -->
       <a class="navbar-brand d-flex align-items-center" href="/">
-        <img src="{% static 'accounts/images/logo.jpg' %}" alt="Logo" width="40" height="40" class="rounded-circle mr-2">
-        <span class="font-weight-bold ml-2">PawTraConnect</span>
+        <img src="{% static 'images/pawtraconnect_logo.png' %}" alt="Logo" width="60" height="60" class="rounded-circle mr-2">
       </a>
   
       <!-- Toggle for mobile -->
@@ -16,18 +15,10 @@
       <!-- Nav Links -->
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-            </li>
-          {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'register' %}">Register</a>
-            </li>
-          {% endif %}
+
         </ul>
       </div>
     </div>

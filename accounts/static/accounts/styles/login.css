@@ -1,0 +1,57 @@
+body {
+    background-color: #1f3942;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+  .form-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 2rem;
+  }
+  .form-control {
+    border-radius: 15px;
+    padding: 0.75rem 1rem;
+  }
+  .btn-login {
+    background-color: #f77f00;
+    border: none;
+    border-radius: 15px;
+    color: #273e47;
+    font-weight: bold;
+    padding: 0.6rem;
+    transition: 0.80s ease;
+  }
+  .btn-login:hover {
+    background-color: #be620d;
+    color: #eae2b7;
+  }
+  .register-link {
+    color: #f77f00;
+    font-weight: 500;
+    transition: 0.80s ease;
+  }
+
+  .register-link:hover {
+    color: #be620d;
+  }
+
+  .logo-img {
+    width: 300px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  .form-group input{
+      height: 50px;
+      background: #eae2b7;
+      color:#273e47 !important; 
+      font-weight: 500;
+  }
+  .form-group input::placeholder{
+    color:#273e47 !important; 
+    font-weight: 400;
+  }
+
+  p {
+      color: #eae2b7;
+  }

@@ -14,6 +14,8 @@ class Dog(models.Model):
     barangay = models.ForeignKey(Barangay, on_delete= models.SET_NULL, blank=True, null=True)
     owner = models.ForeignKey(PetOwnerProfile, on_delete=models.SET_NULL, blank=True, null=True)
 
+    sex = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')], blank=True) 
+
     
 
     def save(self, *args, **kwargs):

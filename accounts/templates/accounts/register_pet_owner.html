@@ -1,84 +1,95 @@
-<!-- register_pet_owner.html -->
 {% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/styles/register_pet_owner.css' %}">
+{% endblock extra_css %}
 
 {% block title %}Register as Pet Owner{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
-            <div class="card shadow-sm rounded-lg">
+        <div class="col-lg-10">
+            <div class="card shadow-none">
                 <div class="card-body p-5">
-                    <h3 class="card-title text-center mb-4">Register as Pet Owner</h3>
+                    <!-- ✅ ADDED: Back arrow icon in top-left -->
+                    <div class="arrow-back mb-4">
+                        <a href="{% url 'register' %}" class="arrow-back">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </a>
+                    </div>
+
+
+                    <h3 class="card-title text-center mb-5">REGISTER AS PET OWNER</h3>
                     <form method="post" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
 
-                        <h5 class="text-primary mt-3 mb-3 border-bottom pb-2">Account Information</h5>
+                        <div class="section-title mb-3">Account Information</div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.username.label_tag }}
-                                {{ form.username }}
+                                <div>{{ form.username }}</div>
                                 <small class="text-danger">{{ form.username.errors|striptags }}</small>
                             </div>
                             <div class="form-group col-md-6">
                                 {{ form.email.label_tag }}
-                                {{ form.email }}
+                                <div>{{ form.email }}</div>
                                 <small class="text-danger">{{ form.email.errors|striptags }}</small>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.password1.label_tag }}
-                                {{ form.password1 }}
+                                <div>{{ form.password1 }}</div>
                                 <small class="text-danger">{{ form.password1.errors|striptags }}</small>
                             </div>
                             <div class="form-group col-md-6">
                                 {{ form.password2.label_tag }}
-                                {{ form.password2 }}
+                                <div>{{ form.password2 }}</div>
                                 <small class="text-danger">{{ form.password2.errors|striptags }}</small>
                             </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            {{ form.profile_picture.label_tag }}
+                            <div>{{ form.profile_picture }}</div>
+                            <small class="text-danger">{{ form.profile_picture.errors|striptags }}</small>
                         </div>
 
-                        <h5 class="text-primary mt-4 mb-3 border-bottom pb-2">Profile Information</h5>
+                        <div class="section-title mb-3">Profile Information</div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.first_name.label_tag }}
-                                {{ form.first_name }}
+                                <div>{{ form.first_name }}</div>
                                 <small class="text-danger">{{ form.first_name.errors|striptags }}</small>
                             </div>
                             <div class="form-group col-md-6">
                                 {{ form.last_name.label_tag }}
-                                {{ form.last_name }}
+                                <div>{{ form.last_name }}</div>
                                 <small class="text-danger">{{ form.last_name.errors|striptags }}</small>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ form.contact_number.label_tag }}
-                            {{ form.contact_number }}
-                            <small class="text-danger">{{ form.contact_number.errors|striptags }}</small>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.contact_number.label_tag }}
+                                <div>{{ form.contact_number }}</div>
+                                <small class="text-danger">{{ form.contact_number.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.barangay.label_tag }}
+                                <div>{{ form.barangay }}</div>
+                                <small class="text-danger">{{ form.barangay.errors|striptags }}</small>
+                            </div>
                         </div>
+                     
                         <div class="form-group">
                             {{ form.bio.label_tag }}
-                            {{ form.bio }}
+                            <div>{{ form.bio }}</div>
                             <small class="text-danger">{{ form.bio.errors|striptags }}</small>
                         </div>
-                        <div class="form-group">
-                            {{ form.social_email.label_tag }}
-                            {{ form.social_email }}
-                            <small class="text-danger">{{ form.social_email.errors|striptags }}</small>
-                        </div>
-                        <div class="form-group">
-                            {{ form.baranggay.label_tag }}
-                            {{ form.barangay }}
-                            <small class="text-danger">{{ form.barangay.errors|striptags }}</small>
-                        </div>
-                        <div class="form-group">
-                            {{ form.profile_picture.label_tag }}
-                            {{ form.profile_picture }}
-                            <small class="text-danger">{{ form.profile_picture.errors|striptags }}</small>
-                        </div>
 
-                        <button type="submit" class="btn btn-success btn-block mt-4">Register</button>
+                        <button type="submit" class="btn btn-register btn-block mt-4 col-md-4 m-auto">REGISTER</button>
                     </form>
                 </div>
             </div>

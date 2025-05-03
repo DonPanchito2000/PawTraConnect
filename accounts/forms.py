@@ -8,7 +8,6 @@ class PetOwnerRegistrationForm(UserCreationForm):
     last_name = forms.CharField()
     contact_number = forms.CharField()
     bio = forms.CharField(widget=forms.Textarea)
-    social_email = forms.EmailField()
     barangay = forms.ModelChoiceField(queryset=Barangay.objects.all())
     profile_picture = forms.ImageField(required=False)
 
@@ -30,17 +29,16 @@ class PetOwnerRegistrationForm(UserCreationForm):
                 contact_number=self.cleaned_data['contact_number'],
                 barangay=self.cleaned_data['barangay'],
                 bio=self.cleaned_data['bio'],
-                social_email=self.cleaned_data['social_email']
             )
         return user
 
 
 class VetClinicRegistrationForm(UserCreationForm):
     clinic_name = forms.CharField()
-    license_number = forms.CharField()
+    business_permit_number = forms.CharField()
+    issuing_office = forms.CharField()
     contact_number = forms.CharField()
     location = forms.CharField()
-    social_email = forms.EmailField()
     profile_picture = forms.ImageField(required=False)
 
     class Meta:
@@ -55,11 +53,12 @@ class VetClinicRegistrationForm(UserCreationForm):
             VetClinicProfile.objects.create(
                 user=user,
                 clinic_name=self.cleaned_data['clinic_name'],
-                license_number=self.cleaned_data['license_number'],
+                business_permit_number=self.cleaned_data['business_permit_number'],
+                issuing_office=self.cleaned_data['issuing_office'],
                 contact_number=self.cleaned_data['contact_number'],
                 location=self.cleaned_data['location'],
-                social_email=self.cleaned_data['social_email'],
-                is_city_vet=False  # always default to False
+                is_city_vet=False, # always default to False
+                is_approved=False 
             )
         return user
 
@@ -70,9 +69,8 @@ class ClubRegistrationForm(UserCreationForm):
     admin_name = forms.CharField()
     contact_number = forms.CharField()
     description = forms.CharField(widget=forms.Textarea)
-    social_email = forms.EmailField()
     profile_picture = forms.ImageField(required=False)
-
+    admin_email = forms.EmailField(required=True)
     class Meta:
         model = Account
         fields = ['username', 'email', 'password1', 'password2', 'profile_picture']
@@ -88,7 +86,7 @@ class ClubRegistrationForm(UserCreationForm):
                 admin_name=self.cleaned_data['admin_name'],
                 contact_number=self.cleaned_data['contact_number'],
                 description=self.cleaned_data['description'],
-                social_email=self.cleaned_data['social_email']
+                admin_email=self.cleaned_data['admin_email']
             )
         return user
 
@@ -96,9 +94,9 @@ class ClubRegistrationForm(UserCreationForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Enter your email'
+        'placeholder': 'Email'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Enter your password'
+        'placeholder': 'Password'
     }))

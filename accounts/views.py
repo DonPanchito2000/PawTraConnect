@@ -38,16 +38,16 @@ def choose_role(request):
 
 
 def user_login(request):
-    if request.user.is_authenticated:
-        # Redirect if already logged in (prevents CSRF from hitting back button)
-        if request.user.role == 'owner':
-            return redirect('pet-owner-dashboard')
-        elif request.user.role == 'vet':
-            return redirect('vet-clinic-dashboard')
-        elif request.user.role == 'club':
-            return redirect('club-dashboard')
-        else:
-            return HttpResponse('You are not allowed here')
+    # if request.user.is_authenticated:
+ 
+    #     if request.user.role == 'owner':
+    #         return redirect('pet-owner-dashboard')
+    #     elif request.user.role == 'vet':
+    #         return redirect('vet-clinic-dashboard')
+    #     elif request.user.role == 'club':
+    #         return redirect('club-dashboard')
+    #     else:
+    #         return HttpResponse('You are not allowed here')
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -62,8 +62,21 @@ def user_login(request):
                 # Redirect based on user role
                 if user.role == 'owner':
                     return redirect('pet-owner-dashboard')
+                
                 elif user.role == 'vet':
-                    return redirect('vet-clinic-dashboard')
+                    if hasattr(user, 'vetclinicprofile'):
+                        vet_profile = user.vetclinicprofile
+
+                        if vet_profile.is_city_vet:
+                            return redirect('ccvo-announcement')
+                        elif not vet_profile.is_approved:
+                            return redirect('pending-approval-page')  # this should match your URL name
+                        else:
+                            return redirect('vet-clinic-dashboard')
+                    else:
+                        messages.error(request, 'Vet clinic profile not found.')
+                        return redirect('login')
+                    
                 elif user.role == 'club':
                     return redirect('club-dashboard')
                 else:
@@ -81,3 +94,5 @@ def user_logout(request):
     _ = list(messages.get_messages(request))  # Clear any previous messages
     messages.success(request, 'You have been logged out.')
     return redirect('login')
+
+

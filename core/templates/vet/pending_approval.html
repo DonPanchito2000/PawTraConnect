@@ -1,0 +1,24 @@
+{% extends 'vet/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="fas fa-hourglass-half fa-4x text-warning"></i>
+                    </div>
+                    <h2 class="card-title mb-3">Your Clinic Is Awaiting Approval</h2>
+                    <p class="text-muted">Thank you for registering. Your clinic account is currently under review by the City Veterinary Office (CVO).</p>
+                    <p class="text-muted">You’ll be notified once your registration is approved. Until then, you may not access the dashboard features.</p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-secondary mr-2">Log Out</a>
+                        <a href="#" class="btn btn-primary">Back to Homepage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
