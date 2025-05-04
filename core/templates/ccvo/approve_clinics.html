@@ -24,7 +24,7 @@
                                 <li><strong>Contact:</strong> {{ clinic.contact_number }}</li>
                                 <li><strong>Location:</strong> {{ clinic.location }}</li>
                             </ul>
-                            <form method="post" action="">
+                            <form method="post" action="{% url 'approve-clinic' clinic.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success btn-sm w-100">Approve Clinic</button>
                             </form>
