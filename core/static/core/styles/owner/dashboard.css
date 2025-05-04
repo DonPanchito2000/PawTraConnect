@@ -1,0 +1,145 @@
+
+
+/* .registered-pets-section{
+    background-color: #273e47; 
+    z-index: 1;
+
+} */
+.registered-pets-section{
+    max-height: 80vh; 
+    overflow-y: auto;
+}
+
+.registered-pets-section a{
+    text-decoration: none;
+}
+.btn-register {
+    background-color: #f77f00;
+    border: none;
+    border-radius: 15px;
+    color: #273e47;
+    font-weight: bold;
+    padding: 0.6rem;
+    transition: 0.80s ease;
+    text-decoration: none;
+    outline: none; 
+    box-shadow: none;
+    width: 250px;
+    margin: auto;
+  }
+  .btn-register:hover {
+    background-color: #be620d;
+    color: #eae2b7;
+  }
+
+.registered-pets-section::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+ 
+  }
+  
+  .registered-pets-section::-webkit-scrollbar-track {
+    background: #eae2b7; /* Track color */
+    border-radius: 10px;
+  }
+  
+  .registered-pets-section::-webkit-scrollbar-thumb {
+    background: #f77f00; /* Scrollbar handle color (Bootstrap primary) */
+    border-radius: 10px;
+  }
+  
+  .registered-pets-section::-webkit-scrollbar-thumb:hover {
+    background: #f77f00;/* Darker on hover */
+    cursor:grab;
+  }
+
+
+
+.clickable{
+    background-color: #273e47;   
+    color: #f77f00;
+  } 
+
+
+.clickable::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+    z-index: 2;
+    pointer-events: none; /* So clicks go through */
+  }
+
+
+  .card-body strong span{
+    color:#eae2b7; 
+  }
+
+
+.card-view{
+    background-color:#eae2b7;
+    border-radius: 30px;
+    color: #273e47;
+}
+
+
+
+/* TABLES */
+/* Table Header */
+.thead-custom {
+    background-color: #eae2b7; /* light beige header */
+    color: #273e47;
+  }
+  
+  /* Table rows */
+  .vaccine-table tbody tr:nth-child(odd) {
+    background-color: #b3b3b3; /* lighter gray */
+    color: #273e47;
+  }
+  
+  .vaccine-table tbody tr:nth-child(even) {
+    background-color: #8c8c8c; /* darker gray */
+    color: #273e47;
+  }
+  
+  /* Button styling */
+  .btn-details {
+    background-color:  #f77f00; /* dark slate */
+    color: #273e47;
+    font-weight: bold;
+    padding: 4px 12px;
+    border: none;
+    border-radius: 20px;
+    width: 80px;
+    transition: 0.80s ease;
+    text-decoration: none;
+    outline: none; 
+    box-shadow: none;
+  }
+
+  .btn-details:focus{
+    outline: none; 
+    box-shadow: none;
+  }
+  
+  .btn-details:hover {
+    background-color: #be620d;
+    color: #eae2b7;
+  }
+  
+  /* Border */
+  .vaccine-table th, .vaccine-table td {
+    border: 2px solid black;
+  }
+  
+  /* Optional: Reduce spacing */
+  .vaccine-table td, .vaccine-table th {
+    padding: 8px;
+  }
+  
+
+  .tag{
+    color: #f77f00;
+  }

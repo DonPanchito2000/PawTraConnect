@@ -1,11 +1,16 @@
 {% extends 'owner/base.html' %}
 {% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/owner/dashboard.css' %}">
+{% endblock extra_css %}
 {% block title %}Dashboard - PawTraConnect{% endblock %}
 {% block content %}
 <div class="row mt-4">
 <!-- Pet Sidebar -->
-<div class="col-md-3 mb-4">
-    <a href="{% url 'register-dog' %}"><button class="btn btn-primary btn-block mb-3">Register New Pet</button></a>
+<div class="col-md-3 mb-4 registered-pets-section pt-3">
+    <a href="{% url 'register-dog' %}">
+        <button class="btn btn-register btn-block mb-3" >Register New Pet</button>
+    </a>
 
     {% for dog in registered_dogs %}
     <a href="{% url 'dog-profile' dog.id %}">
@@ -14,79 +19,94 @@
                 <div class="card-body d-flex align-items-center">
                     <img src="{{ dog.pet_profile.url }}" class="rounded-circle mr-3 img-fluid" alt="Pet" style="max-width: 50px; height: 50px;">
                     <div>
-                        <strong>{{dog.name}}</strong><br>
-                        {{dog.age}}
+                        <strong><span>Name:</span> {{ dog.name }}</strong><br>
+                        <strong><span>Breed:</span> {{ dog.breed }}</strong>
                     </div>
                 </div>
             </div>
         </div>
     </a>
-        {% endfor %}
-    </div>
-
+    {% endfor %}
+</div>
     <!-- Main Dashboard Content -->
     <div class="col-md-9">
         <div class="row dashboard-overview mb-4">
     
             <div class="col-md-4 mb-3">
-                <div class="card text-center p-3">
+                <div class="card card-view text-center p-3">
                     <h5>Total Registered Pets</h5>
                     <h3>{{registered_dogs.count}}</h3>
                 </div>
             </div>
 
             <div class="col-md-4 mb-3">
-                <div class="card text-center p-3">
+                <div class="card card-view text-center p-3">
                     <h5>Upcoming Vaccinations</h5>
                     <h3>3</h3>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card text-center p-3">
+                <div class="card card-view text-center p-3">
                     <h5>Overdue Vaccinations</h5>
                     <h3>1</h3>
                 </div>
             </div>
         </div>
 
-        <h5>Upcoming Vaccinations</h5>
+        <h5 class="tag">Upcoming Vaccinations</h5>
         <div class="table-responsive mb-4">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Pet Name</th>
-                        <th>Vaccine</th>
-                        <th>Date</th>
-                    </tr>
+            <table class="table table-bordered text-center vaccine-table">
+                <thead class="thead-custom">
+                  <tr>
+                    <th>Pet Name</th>
+                    <th>Vaccine</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Max</td>
-                        <td>Rabies</td>
-                        <td>2025-04-25</td>
-                    </tr>
+                  <tr>
+                    <td><strong>Pancho</strong></td>
+                    <td>Anti-rabbies</td>
+                    <td>04-06-2025</td>
+                    <td><button class="btn btn-details">Details</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Portia</strong></td>
+                    <td>Anti-rabbies</td>
+                    <td>03-06-2025</td>
+                    <td><button class="btn btn-details">Details</button></td>
+                  </tr>
                 </tbody>
-            </table>
+              </table>
         </div>
 
-        <h5>Overdue Vaccinations</h5>
+        <h5 class="tag">Overdue Vaccinations</h5>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Pet Name</th>
-                        <th>Vaccine</th>
-                        <th>Due Date</th>
-                    </tr>
+            <table class="table table-bordered text-center vaccine-table">
+                <thead class="thead-custom">
+                  <tr>
+                    <th>Pet Name</th>
+                    <th>Vaccine</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Luna</td>
-                        <td>Distemper</td>
-                        <td>2025-03-20</td>
-                    </tr>
+                  <tr>
+                    <td><strong>Pancho</strong></td>
+                    <td>Anti-rabbies</td>
+                    <td>04-06-2025</td>
+                    <td><button class="btn btn-details">Details</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Portia</strong></td>
+                    <td>Anti-rabbies</td>
+                    <td>03-06-2025</td>
+                    <td><button class="btn btn-details">Details</button></td>
+                  </tr>
                 </tbody>
-            </table>
+              </table>
         </div>
     </div>
 </div>

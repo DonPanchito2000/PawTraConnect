@@ -10,12 +10,15 @@ from accounts.models import PetOwnerProfile, VetClinicProfile
 # -----------------------
 # PET_OWNER VIEWS
 # -----------------------
+@login_required(login_url='login')
 def pet_owner_dashboard(request):
     owner =  get_object_or_404(PetOwnerProfile, user=request.user)
     registered_dogs= Dog.objects.filter(owner = owner)
     context = {'registered_dogs':registered_dogs}
     return render(request,'owner/dashboard.html',context)
 
+
+@login_required(login_url='login')
 def register_dog(request):
     form = DogRegistrationForm()
 
@@ -32,7 +35,7 @@ def register_dog(request):
     context = {'form':form}
     return render(request,'owner/register_dog.html',context)
 
-
+@login_required(login_url='login')
 def dog_profile(request,pk):
     dog = Dog.objects.get(id=pk)
     context = {'dog':dog}
@@ -47,10 +50,11 @@ def dog_profile(request,pk):
 # -----------------------
 # VET_CLINIC VIEWS
 # -----------------------
+@login_required(login_url='login')
 def vet_clinic_dashboard(request):
     return render(request,'vet/dashboard.html')
 
-
+@login_required(login_url='login')
 def pending_approval_page(request):
     return render(request, 'vet/pending_approval.html')
 # -----------------------
@@ -62,6 +66,7 @@ def pending_approval_page(request):
 # -----------------------
 # CLUB VIEWS
 # -----------------------
+@login_required(login_url='login')
 def club_dashboard(request):
     return render(request,'club/dashboard.html')
 # -----------------------
