@@ -78,7 +78,7 @@ def user_login(request):
                         return redirect('login')
                     
                 elif user.role == 'club':
-                    return redirect('club-dashboard')
+                    return redirect('club-announcement')
                 else:
                     return redirect('home')
             else:

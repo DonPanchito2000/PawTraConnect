@@ -1,5 +1,5 @@
 from django import forms
-from .models import Dog
+from .models import Dog, ForumRoom
 
 class DogRegistrationForm(forms.ModelForm):
     class Meta:
@@ -13,4 +13,30 @@ class DogRegistrationForm(forms.ModelForm):
             'age': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Age in years'}),
             'barangay': forms.Select(attrs={'class': 'form-control'}),
             'sex': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+
+class ForumRoomForm(forms.ModelForm):
+    class Meta:
+        model = ForumRoom
+        fields = ['title', 'content', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter room title',
+                'required': True
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Write something about the room...',
+                'required': True
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'accept': 'image/*',
+                'onchange': 'previewImage(event)',
+                'hidden': True,  # hide native input
+                'id': 'image'
+            })
         }

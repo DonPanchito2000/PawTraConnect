@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Barangay, PetOwnerProfile
+from accounts.models import Barangay, PetOwnerProfile, Account
 
 class Dog(models.Model):
     dog_id = models.CharField(max_length=150, unique=True, blank=True, null=True)
@@ -26,3 +26,41 @@ class Dog(models.Model):
                 count = Dog.objects.count() + 1  # Get the count of dogs, ensuring unique IDs
                 self.dog_id = f"{dog_name}-{owner_name}-{count:04d}"
             super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        ordering = ['-updated_at', '-created_at']
+
+
+
+class ForumRoom(models.Model):
+     host = models.ForeignKey(Account, on_delete = models.SET_NULL,null=True)
+     title = models.CharField(max_length=200, blank=True)
+     content = models.TextField()
+     participants = models.ManyToManyField(Account, related_name='participants',blank=True)
+     created = models.DateTimeField(auto_now_add=True)
+     updated = models.DateTimeField(auto_now=True)
+     image = models.ImageField(upload_to='forum_images/', blank=True, null=True)
+
+     def __str__(self):
+        return self.title
+    
+     class Meta:
+        ordering = ['-updated', '-created']
+
+
+class ForumComment(models.Model):
+    user = models.ForeignKey(Account, on_delete= models.CASCADE)
+    room = models.ForeignKey(ForumRoom, on_delete=models.CASCADE)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-updated','-created']
+    
+
+    def __str__(self):
+        return self.body[0:50]

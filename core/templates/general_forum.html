@@ -1,0 +1,75 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <!-- Forum Room Section -->
+    <div class="col-lg-8 mb-4">
+      <div class="card bg-dark text-white shadow rounded-3 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Forum Rooms</h5>
+          <a href="{% url 'general-forum-form' %}" class="btn btn-primary">
+            + Create Room
+          </a>
+        </div>
+
+        <!-- Search Bar -->
+        <form method="get" action="" class="mb-3">
+          <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+        </form>
+
+        <!-- Room List -->
+        {% for room in rooms %}
+        <a href="" class="text-decoration-none text-white">
+          <div class="card bg-secondary text-white mb-3">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-2">
+                <img src="{{ room.host.profile.avatar.url }}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
+                <span>@{{ room.host.username }}</span>
+                <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
+              </div>
+              <h6 class="card-title mb-1">{{ room.title }}</h6>
+              {% if room.image %}
+              <img src="{{ room.image.url }}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height: 200px; object-fit: cover; width: 100%;">
+              {% endif %}
+              <p class="mb-2">{{ room.content|truncatewords:20 }}</p>
+              <div class="d-flex justify-content-between align-items-center mt-2">
+                <span><i class="fas fa-users"></i> {{ room.participants.count }} Joined</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% empty %}
+        <p class="text-light">No rooms found.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="col-lg-4">
+      <div class="card bg-dark text-white shadow rounded-3 p-4">
+        <h5 class="mb-3">Recent Activities</h5>
+        <div style="max-height: 600px; overflow-y: auto;">
+          {% for message in room_comments %}
+          <a href="" class="text-decoration-none text-white">
+            <div class="card bg-secondary text-white mb-3">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <img src="{{ message.user.profile.avatar.url }}" alt="avatar" class="rounded-circle me-2" width="28" height="28" style="object-fit: cover;">
+                  <span>@{{ message.user.username }}</span>
+                  <small class="ms-auto text-light">{{ message.created|timesince }} ago</small>
+                </div>
+                <div>
+                  <strong>replied to post “{{ message.room.title }}”</strong>
+                  <div class="bg-dark text-white p-2 mt-2 rounded">
+                    {{ message.body|linebreaksbr }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-light">No recent activity.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

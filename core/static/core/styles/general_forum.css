@@ -1,0 +1,16 @@
+/* static/css/communityforum.css */
+.forum-room {
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #fdf3c7;
+    border: none;
+  }
+  
+  .forum-room .card-body h5 {
+    font-weight: 700;
+    color: #1c313a;
+  }
+  
+  .forum-room .card-footer {
+    font-size: 0.95rem;
+  }

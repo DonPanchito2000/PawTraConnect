@@ -1,0 +1,50 @@
+
+  
+  .card {
+    border: none;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  .card-header, .card-footer {
+    background: transparent;
+  }
+  
+  .form-control,
+  .form-control-file {
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    color: #fff;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: none;
+    background-color: #1f1f1f;
+    color: #fff;
+  }
+  
+  label {
+    font-weight: 600;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: bold;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004e9a;
+  }
+  
+  a.text-light:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+  

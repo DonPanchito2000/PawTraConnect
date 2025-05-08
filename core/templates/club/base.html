@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}PawTraConnect{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'core/styles/ccvo/base.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'core/styles/club/base.css' %}">
     {% block extra_css %} {% endblock extra_css %}
 </head>
 <body>
@@ -22,19 +21,10 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ccvo-dashboard' %}">Dashboard</a>
+                    <a class="nav-link" href="{% url 'club-announcement' %}">Announcement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ccvo-announcement' %}">Announcement</a>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'approve-clinics-page' %}">Clinics</a>
-                </li>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Report Service</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Analytics Report</a>
+                    <a class="nav-link" href="#">Members</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'general-forum' %}">Community Forum</a>
