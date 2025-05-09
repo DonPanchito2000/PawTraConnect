@@ -13,4 +13,19 @@ env/
 .idea/
 
 
-media/
+# Ignore everything in the media folder
+media/*
+
+# But keep the pet_profile folder
+!media/pet_profile/
+
+# But keep the profile_pics folder
+!media/profile_pics/
+
+# Ignore everything inside pet_profile and profile_pics
+media/pet_profile/*
+media/profile_pics/*
+
+# Except the specific default profile images
+!media/pet_profile/default_pet_profile.png
+!media/profile_pics/defaultprofile.png
