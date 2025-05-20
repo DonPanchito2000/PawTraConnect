@@ -43,6 +43,6 @@ urlpatterns = [
     # -----------------------
 
 
-    path('general-forum',views.general_forum_view,name='general-forum'),
-    path('general-forum-form',views.general_forum_form,name='general-forum-form'),
+    path('general-forum/',views.general_forum_view,name='general-forum'),
+    path('general-forum-form/',views.general_forum_form,name='general-forum-form'),
 ]

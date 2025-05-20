@@ -9,7 +9,7 @@ class Account(AbstractUser):
         ('club', 'Club'),
     )
     role = models.CharField(max_length=10, choices=USER_ROLES)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True,default='profile_pics/defaultprofile.png')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

@@ -7,6 +7,9 @@ from .models import Dog, ForumRoom, ForumComment
 from accounts.models import PetOwnerProfile, VetClinicProfile
 from django.http import HttpResponse
 
+from django.http import JsonResponse
+from django.core import serializers
+
 # Create your views here.
 
 # -----------------------
@@ -99,7 +102,7 @@ def ccvo_announcement(request):
                 return render(request, 'ccvo/announcement.html')
             else:
                 # If the vet is not a city vet, redirect to another page (e.g., 'another_page')
-                return redirect('login')  # Change 'another_page' to your desired URL name
+                return HttpResponse('You are not allowed here!')  # Change 'another_page' to your desired URL name
         except VetClinicProfile.DoesNotExist:
             # No vet profile found for this user
             return redirect('login')  # Same as above, redirect to another page
@@ -132,6 +135,10 @@ def approve_clinic(request, pk):
 
 @login_required(login_url='login')
 def ccvo_dashboard(request):
+    user = request.user
+    vet_profile = VetClinicProfile.objects.get(user=user)
+    if not vet_profile.is_city_vet:
+         return HttpResponse('You are not allowed here!')
     return render(request,'ccvo/dashboard.html')
 # -----------------------
 # END CCVO VIEWS
@@ -174,8 +181,11 @@ def general_forum_view(request):
             vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/forum.html',context)
-            else:
+            elif vet_profile.is_approved:
                 return render(request, 'vet/forum.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
         except VetClinicProfile.DoesNotExist:
             # fallback in case vet profile is missing
             return HttpResponse('You are not allowed here!')
@@ -214,8 +224,10 @@ def general_forum_form(request):
             vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/forum_form.html',context)
-            else:
+            elif vet_profile.is_approved:
                 return render(request, 'vet/forum_form.html',context)
+            else:
+                 return HttpResponse('You are not allowed here!')
         except VetClinicProfile.DoesNotExist:
             # fallback in case vet profile is missing
            return HttpResponse('You are not allowed here!')
@@ -226,6 +238,9 @@ def general_forum_form(request):
     else:
         # optional fallback if role is not recognized
         return HttpResponse('You are not allowed here!')
+
+
+
 
 
 
