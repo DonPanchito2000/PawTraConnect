@@ -99,17 +99,16 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 $(document).ready(function () {
-  setInterval(function () {
+  function loadRooms() {
     $.ajax({
-      type: 'POST',
+      type: 'GET',
       url: "{% url 'get-rooms' %}",
-      headers: {
-        'X-CSRFToken': csrftoken
-      },
       success: function (response) {
-        $('#forum-post').empty();
+        const forumPost = $('#forum-post');
+        forumPost.empty();
+
         if (response.rooms.length === 0) {
-          $('#forum-post').append('<p class="text-light">No rooms found.</p>');
+          forumPost.append('<p class="text-light">No rooms found.</p>');
         } else {
           response.rooms.forEach(function (item) {
             const roomHTML = `
@@ -129,16 +128,23 @@ $(document).ready(function () {
                     </div>
                   </div>
                 </div>
-              </a>
-            `;
-            $('#forum-post').append(roomHTML);
+              </a>`;
+            forumPost.append(roomHTML);
           });
         }
       },
       error: function (xhr, status, error) {
-        console.error("AJAX Error:", error);
+        console.error("Error fetching rooms:", error);
+        $('#forum-post').html('<p class="text-danger">Failed to load rooms.</p>');
       }
     });
-  }, 5000);
+  }
+
+  // Initial load
+  loadRooms();
+
+  // Repeat every 5 seconds (not best, but simple for now)
+  setInterval(loadRooms, 5000);
 });
+
 </script>
