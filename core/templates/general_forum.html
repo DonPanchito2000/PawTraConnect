@@ -1,3 +1,4 @@
+
 <div class="container-fluid py-4">
   <div class="row">
     <!-- Forum Room Section -->
@@ -16,8 +17,9 @@
         </form>
 
         <!-- Room List -->
+         <div id="forum-post">
         {% for room in rooms %}
-        <a href="" class="text-decoration-none text-white">
+        <a href="{% url 'room' %}" class="text-decoration-none text-white">
           <div class="card bg-secondary text-white mb-3">
             <div class="card-body">
               <div class="d-flex align-items-center mb-2">
@@ -39,6 +41,7 @@
         {% empty %}
         <p class="text-light">No rooms found.</p>
         {% endfor %}
+        </div>
       </div>
     </div>
 
@@ -75,3 +78,67 @@
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+$(document).ready(function () {
+  setInterval(function () {
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'get-rooms' %}",
+      headers: {
+        'X-CSRFToken': csrftoken
+      },
+      success: function (response) {
+        $('#forum-post').empty();
+        if (response.rooms.length === 0) {
+          $('#forum-post').append('<p class="text-light">No rooms found.</p>');
+        } else {
+          response.rooms.forEach(function (item) {
+            const roomHTML = `
+              <a href="/room/${item.id}/" class="text-decoration-none text-white">
+                <div class="card bg-secondary text-white mb-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                      <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
+                      <span>@${item.host.username}</span>
+                      <small class="ms-auto text-light">${item.created_timesince}</small>
+                    </div>
+                    <h6 class="card-title mb-1">${item.title}</h6>
+                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height: 200px; object-fit: cover; width: 100%;">` : ''}
+                    <p class="mb-2">${item.content_truncated}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <span><i class="fas fa-users"></i> ${item.participants_count} Joined</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            `;
+            $('#forum-post').append(roomHTML);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX Error:", error);
+      }
+    });
+  }, 5000);
+});
+</script>

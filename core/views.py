@@ -7,8 +7,14 @@ from .models import Dog, ForumRoom, ForumComment
 from accounts.models import PetOwnerProfile, VetClinicProfile
 from django.http import HttpResponse
 
+
+
+from django.utils.timesince import timesince
 from django.http import JsonResponse
-from django.core import serializers
+from django.core.serializers import serialize
+import json
+
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -243,6 +249,53 @@ def general_forum_form(request):
 
 
 
+def room(request):
+    user = request.user
+
+    if user.role == 'owner':
+        return render(request, 'owner/room_page.html')
+
+    elif user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'owner/room_page.html')
+            elif vet_profile.is_approved:
+                return render(request, 'owner/room_page.html')
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            # fallback in case vet profile is missing
+            return HttpResponse('You are not allowed here!')
+
+    elif user.role == 'club':
+        return render(request, 'owner/rroom_pageoom.html')
+
+    else:
+        # optional fallback if role is not recognized
+         return HttpResponse('You are not allowed here!')
+
+
+def getRooms(request):
+    rooms = ForumRoom.objects.all()
+    data = []
+
+    for room in rooms:
+        data.append({
+            "id": room.id,
+            "title": room.title,
+            "content_truncated": room.content[:100],
+            "created_timesince": timesince(room.created) + " ago",  # this caused the error
+            "host": {
+                "username": room.host.username,
+                "profile_picture_url": room.host.profile_picture.url if room.host.profile_picture else "",
+            },
+            "image_url": room.image.url if room.image else "",
+            "participants_count": room.participants.count(),
+        })
+
+    return JsonResponse({"rooms": data})
 
 # -----------------------
 # END GENERAL FORUM VIEWS
