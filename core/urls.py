@@ -37,7 +37,7 @@ urlpatterns = [
     path('ccvo-dashboard/', views.ccvo_dashboard,name='ccvo-dashboard'),
     path('ccvo-announcement/', views.ccvo_announcement,name='ccvo-announcement'),
     path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
-    path('approve-clinic/<str:pk>',views.approve_clinic, name='approve-clinic'),
+    path('approve-clinic/<str:pk>/',views.approve_clinic, name='approve-clinic'),
     # -----------------------
     # CCVO VET URLS
     # -----------------------
@@ -45,7 +45,7 @@ urlpatterns = [
 
     path('general-forum/',views.general_forum_view,name='general-forum'),
     path('general-forum-form/',views.general_forum_form,name='general-forum-form'),
-    path('room/',views.room,name='room'),
+    path('room/<int:pk>',views.room,name='room'),
 
 
     path('get-rooms/', views.getRooms, name='get-rooms'),

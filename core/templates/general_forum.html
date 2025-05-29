@@ -6,71 +6,72 @@
       <div class="card bg-dark text-white shadow rounded-3 p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="mb-0">Forum Rooms</h5>
-          <a href="{% url 'general-forum-form' %}" class="btn btn-primary">
-            + Create Room
-          </a>
+          <a href="{% url 'general-forum-form' %}" class="btn btn-primary">+ Create Room</a>
         </div>
 
         <!-- Search Bar -->
         <form method="get" action="" class="mb-3">
           <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+     
         </form>
 
         <!-- Room List -->
-         <div id="forum-post">
-        {% for room in rooms %}
-        <a href="{% url 'room' %}" class="text-decoration-none text-white">
-          <div class="card bg-secondary text-white mb-3">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-2">
-                <img src="{{ room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
-                <span>@{{ room.host.username }}</span>
-                <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
-              </div>
-              <h6 class="card-title mb-1">{{ room.title }}</h6>
-              {% if room.image %}
-              <img src="{{ room.image.url }}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height: 200px; object-fit: cover; width: 100%;">
-              {% endif %}
-              <p class="mb-2">{{ room.content|truncatewords:20 }}</p>
-              <div class="d-flex justify-content-between align-items-center mt-2">
-                <span><i class="fas fa-users"></i> {{ room.participants.count }} Joined</span>
-              </div>
-            </div>
-          </div>
-        </a>
-        {% empty %}
-        <p class="text-light">No rooms found.</p>
-        {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    <!-- Recent Activities -->
-    <div class="col-lg-4">
-      <div class="card bg-dark text-white shadow rounded-3 p-4">
-        <h5 class="mb-3">Recent Activities</h5>
-        <div style="max-height: 600px; overflow-y: auto;">
-          {% for message in room_comments %}
-          <a href="" class="text-decoration-none text-white">
-            <div class="card bg-secondary text-white mb-3">
+        <div id="forum-post">
+          {% for room in rooms %}
+          <a href="{% url 'room' room.id %}" class="text-decoration-none text-white forum-room-link">
+            <div class="card bg-secondary text-white mb-3 forum-room-card">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
-                  <img src="{{ message.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="28" height="28" style="object-fit: cover;">
-                  <span>@{{ message.user.username }}</span>
-                  <small class="ms-auto text-light">{{ message.created|timesince }} ago</small>
+                  <img src="{{ room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
+                  <span>@{{ room.host.username }}</span>
+                  <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
                 </div>
-                <div>
-                  <strong>replied to post “{{ message.room.title }}”</strong>
-                  <div class="bg-dark text-white p-2 mt-2 rounded">
-                    {{ message.body|linebreaksbr }}
-                  </div>
+                <h6 class="card-title mb-1">{{ room.title }}</h6>
+                {% if room.image %}
+                <img src="{{ room.image.url }}" alt="Room Image" class="img-fluid rounded mb-2 forum-room-img">
+                {% endif %}
+                <p class="mb-2">{{ room.content|truncatewords:20 }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                  <span><i class="fas fa-users"></i> {{ room.participants.count }} Joined</span>
                 </div>
               </div>
             </div>
           </a>
           {% empty %}
-          <p class="text-light">No recent activity.</p>
+          <p class="text-light">No rooms found.</p>
           {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activities Section -->
+    <div class="col-lg-4 d-none d-lg-block">
+      <div class="recent-activity-fixed">
+        <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+          <h5 class="mb-3">Recent Activities</h5>
+          <div class="recent-activities">
+            {% for message in room_comments %}
+            <a href="#" class="text-decoration-none text-white">
+              <div class="card bg-secondary text-white mb-3">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-2">
+                    <img src="{{ message.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="28" height="28" style="object-fit: cover;">
+                    <span>@{{ message.user.username }}</span>
+                    <small class="ms-auto text-light">{{ message.created|timesince }} ago</small>
+                  </div>
+                  <div>
+                    <strong>replied to post “{{ message.room.title }}”</strong>
+                    <div class="bg-dark text-white p-2 mt-2 rounded">
+                      {{ message }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            {% empty %}
+            <p class="text-light">No recent activity.</p>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
@@ -78,10 +79,18 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Back to Top Button -->
+<button id="backToTop" title="Go to top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V4.707l3.147 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 4.707V11.5A.5.5 0 0 0 8 12z"/>
+  </svg>
+</button>
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-function getCookie(name) {
+/*function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
@@ -96,13 +105,15 @@ function getCookie(name) {
   return cookieValue;
 }
 
-const csrftoken = getCookie('csrftoken');
+const csrftoken = getCookie('csrftoken'); */
 
 $(document).ready(function () {
   function loadRooms() {
+  const query = $('input[name="q"]').val() || '';
     $.ajax({
       type: 'GET',
       url: "{% url 'get-rooms' %}",
+       data: { q: query },  // <-- send query here
       success: function (response) {
         const forumPost = $('#forum-post');
         forumPost.empty();
@@ -112,7 +123,7 @@ $(document).ready(function () {
         } else {
           response.rooms.forEach(function (item) {
             const roomHTML = `
-              <a href="/room/${item.id}/" class="text-decoration-none text-white">
+             <a href="/core/room/${item.id}" class="text-decoration-none text-white">
                 <div class="card bg-secondary text-white mb-3">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
@@ -145,6 +156,36 @@ $(document).ready(function () {
 
   // Repeat every 5 seconds (not best, but simple for now)
   setInterval(loadRooms, 5000);
+
+
+
+  $('form').on('submit', function(e) {
+  e.preventDefault();
+  loadRooms();
 });
+});
+
+
+
+
+
+// back top
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 200) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+
+
+
 
 </script>

@@ -7,6 +7,7 @@ from .models import Dog, ForumRoom, ForumComment
 from accounts.models import PetOwnerProfile, VetClinicProfile
 from django.http import HttpResponse
 
+from django.utils.timesince import timesince
 
 
 from django.utils.timesince import timesince
@@ -161,11 +162,11 @@ def ccvo_dashboard(request):
 def general_forum_view(request):
 
     query = request.GET.get('q') if request.GET.get('q') else ''
-
+    print(f"Query: {query}")
     rooms = ForumRoom.objects.filter(
         Q(title__icontains=query) |
         Q(content__icontains=query) |
-        Q(host__email__icontains=query)
+        Q(host__username__icontains=query)
     ).order_by('-created')
 
     # Recent comments/messages
@@ -249,19 +250,54 @@ def general_forum_form(request):
 
 
 
-def room(request):
+def room(request, pk):
     user = request.user
 
+    room = get_object_or_404(ForumRoom, id=pk)
+    room_comments = room.forumcomment_set.all().order_by('created')
+    participants = room.participants.all()
+
+    context ={'room':room, 'room_comments':room_comments,'paricipants':participants}
+
+    if request.method == 'POST':
+       comment = ForumComment.objects.create(
+           user = request.user,
+           room = room,
+           body = request.POST.get('body')
+       )
+       room.participants.add(request.user)
+       return JsonResponse({
+                    'user_profile': comment.user.profile_picture.url,
+                    'user': comment.user.username,
+                    'comment': comment.body,
+                    'created': comment.created.strftime('%Y-%m-%d %H:%M:%S'),
+                })
+    
+    # automatic view new comments ajax
+    if request.GET.get("ajax") == "1":
+        html = ""
+        for comment in room_comments:
+            html += f'''
+            <div class="comment-card">
+                <img src="{comment.user.profile_picture.url}" alt="User Profile" />
+                <div class="comment-body">
+                    <div class="username">{comment.user.username} <span class="time">· {timesince(comment.created)} ago</span></div>
+                    <div class="comment-text">{comment.body}</div>
+                </div>
+            </div>
+            '''
+        return HttpResponse(html)
+
     if user.role == 'owner':
-        return render(request, 'owner/room_page.html')
+        return render(request, 'owner/room_page.html', context)
 
     elif user.role == 'vet':
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:
-                return render(request, 'owner/room_page.html')
+                return render(request, 'ccvo/room_page.html',context)
             elif vet_profile.is_approved:
-                return render(request, 'owner/room_page.html')
+                return render(request, 'vet/room_page.html',context)
             else:
                 return HttpResponse('You are not allowed here!')
 
@@ -270,15 +306,23 @@ def room(request):
             return HttpResponse('You are not allowed here!')
 
     elif user.role == 'club':
-        return render(request, 'owner/rroom_pageoom.html')
+        return render(request, 'club/room_page.html',context)
 
     else:
         # optional fallback if role is not recognized
          return HttpResponse('You are not allowed here!')
 
 
+
 def getRooms(request):
-    rooms = ForumRoom.objects.all()
+    query = request.GET.get('q', '')
+
+    rooms = ForumRoom.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(host__email__icontains=query)
+    ).order_by('-created')
+
     data = []
 
     for room in rooms:
@@ -286,7 +330,7 @@ def getRooms(request):
             "id": room.id,
             "title": room.title,
             "content_truncated": room.content[:100],
-            "created_timesince": timesince(room.created) + " ago",  # this caused the error
+            "created_timesince": timesince(room.created) + " ago",
             "host": {
                 "username": room.host.username,
                 "profile_picture_url": room.host.profile_picture.url if room.host.profile_picture else "",
