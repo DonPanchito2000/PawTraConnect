@@ -72,6 +72,17 @@ class ClubProfile(models.Model):
     contact_number = models.CharField(max_length=20)
     description = models.TextField(blank=True)
     admin_email = models.EmailField(blank=True)
+    
+     # Optional fields
+    has_professional_services = models.BooleanField(default=False)
+
+    # CPC and PTR file uploads (optional, but useful for verification)
+    cpc_document = models.FileField(upload_to='cpc_docs/', null=True, blank=True)
+    ptr_document = models.FileField(upload_to='ptr_docs/', null=True, blank=True)
+
+    # Dates of issuance (optional)
+    cpc_issued_date = models.DateField(null=True, blank=True)
+    ptr_issued_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.club_name} ({self.admin_name})"

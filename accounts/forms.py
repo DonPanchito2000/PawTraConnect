@@ -71,10 +71,35 @@ class ClubRegistrationForm(UserCreationForm):
     description = forms.CharField(widget=forms.Textarea)
     profile_picture = forms.ImageField(required=False)
     admin_email = forms.EmailField(required=True)
+
+    # Optional professional services fields
+    has_professional_services = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'id': 'id_has_professional_services'}))
+    cpc_document = forms.FileField(required=False)
+    ptr_document = forms.FileField(required=False)
+    cpc_issued_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    ptr_issued_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+
+
     class Meta:
         model = Account
         fields = ['username', 'email', 'password1', 'password2', 'profile_picture']
 
+    def clean(self):
+        cleaned_data = super().clean()
+        has_professional_services = cleaned_data.get('has_professional_services')
+
+        # Only validate these if checkbox is checked
+        if has_professional_services:
+            if not cleaned_data.get('cpc_document'):
+                self.add_error('cpc_document', 'This field is required if professional services are enabled.')
+            if not cleaned_data.get('ptr_document'):
+                self.add_error('ptr_document', 'This field is required if professional services are enabled.')
+            if not cleaned_data.get('cpc_issued_date'):
+                self.add_error('cpc_issued_date', 'This field is required if professional services are enabled.')
+            if not cleaned_data.get('ptr_issued_date'):
+                self.add_error('ptr_issued_date', 'This field is required if professional services are enabled.')
+
+                
     def save(self, commit=True):
         user = super().save(commit=False)
         user.role = 'club'
@@ -86,7 +111,13 @@ class ClubRegistrationForm(UserCreationForm):
                 admin_name=self.cleaned_data['admin_name'],
                 contact_number=self.cleaned_data['contact_number'],
                 description=self.cleaned_data['description'],
-                admin_email=self.cleaned_data['admin_email']
+                admin_email=self.cleaned_data['admin_email'],
+
+                has_professional_services=self.cleaned_data['has_professional_services'],
+                cpc_document=self.cleaned_data.get('cpc_document'),
+                ptr_document=self.cleaned_data.get('ptr_document'),
+                cpc_issued_date=self.cleaned_data.get('cpc_issued_date'),
+                ptr_issued_date=self.cleaned_data.get('ptr_issued_date'),
             )
         return user
 

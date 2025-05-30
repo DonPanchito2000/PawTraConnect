@@ -87,6 +87,35 @@
                             <small class="text-danger">{{ form.description.errors|striptags }}</small>
                         </div>
                     
+                        <!-- HAS PRFESSIONAL SERVICES BOOLEAN-->
+                      <div class="form-group form-check">
+                            {{ form.has_professional_services }}
+                            {{ form.has_professional_services.label_tag }}
+                            <small class="text-danger">{{ form.has_professional_services.errors|striptags }}</small>
+                        </div>
+                            <!-- Professional Fields Container -->
+                        <div id="professionalFields" style="display: none;">
+                            <div class="form-group">
+                                {{ form.cpc_document.label_tag }}
+                                {{ form.cpc_document }}
+                                <small class="text-danger">{{ form.cpc_document.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form.cpc_issued_date.label_tag }}
+                                {{ form.cpc_issued_date }}
+                                <small class="text-danger">{{ form.cpc_issued_date.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form.ptr_document.label_tag }}
+                                {{ form.ptr_document }}
+                                <small class="text-danger">{{ form.ptr_document.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form.ptr_issued_date.label_tag }}
+                                {{ form.ptr_issued_date }}
+                                <small class="text-danger">{{ form.ptr_issued_date.errors|striptags }}</small>
+                            </div>
+                        </div>
 
                         <button type="submit" class="btn btn-register btn-block mt-4 col-md-4 m-auto">REGISTER</button>
                     </form>
@@ -95,4 +124,24 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkbox = document.getElementById('id_has_professional_services');
+        const professionalFields = document.getElementById('professionalFields');
+
+        function toggleProfessionalFields() {
+            professionalFields.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        if (checkbox) {
+            checkbox.addEventListener('change', toggleProfessionalFields);
+            toggleProfessionalFields(); // Run initially
+        }
+    });
+</script>
+
 {% endblock content %}
+
+
