@@ -1,8 +1,20 @@
 
 <div class="container-fluid py-4">
+
+    <!-- Tabs for small screens -->
+  <ul class="nav nav-tabs d-lg-none mb-3" id="forumTabs" role="tablist" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="forum-rooms-tab" data-toggle="tab" href="#forum-rooms" role="tab" aria-controls="forum-rooms" aria-selected="true">Forum Rooms</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="recent-activities-tab" data-toggle="tab" href="#recent-activities" role="tab" aria-controls="recent-activities" aria-selected="false">Recent Activities</a>
+    </li>
+  </ul>
+
+
   <div class="row">
     <!-- Forum Room Section -->
-    <div class="col-lg-8 mb-4">
+    <div class="col-lg-8 mb-4 d-none d-lg-block">
       <div class="card bg-dark text-white shadow rounded-3 p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="mb-0">Forum Rooms</h5>
@@ -12,11 +24,11 @@
         <!-- Search Bar -->
         <form method="get" action="" class="mb-3">
           <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
-     
+
         </form>
 
         <!-- Room List -->
-        <div id="forum-post">
+        <div class="forum-post">
           {% for room in rooms %}
           <a href="{% url 'room' room.id %}" class="text-decoration-none text-white forum-room-link">
             <div class="card bg-secondary text-white mb-3 forum-room-card">
@@ -51,7 +63,7 @@
           <h5 class="mb-3">Recent Activities</h5>
           <div class="recent-activities">
             {% for message in room_comments %}
-            <a href="#" class="text-decoration-none text-white">
+            <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">
               <div class="card bg-secondary text-white mb-3">
                 <div class="card-body">
                   <div class="d-flex align-items-center mb-2">
@@ -77,6 +89,88 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+<!-- Tabs content for small/mobile screens -->
+    <div class="col-12 d-lg-none">
+      <div class="tab-content" id="forumTabsContent" style="min-height: 400px;">
+        <div class="tab-pane fade show active" id="forum-rooms" role="tabpanel" aria-labelledby="forum-rooms-tab">
+          
+          <div class="card bg-dark text-white shadow rounded-3 p-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Forum Rooms</h5>
+          <a href="{% url 'general-forum-form' %}" class="btn btn-primary">+ Create Room</a>
+        </div>
+        
+              <!-- Search Bar -->
+        <form method="get" action="" class="mb-3">
+          <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+
+        </form>
+
+
+            <!-- Forum Rooms content (same as large screen) -->
+             <div class="forum-post">
+              {% for room in rooms %}
+          <a href="{% url 'room' room.id %}" class="text-decoration-none text-white forum-room-link">
+            <div class="card bg-secondary text-white mb-3 forum-room-card">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <img src="{{ room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
+                  <span>@{{ room.host.username }}</span>
+                  <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
+                </div>
+                <h6 class="card-title mb-1">{{ room.title }}</h6>
+                {% if room.image %}
+                <img src="{{ room.image.url }}" alt="Room Image" class="img-fluid rounded mb-2 forum-room-img">
+                {% endif %}
+                <p class="mb-2">{{ room.content|truncatewords:20 }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                  <span><i class="fas fa-users"></i> {{ room.participants.count }} Joined</span>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-light">No rooms found.</p>
+          {% endfor %}
+            </div>
+          </div>
+          
+        </div>
+
+        
+        <div class="tab-pane fade" id="recent-activities" role="tabpanel" aria-labelledby="recent-activities-tab">
+          <div class="card bg-dark text-white shadow rounded-3 p-4">
+            <!-- Recent Activities content (same as large screen) -->
+             {% for message in room_comments %}
+            <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">
+              <div class="card bg-secondary text-white mb-3">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-2">
+                    <img src="{{ message.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="28" height="28" style="object-fit: cover;">
+                    <span>@{{ message.user.username }}</span>
+                    <small class="ms-auto text-light">{{ message.created|timesince }} ago</small>
+                  </div>
+                  <div>
+                    <strong>replied to post “{{ message.room.title }}”</strong>
+                    <div class="bg-dark text-white p-2 mt-2 rounded">
+                      {{ message }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            {% empty %}
+            <p class="text-light">No recent activity.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 <!-- Back to Top Button -->
@@ -115,7 +209,7 @@ $(document).ready(function () {
       url: "{% url 'get-rooms' %}",
        data: { q: query },  // <-- send query here
       success: function (response) {
-        const forumPost = $('#forum-post');
+        const forumPost = $('.forum-post');
         forumPost.empty();
 
         if (response.rooms.length === 0) {
@@ -132,7 +226,7 @@ $(document).ready(function () {
                       <small class="ms-auto text-light">${item.created_timesince}</small>
                     </div>
                     <h6 class="card-title mb-1">${item.title}</h6>
-                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height: 200px; object-fit: cover; width: 100%;">` : ''}
+                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
                     <p class="mb-2">${item.content_truncated}</p>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                       <span><i class="fas fa-users"></i> ${item.participants_count} Joined</span>

@@ -20,8 +20,9 @@
     </div>
 
     <div class="room-title">{{room.title}}</div>
-
-
+    {% if room.image %}
+    <div class="room-img text-center"><img src="{{room.image.url}}" alt="" class="img-fluid"></div>
+    {% endif %}
     <div class="room-content">
       {{room.content}}
     </div>

@@ -48,13 +48,29 @@ body{
     max-height: calc(100vh - 100px);
 }
 @media (max-width: 768px) {
-    .navbar-nav {
-        flex-direction: column;
-        width: 100%;
+ .navbar-collapse {
+        background-color: #1d2c33; /* Darker shade for contrast */
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
     }
-    .navbar-collapse {
-        background-color: #f8f9fa;
-        padding: 10px;
+
+    .navbar-nav .nav-item {
+        margin-bottom: 10px;
+    }
+
+    .dropdown.profile-dropdown {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+    }
+
+    .dropdown-menu {
+        position: static;
+        float: none;
+        width: 100%;
+        box-shadow: none;
     }
 }
 
@@ -72,4 +88,18 @@ body{
 .dropdown-menu a:hover{
    background-color: rgba(0, 0, 0, 0.2);
    color: #eae2b7 ;
+}
+
+
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28234, 226, 183, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
 }

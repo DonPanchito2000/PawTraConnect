@@ -15,12 +15,6 @@
   font-size: 0.95rem;
 }
 
-/* Forum Image */
-.forum-room img.img-fluid {
-  max-height: 160px;
-  object-fit: cover;
-  border-radius: 12px;
-}
 
 /* Back to Top Button */
 #backToTop {
@@ -98,4 +92,46 @@
   top: 100px;          /* same offset as inner scroll */
   align-self: flex-start; /* prevent stretching in flex/grid layouts */
   max-height: calc(100vh - 120px); /* full viewport height minus offset */
+}
+
+
+
+
+
+
+
+/* Tabs styling */
+.nav-tabs {
+  border: none;
+  background: #343a40;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.nav-tabs .nav-link {
+  color: #adb5bd;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  background: linear-gradient(45deg, #4e9af1, #4361ee);
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.5);
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  color: #f8f9fa;
+  background-color: #495057;
+}
+
+/* Adjust tab content min height for better UX */
+.tab-content > .tab-pane {
+  min-height: 400px; /* or adjust as needed */
 }
