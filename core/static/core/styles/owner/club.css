@@ -1,0 +1,38 @@
+
+.card {
+  background-color: #343a40 !important;
+  border: none;
+  border-radius: 16px;
+  transition: box-shadow 0.2s ease;
+}
+
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.card-body img.rounded-circle {
+  border: 2px solid #dee2e6;
+}
+
+.clubs {
+  max-height: 70vh;    /* optional, keeps internal scroll */
+  overflow-y: auto;
+  padding-right: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #adb5bd transparent;
+}
+
+/* Modern scrollbar (Webkit browsers) */
+.clubs::-webkit-scrollbar {
+  width: 6px;
+}
+
+.clubs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.clubs::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 4px;
+}

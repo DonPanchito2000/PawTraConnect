@@ -1,0 +1,75 @@
+{% extends 'owner/base.html' %}
+
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/owner/club.css' %}">
+{% endblock extra_css %}
+<title>{% block title %}Forum{% endblock %}</title>
+
+
+{% block content %} 
+       <div class="row mt-5">
+        <!-- MY CLUBS -->
+        <div class="col-lg-5"> 
+            <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+                <h5 class="mb-4">My Clubs</h5>
+                <div class="clubs">
+                       {% for user_club in user_clubs %}
+                   <div class="card bg-secondary m-3 text-dark">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                {% if user_club.club.user.profile_picture %}
+                                <img src="{{ user_club.club.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="text-light">{{ user_club.club.club_name }}</span>
+                                <span class="text-light">{{ user_club.joined_at }}</span>
+                                <!-- <small class="ms-auto text-light">{{ room.created|timesince }} ago</small> -->
+                            </div>
+                        </div>
+                   </div>
+                   {% endfor %}
+                </div>
+             
+            </div>
+        </div>
+
+        <!-- CLUBS -->
+          <div class="col-lg-7"> 
+            <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+                <h5 class="mb-4">Clubs</h5>
+
+            <!-- Search Bar -->
+                    <form method="get" action="" class="mb-3">
+                    <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+
+                    </form>
+
+                <div class="clubs">
+                       {% for club in clubs %}
+                   <div class="card bg-secondary m-3 text-dark">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                {% if club.user.profile_picture %}
+                                <img src="{{ club.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="text-light">{{ club.club_name }}</span>
+                                <!-- <small class="ms-auto text-light">{{ room.created|timesince }} ago</small> -->
+                                 <form action="{% url 'join-club' club.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="JOIN">
+                                 </form>
+                                
+                            </div>
+                        </div>
+                   </div>
+                   {% endfor %}
+                </div>
+             
+            </div>
+        </div>
+
+
+    </div>
+    
+  
+{% endblock content %}

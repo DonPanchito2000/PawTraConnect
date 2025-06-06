@@ -9,15 +9,18 @@ urlpatterns = [
     path('register-dog/',views.register_dog,name='register-dog'),
     path('dog-profile/<str:pk>', views.dog_profile,name='dog-profile'),
     path('ccvo-announcement-page/', views.ccvo_announcement_page, name='ccvo-announcement-page'),
+    path('club-page/', views.club_page, name='club-page'),
+    path('join-club/<str:pk>', views.join_club, name='join-club'),
     # -----------------------
     # END PET_OWNER URLS
     # -----------------------
     
 
     # -----------------------
-    # PCLUB URLS
+    # CLUB URLS
     # -----------------------
     path('club-announcement/', views.club_announcement,name='club-announcement'),
+    path('member-page', views.member_page, name='member-page'),
     # -----------------------
     # END CLUB URLS
     # -----------------------

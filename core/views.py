@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .forms import DogRegistrationForm, ForumRoomForm
-from .models import Dog, ForumRoom, ForumComment
-from accounts.models import PetOwnerProfile, VetClinicProfile
+from .models import Dog, ForumRoom, ForumComment, ClubMembership
+from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 
 from django.utils.timesince import timesince
@@ -56,6 +56,31 @@ def dog_profile(request,pk):
 
 def ccvo_announcement_page(request):
     return render(request,'owner/ccvo_announcement_page.html')
+
+
+def club_page(request):
+    user_clubs = ClubMembership.objects.filter(member=request.user,status='approved')
+    query = request.GET.get('q') if request.GET.get('q') else ''
+
+    clubs = ClubProfile.objects.filter(
+        Q(club_name__icontains=query)
+    )
+
+    context = {'user_clubs':user_clubs, 'clubs':clubs}
+    return render(request, 'owner/club.html', context)
+
+
+def join_club(request, pk):
+
+    if request.method =='POST':
+        ClubMembership.objects.create(
+            member = request.user,
+            club = ClubProfile.objects.get(id = pk)
+        )
+        return redirect('club-page')
+
+    return render(request,'owner/club.html')
+
 # -----------------------
 # END PET_OWNER VIEWS
 # -----------------------
@@ -88,6 +113,16 @@ def pending_approval_page(request):
 @login_required(login_url='login')
 def club_announcement(request):
     return render(request,'club/announcement.html')
+
+
+@login_required(login_url='login')
+def member_page(request):
+    club = ClubProfile.objects.get(user=request.user)
+    membership_requests = ClubMembership.objects.filter(club=club)
+
+    context = {'membership_requests':membership_requests}
+
+    return render(request, 'club/member.html', context)
 # -----------------------
 # END CLUB VIEWS
 # -----------------------

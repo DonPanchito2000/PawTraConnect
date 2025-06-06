@@ -1,0 +1,62 @@
+{% extends 'club/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/club/member.css' %}">
+{% endblock extra_css %}
+<title>{% block title %}Forum{% endblock %}</title>
+{% block content %}
+
+    <div class="row mt-5">
+        <!-- REQUESTS -->
+        <div class="col-lg-5"> 
+            <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+                <h5 class="mb-4">Membership Request</h5>
+                <div class="requests">
+                       {% for request in membership_requests %}
+                   <div class="card bg-secondary m-3 text-dark">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                {% if request.member.profile_picture %}
+                                <img src="{{ request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="text-light">@{{ request.member.email }}</span>
+                                <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
+                            </div>
+                        </div>
+                   </div>
+                   {% endfor %}
+                </div>
+             
+            </div>
+        </div>
+
+        <!-- MEMBERS -->
+          <div class="col-lg-7"> 
+            <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+                <h5 class="mb-4">Membership Request</h5>
+                <div class="requests">
+                       {% for request in membership_requests %}
+                   <div class="card bg-secondary m-3 text-dark">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                {% if request.member.profile_picture %}
+                                <img src="{{ request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="text-light">@{{ request.member.email }}</span>
+                                <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
+                            </div>
+                        </div>
+                   </div>
+                   {% endfor %}
+                </div>
+             
+            </div>
+        </div>
+
+
+    </div>
+    
+  
+    
+
+{% endblock content %}

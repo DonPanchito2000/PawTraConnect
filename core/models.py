@@ -1,5 +1,7 @@
 from django.db import models
-from accounts.models import Barangay, PetOwnerProfile, Account
+from accounts.models import Barangay, PetOwnerProfile, Account, ClubProfile
+from django.core.exceptions import ValidationError
+
 
 class Dog(models.Model):
     dog_id = models.CharField(max_length=150, unique=True, blank=True, null=True)
@@ -64,3 +66,153 @@ class ForumComment(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+
+class ClubMembership(models.Model):
+    member = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+    club = models.ForeignKey(ClubProfile, on_delete =models.CASCADE )
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+
+    STATUS_CHOICE = [
+        ('pending','Pending'),
+        ('approved','Approved'),
+        ('rejected','Rejected'),
+        ('removed', 'Removed'),
+    ]
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICE,default='pending')
+    approved_at = models.DateTimeField(null=True,blank=True)
+    rejected_at = models.DateTimeField(null=True,blank=True)
+    kicked_at = models.DateTimeField(null=True,blank=True)
+
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['-joined_at']
+
+    def clean(self):
+        if self.member.role != 'owner' or not hasattr(self.member, 'petownerprofile'):
+            raise ValidationError("Only pet owners can be members of a club.")
+
+    def __str__(self):
+        return f"{self.member.email} - {self.club.club_name} [{self.status}]"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    
+    
