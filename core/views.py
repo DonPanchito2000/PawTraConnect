@@ -124,16 +124,28 @@ def club_announcement(request):
 @login_required(login_url='login')
 def member_page(request):
     club = ClubProfile.objects.get(user=request.user)
-    membership_requests = ClubMembership.objects.filter(club=club)
-    
+    memberships = ClubMembership.objects.filter(club=club)
+    membership_requests = []
     approved_requests = []
-    for membership_request in membership_requests:
-        if membership_request.status == 'approved':
-            approved_requests.append(membership_request)
+    for membership in memberships:
+        if membership.status == 'approved':
+            approved_requests.append(membership)
+        elif membership.status == 'pending':
+            membership_requests.append(membership)
 
     context = {'membership_requests':membership_requests, 'approved_requests':approved_requests,'club':club}
 
     return render(request, 'club/member.html', context)
+
+
+def accept_membership_request(request,membership_id):
+    membership = ClubMembership.objects.get(id = membership_id)
+    if request.method == 'POST':
+        membership.status ='approved'
+        membership.save()
+        return redirect('member-page')
+
+    return render(request,'club/member.html')
 # -----------------------
 # END CLUB VIEWS
 # -----------------------

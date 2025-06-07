@@ -20,8 +20,13 @@
                                 <img src="{{ membership_request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
                                 <span class="text-light">@{{ membership_request.member.email }}</span>
-                                <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
-                            </div>
+                                    <div class="ml-auto">
+                                        <form action="{% url 'accept-membership-request' membership_request.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="submit" value="Accept" class="">
+                                        </form>
+                                    </div>
+                                </div>
                         </div>
                    </div>
                    {% endfor %}
