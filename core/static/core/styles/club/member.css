@@ -15,7 +15,7 @@
   border: 2px solid #dee2e6;
 }
 
-.requests {
+.scroll {
   max-height: 70vh;    /* optional, keeps internal scroll */
   overflow-y: auto;
   padding-right: 5px;
@@ -24,15 +24,15 @@
 }
 
 /* Modern scrollbar (Webkit browsers) */
-.requests::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
   width: 6px;
 }
 
-.requests::-webkit-scrollbar-track {
+.scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.requests::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
   background-color: #adb5bd;
   border-radius: 4px;
 }

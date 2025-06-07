@@ -60,25 +60,31 @@ def ccvo_announcement_page(request):
 
 def club_page(request):
     user_clubs = ClubMembership.objects.filter(member=request.user,status='approved')
+
+     # Get clubs the user has joined
+    user_memberships = ClubMembership.objects.filter(member=request.user)
+    joined_club_ids = user_memberships.values_list('club_id', flat=True)
+
     query = request.GET.get('q') if request.GET.get('q') else ''
 
     clubs = ClubProfile.objects.filter(
         Q(club_name__icontains=query)
     )
 
-    context = {'user_clubs':user_clubs, 'clubs':clubs}
+    context = {'user_clubs':user_clubs, 'clubs':clubs,'joined_club_ids': joined_club_ids}
     return render(request, 'owner/club.html', context)
 
 
 def join_club(request, pk):
-
+    
     if request.method =='POST':
         ClubMembership.objects.create(
             member = request.user,
             club = ClubProfile.objects.get(id = pk)
         )
         return redirect('club-page')
-
+    
+    
     return render(request,'owner/club.html')
 
 # -----------------------
@@ -119,8 +125,13 @@ def club_announcement(request):
 def member_page(request):
     club = ClubProfile.objects.get(user=request.user)
     membership_requests = ClubMembership.objects.filter(club=club)
+    
+    approved_requests = []
+    for membership_request in membership_requests:
+        if membership_request.status == 'approved':
+            approved_requests.append(membership_request)
 
-    context = {'membership_requests':membership_requests}
+    context = {'membership_requests':membership_requests, 'approved_requests':approved_requests,'club':club}
 
     return render(request, 'club/member.html', context)
 # -----------------------

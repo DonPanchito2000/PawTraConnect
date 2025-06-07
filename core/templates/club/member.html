@@ -11,15 +11,15 @@
         <div class="col-lg-5"> 
             <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
                 <h5 class="mb-4">Membership Request</h5>
-                <div class="requests">
-                       {% for request in membership_requests %}
+                <div class="scroll">
+                       {% for membership_request in membership_requests %}
                    <div class="card bg-secondary m-3 text-dark">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
-                                {% if request.member.profile_picture %}
-                                <img src="{{ request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% if membership_request.member.profile_picture %}
+                                <img src="{{ membership_request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
-                                <span class="text-light">@{{ request.member.email }}</span>
+                                <span class="text-light">@{{ membership_request.member.email }}</span>
                                 <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
                             </div>
                         </div>
@@ -33,17 +33,17 @@
         <!-- MEMBERS -->
           <div class="col-lg-7"> 
             <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
-                <h5 class="mb-4">Membership Request</h5>
-                <div class="requests">
-                       {% for request in membership_requests %}
+                <h5 class="mb-4">Members</h5>
+                <div class="scroll">
+                       {% for approved_request in approved_requests %}
                    <div class="card bg-secondary m-3 text-dark">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
-                                {% if request.member.profile_picture %}
-                                <img src="{{ request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% if approved_request.member.profile_picture %}
+                                <img src="{{ approved_request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
-                                <span class="text-light">@{{ request.member.email }}</span>
-                                <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
+                                <span class="text-light">@{{ approved_request.member.email }}</span>
+                                <!-- <small class="ms-auto text-light">{{ room.created|timesince }} ago</small> -->
                             </div>
                         </div>
                    </div>
