@@ -54,13 +54,26 @@
                                 {% endif %}
                                 <span class="text-light">{{ club.club_name }}</span>
                                 <div class="ml-auto">
+            
+
                                {% if club.id in joined_club_ids %}
+                                    <!-- {% for user_membership in user_memberships %}
+                                        {% if user_membership.club == club and user_membership.permanently_banned %}
+                                        <button>BANNED</button>
+                                        {% endif %}
+                                         {% endfor %} -->
+                                    
+                           
                                     <input type="submit" value="JOINED" disabled class="ml-2 btn btn-secondary">
-                               {% else %}
-                                 <form action="{% url 'join-club' club.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" value="JOIN" class="float-right">
-                                 </form>
+                           
+                               {% elif club.id in banned_club_ids %}
+                                    <input type="button" value="BANNED" class="btn btn-danger float-right" disabled>
+                                {% else %}
+                                    <form action="{% url 'join-club' club.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="submit" value="JOIN" class="btn btn-primary float-right">
+                                    </form>
+                                   
                                {% endif %}
                                </div>
                             

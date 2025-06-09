@@ -6,11 +6,10 @@ from .forms import DogRegistrationForm, ForumRoomForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
-
+from django.contrib import messages
 from django.utils.timesince import timesince
+from django.utils import timezone
 
-
-from django.utils.timesince import timesince
 from django.http import JsonResponse
 from django.core.serializers import serialize
 import json
@@ -59,10 +58,14 @@ def ccvo_announcement_page(request):
 
 
 def club_page(request):
+
+    banned_memberships  = ClubMembership.objects.filter(member = request.user, permanently_banned =True)
+    banned_club_ids = banned_memberships.values_list('club_id', flat=True)
+
     user_clubs = ClubMembership.objects.filter(member=request.user,status='approved')
 
      # Get clubs the user has joined
-    user_memberships = ClubMembership.objects.filter(member=request.user)
+    user_memberships = ClubMembership.objects.filter(member=request.user,status__in=['approved', 'pending'])
     joined_club_ids = user_memberships.values_list('club_id', flat=True)
 
     query = request.GET.get('q') if request.GET.get('q') else ''
@@ -71,21 +74,29 @@ def club_page(request):
         Q(club_name__icontains=query)
     )
 
-    context = {'user_clubs':user_clubs, 'clubs':clubs,'joined_club_ids': joined_club_ids}
+    context = {'user_clubs':user_clubs, 'clubs':clubs,'joined_club_ids': joined_club_ids, 'user_memberships':user_memberships,'banned_club_ids': banned_club_ids}
     return render(request, 'owner/club.html', context)
 
 
 def join_club(request, pk):
-    
-    if request.method =='POST':
-        ClubMembership.objects.create(
-            member = request.user,
-            club = ClubProfile.objects.get(id = pk)
-        )
-        return redirect('club-page')
-    
-    
-    return render(request,'owner/club.html')
+
+    if request.method == 'POST':
+        club = ClubProfile.objects.get(id=pk)
+        membership, created = ClubMembership.objects.get_or_create(member=request.user,club=club)
+
+    if not created:
+            if membership.permanently_banned:   
+                messages.error(request, "You cannot join this club again.")
+                return redirect('club-page')   
+            if membership.status == 'removed':
+                membership.status = 'pending'
+                membership.joined_at = timezone.now()  # optional: reset time
+                membership.save()
+            else:
+                # Already has a non-removed membership
+                return redirect('club-page')
+ 
+    return redirect('club-page')
 
 # -----------------------
 # END PET_OWNER VIEWS
@@ -146,6 +157,28 @@ def accept_membership_request(request,membership_id):
         return redirect('member-page')
 
     return render(request,'club/member.html')
+
+
+def kick_member_confirmation_page(request,membership_id):
+    membership = ClubMembership.objects.get(id = membership_id)
+
+    context = {'membership':membership}
+    return render(request,'club/kick_member_confirmation.html', context)
+
+def kick_member(request, membership_id):
+    ban_user = request.POST.get('ban_user')
+    membership = ClubMembership.objects.get(id =membership_id)
+    print(membership)
+    if request.method == 'POST':
+        membership.status = 'removed'
+        membership.kicked_at = timezone.now()
+        if ban_user == 'yes':
+         membership.permanently_banned = True
+        membership.save()
+        print(membership)
+    return redirect('member-page')
+    
+
 # -----------------------
 # END CLUB VIEWS
 # -----------------------

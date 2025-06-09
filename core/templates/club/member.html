@@ -47,8 +47,15 @@
                                 {% if approved_request.member.profile_picture %}
                                 <img src="{{ approved_request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
-                                <span class="text-light">@{{ approved_request.member.email }}</span>
-                                <!-- <small class="ms-auto text-light">{{ room.created|timesince }} ago</small> -->
+                                <span class="text-light">{{ approved_request.member.username }}</span>
+                                
+                                <div class="ml-auto">
+                              
+                        
+                                        <a href="{% url 'kick-member-confirmation-page' approved_request.id %}"><button>KICK</button></a>
+
+                               </div>
+
                             </div>
                         </div>
                    </div>

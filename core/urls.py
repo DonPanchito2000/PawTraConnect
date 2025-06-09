@@ -22,6 +22,8 @@ urlpatterns = [
     path('club-announcement/', views.club_announcement,name='club-announcement'),
     path('member-page', views.member_page, name='member-page'),
     path('accept-membership-request/<str:membership_id>', views.accept_membership_request, name='accept-membership-request'),
+    path('kick-member-confirmation-page/<str:membership_id>', views.kick_member_confirmation_page, name='kick-member-confirmation-page'),
+    path('kick-member/<str:membership_id>', views.kick_member, name='kick-member'),
     # -----------------------
     # END CLUB URLS
     # -----------------------

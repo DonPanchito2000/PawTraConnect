@@ -16,7 +16,7 @@
 }
 
 .clubs {
-  max-height: 70vh;    /* optional, keeps internal scroll */
+  max-height: 60vh;    /* optional, keeps internal scroll */
   overflow-y: auto;
   padding-right: 5px;
   scrollbar-width: thin;

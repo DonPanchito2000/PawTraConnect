@@ -41,10 +41,12 @@
                 </li>
 
                 <!-- Mobile-only user info + links -->
+                {% if request.user.profile_picture %}
                 <li class="nav-item d-lg-none mt-3">
                     <img src="{{ request.user.profile_picture.url }}" class="rounded-circle" alt="Profile" width="40" height="40" style="object-fit: cover;">
                     <span class="nav-link text-muted"><i class="fas fa-user"></i> {{ request.user.username }}</span>
                 </li>
+                {% endif %}
                 <li class="nav-item d-lg-none">
                     <a class="nav-link" href="#">Account</a>
                 </li>
@@ -54,7 +56,9 @@
             </ul>
         </div>
       <div class="dropdown profile-dropdown d-none d-lg-flex align-items-center">
+        {% if request.user.profile_picture %}
     <img src="{{ request.user.profile_picture.url }}" class="rounded-circle" alt="Profile" width="40" height="40" style="object-fit: cover;">
+        {% endif %}
     <span class="ml-2">{{ request.user.username }}</span>
     <button class="btn btn-link dropdown-toggle text-light" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-caret-down"></i>

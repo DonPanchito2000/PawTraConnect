@@ -19,7 +19,10 @@ class PetOwnerRegistrationForm(UserCreationForm):
         user = super().save(commit=False)
         user.role = 'owner'
         user.set_password(self.cleaned_data['password1'])
-        user.profile_picture = self.cleaned_data['profile_picture']
+
+        if self.cleaned_data.get('profile_picture'):
+         user.profile_picture = self.cleaned_data['profile_picture']
+         
         if commit:
             user.save()
             PetOwnerProfile.objects.create(

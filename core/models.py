@@ -85,6 +85,7 @@ class ClubMembership(models.Model):
     approved_at = models.DateTimeField(null=True,blank=True)
     rejected_at = models.DateTimeField(null=True,blank=True)
     kicked_at = models.DateTimeField(null=True,blank=True)
+    permanently_banned = models.BooleanField(default=False)
 
     notes = models.TextField(blank=True)
 

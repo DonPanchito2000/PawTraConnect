@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'kick-member' membership.id %}">
+        {% csrf_token %}
+        <h1>Are you sure you want to kick {{membership.member.petownerprofile.first_name}} {{membership.member.petownerprofile.last_name}} from the club?</h1>
+        <small>Do you want to permanently ban this user?</small>
+        <small>The user will not be able to join your club again.</small>
+        <label>
+            <input type="radio" name="ban_user" value="yes" required> Yes, ban permanently
+        </label><br>
+        <label>
+            <input type="radio" name="ban_user" value="no"> No, just kick
+        </label>
+        <a href=""><button>CANCEL</button></a>
+        <button type="submit">KICK</button>
+    </form>
+</body>
+</html>
