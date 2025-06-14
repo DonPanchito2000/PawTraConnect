@@ -1,0 +1,48 @@
+/* Forum Room Card */
+.forum-room {
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #fdf3c7;
+  border: none;
+}
+
+.forum-room .card-body h5 {
+  font-weight: 700;
+  color: #fdf3c7 !important;
+}
+
+.forum-room .card-footer {
+  font-size: 0.95rem;
+}
+
+
+/* Back to Top Button */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  background-color: #343a40;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.3s ease;
+}
+
+#backToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#backToTop:hover {
+  background-color: #495057;
+  transform: translateY(-3px);
+}

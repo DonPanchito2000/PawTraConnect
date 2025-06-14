@@ -47,6 +47,7 @@
                 <div class="clubs">
                        {% for club in clubs %}
                    <div class="card bg-secondary m-3 text-dark=">
+                        <a href="{% url 'club-profile-page' club.id %}">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 {% if club.user.profile_picture %}
@@ -81,6 +82,7 @@
                                 
                             </div>
                         </div>
+                        </a>
                    </div>
                    {% endfor %}
                 </div>

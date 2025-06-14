@@ -1,0 +1,39 @@
+
+<a href="javascript:history.back()" class="back-link">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+    <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 1-.708 0L4.5 8.207l-.354-.354.354-.353L7.646 4.646a.5.5 0 0 1 .708.708L6.207 8l2.147 2.146a.5.5 0 0 1 0 .708z"/>
+    <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 1-.5.5H5a.5.5 0 0 1 0-1h6a.5.5 0 0 1 .5.5z"/>
+  </svg>
+  <span>Back</span>
+</a>
+
+
+ <div class="text-center text-white mb-5">
+  <img src="{{ club.user.profile_picture.url }}" class="rounded-circle border border-warning mb-3 shadow" width="140" height="140">
+  <h2 class="font-weight-bold">{{club.club_name}}</h2>
+  <p class="lead text-light">{{club.description}}</p>
+    
+      {% if membership_status == 'pending' %}                                            
+    <button disabled class="btn btn-primary">Reuqest Sent</button>                     
+    {% elif membership_status == 'approved' %}
+        <input type="button" value="MEMBER" class="btn btn-success" disabled>
+     {% elif membership_status == 'banned' %}
+        <button disabled class="btn btn-danger mb-5">You are banned by the admin</button> 
+
+
+    {% else %}
+    <form action="{% url 'join-club' club.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="JOIN" class="btn btn-primary">
+    </form>                          
+     {% endif %}
+</div>
+ 
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from .forms import DogRegistrationForm, ForumRoomForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -96,8 +96,73 @@ def join_club(request, pk):
                 # Already has a non-removed membership
                 return redirect('club-page')
  
-    return redirect('club-page')
+    return redirect('club-profile-page' , club_id = pk)
 
+
+def club_profile_page(request, club_id):
+    # banned_memberships  = ClubMembership.objects.filter(member = request.user, permanently_banned =True)
+    # banned_club_ids = banned_memberships.values_list('club_id', flat=True)
+
+    # user_clubs = ClubMembership.objects.filter(member=request.user,status='approved')
+
+    #  # Get clubs the user has joined
+    # user_memberships = ClubMembership.objects.filter(member=request.user,status__in=['approved', 'pending'])
+    # joined_club_ids = user_memberships.values_list('club_id', flat=True)
+
+    membership_status =''
+    club = ClubProfile.objects.get(id=club_id)
+   
+
+    try:
+        user_membership = ClubMembership.objects.get(club = club, member = request.user)
+
+        if user_membership.status == 'approved':
+            membership_status = 'approved'
+        elif user_membership.status == 'rejected':
+            membership_status = 'rejected'
+        elif user_membership.permanently_banned:
+            membership_status = 'banned'
+        elif user_membership.status == 'removed' and user_membership.permanently_banned == False:
+            membership_status = 'removed'
+        else:
+            membership_status = 'pending'
+    except ClubMembership.DoesNotExist:
+        membership_status = 'none'
+
+    context = {'club':club,'membership_status':membership_status}
+    return render(request, 'owner/club_profile.html', context)
+
+
+
+def club_forum_form(request, club_id):
+    user = request.user
+    is_member = False
+
+    club = ClubProfile.objects.get(id=club_id)
+
+    approved_memberships = ClubMembership.objects.filter(club = club, status = 'approved')
+    for approved_membership in approved_memberships:
+        if approved_membership.member == user:
+            is_member =True
+
+    if not is_member:
+        return redirect('club-profile-page', club_id = club_id)
+
+    if request.method == 'POST':
+            form = ClubForumRoomForm(request.POST, request.FILES)
+            if form.is_valid():
+                room = form.save(commit=False)
+                room.host = user
+                room.save()
+                return redirect('general-forum')
+    else:
+        form = ClubForumRoomForm()
+
+
+
+    context ={'form':form, 'club':club}
+
+    return render(request, 'owner/club_forum_form.html',context)
 # -----------------------
 # END PET_OWNER VIEWS
 # -----------------------
@@ -178,6 +243,11 @@ def kick_member(request, membership_id):
         print(membership)
     return redirect('member-page')
     
+
+
+
+    
+
 
 # -----------------------
 # END CLUB VIEWS

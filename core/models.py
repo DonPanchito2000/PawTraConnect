@@ -102,16 +102,37 @@ class ClubMembership(models.Model):
 
 
 
+# CLUB FORUM MODELS
+class ClubForumRoom(models.Model):
+     host = models.ForeignKey(Account, on_delete = models.SET_NULL,null=True)
+     title = models.CharField(max_length=200, blank=True)
+     content = models.TextField()
+     joined = models.ManyToManyField(Account, related_name='joined',blank=True)
+     created = models.DateTimeField(auto_now_add=True)
+     updated = models.DateTimeField(auto_now=True)
+     image = models.ImageField(upload_to='club_forum_images/', blank=True, null=True)
+
+     def __str__(self):
+        return self.title
+    
+     class Meta:
+        ordering = ['-updated', '-created']
 
 
+class ClubForumComment(models.Model):
+    user = models.ForeignKey(Account, on_delete= models.CASCADE)
+    room = models.ForeignKey(ForumRoom, on_delete=models.CASCADE)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-updated','-created']
+    
 
-
-
-
-
-
-
+    def __str__(self):
+        return self.body[0:50]
+# CLUB FORUM MODELS END
 
 
 
