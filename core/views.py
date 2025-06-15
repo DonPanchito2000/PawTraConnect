@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
-from .models import Dog, ForumRoom, ForumComment, ClubMembership
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 from django.contrib import messages
@@ -15,6 +15,8 @@ from django.core.serializers import serialize
 import json
 
 from django.template.loader import render_to_string
+
+from django.urls import reverse
 
 # Create your views here.
 
@@ -100,14 +102,15 @@ def join_club(request, pk):
 
 
 def club_profile_page(request, club_id):
-    # banned_memberships  = ClubMembership.objects.filter(member = request.user, permanently_banned =True)
-    # banned_club_ids = banned_memberships.values_list('club_id', flat=True)
-
-    # user_clubs = ClubMembership.objects.filter(member=request.user,status='approved')
-
-    #  # Get clubs the user has joined
-    # user_memberships = ClubMembership.objects.filter(member=request.user,status__in=['approved', 'pending'])
-    # joined_club_ids = user_memberships.values_list('club_id', flat=True)
+  
+    # This is to display club forum rooms
+    query = request.GET.get('q') if request.GET.get('q') else ''
+    print(f"Query: {query}")
+    rooms = ClubForumRoom.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(host__username__icontains=query)
+    ).order_by('-created')
 
     membership_status =''
     club = ClubProfile.objects.get(id=club_id)
@@ -129,7 +132,7 @@ def club_profile_page(request, club_id):
     except ClubMembership.DoesNotExist:
         membership_status = 'none'
 
-    context = {'club':club,'membership_status':membership_status}
+    context = {'club':club,'membership_status':membership_status,'rooms':rooms}
     return render(request, 'owner/club_profile.html', context)
 
 
@@ -137,7 +140,6 @@ def club_profile_page(request, club_id):
 def club_forum_form(request, club_id):
     user = request.user
     is_member = False
-
     club = ClubProfile.objects.get(id=club_id)
 
     approved_memberships = ClubMembership.objects.filter(club = club, status = 'approved')
@@ -154,7 +156,8 @@ def club_forum_form(request, club_id):
                 room = form.save(commit=False)
                 room.host = user
                 room.save()
-                return redirect('general-forum')
+                url = reverse('club-profile-page', kwargs={'club_id': club_id})
+                return redirect(f'{url}?tab=forum&subtab=posts')
     else:
         form = ClubForumRoomForm()
 
@@ -163,6 +166,34 @@ def club_forum_form(request, club_id):
     context ={'form':form, 'club':club}
 
     return render(request, 'owner/club_forum_form.html',context)
+
+
+def getClubForumRooms(request):
+    query = request.GET.get('q', '')
+
+    rooms = ClubForumRoom.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(host__email__icontains=query)
+    ).order_by('-created')
+
+    data = []
+
+    for room in rooms:
+        data.append({
+            "id": room.id,
+            "title": room.title,
+            "content_truncated": room.content[:100],
+            "created_timesince": timesince(room.created) + " ago",
+            "host": {
+                "username": room.host.username,
+                "profile_picture_url": room.host.profile_picture.url if room.host.profile_picture else "",
+            },
+            "image_url": room.image.url if room.image else "",
+            "joined_count": room.joined.count(),
+        })
+
+    return JsonResponse({"rooms": data})
 # -----------------------
 # END PET_OWNER VIEWS
 # -----------------------

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Dog, ForumRoom
+from .models import Dog, ForumRoom, ClubForumRoom
 
 class DogRegistrationForm(forms.ModelForm):
     class Meta:
@@ -46,7 +46,7 @@ class ForumRoomForm(forms.ModelForm):
 # Club form
 class ClubForumRoomForm(forms.ModelForm):
     class Meta:
-        model = ForumRoom
+        model = ClubForumRoom
         fields = ['title', 'content', 'image']
         widgets = {
             'title': forms.TextInput(attrs={

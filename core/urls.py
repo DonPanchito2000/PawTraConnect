@@ -13,6 +13,7 @@ urlpatterns = [
     path('join-club/<str:pk>', views.join_club, name='join-club'),
     path('club-profile-page/<str:club_id>', views.club_profile_page, name ='club-profile-page'),
     path('club-forum-form/<str:club_id>',views.club_forum_form,name='club-forum-form'),
+    path('get-club-forum-rooms/', views.getClubForumRooms, name='get-club-forum-rooms'),
     # -----------------------
     # END PET_OWNER URLS
     # -----------------------

@@ -28,11 +28,11 @@
 
 .card {
   border-left: 4px solid #ffc107;
-  background-color: #fefae0;
+  background-color: #495057;
 }
 
 /* forum nav tabs */
-/* Better looking nav-tabs */
+
 #forumTabs .nav-link {
   border-radius: 20px;
   color: #495057;
@@ -92,6 +92,17 @@
   font-size: 0.95rem;
 }
 
+.card.bg-secondary:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.forum-room-img {
+  /* max-height: 700px; */
+  width: 100%;
+}
+
+
+
 
 /* Back to Top Button */
 #backToTop {
@@ -121,6 +132,62 @@
 
 #backToTop:hover {
   background-color: #495057;
-  transform: translateY(-3px);
+   transform: translateY(-3px);;
 }
+
+
+
+/* Recent Activities Fixed Scroll Panel */
+.recent-activities {
+  max-height: 80vh;    /* optional, keeps internal scroll */
+  overflow-y: auto;
+  padding-right: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #adb5bd transparent;
+}
+
+/* Modern scrollbar (Webkit browsers) */
+.recent-activities::-webkit-scrollbar {
+  width: 6px;
+}
+
+.recent-activities::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.recent-activities::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 4px;
+}
+
+/* Community Forum Cards */
+.card.bg-secondary {
+  background-color: #343a40 !important;
+  border: none;
+  border-radius: 16px;
+  transition: box-shadow 0.2s ease;
+  max-width: 778px;
+  margin: auto;
+}
+
+.card.bg-secondary:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.card-body img.rounded-circle {
+  border: 2px solid #dee2e6;
+}
+
+
+.recent-activity-fixed {
+  position: sticky;
+  top: 100px;          /* same offset as inner scroll */
+  align-self: flex-start; /* prevent stretching in flex/grid layouts */
+  max-height: calc(100vh - 120px); /* full viewport height minus offset */
+}
+
+
+
+
+
 /* club forum end */

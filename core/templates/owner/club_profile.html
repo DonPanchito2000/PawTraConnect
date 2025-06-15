@@ -41,9 +41,12 @@
     </div>
 
     <!-- Forum -->
+
     <div class="tab-pane fade" id="forum" role="tabpanel">
       <h3 class="text-dark mb-3">🗨 Community Forum</h3>
    
+      {% if membership_status == 'approved' %}
+
       <ul class="nav nav-tabs mb-3" id="forumTabs" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="topics-tab" data-toggle="tab" href="#posts" role="tab">Posts</a>
@@ -61,10 +64,137 @@
             <p>Users can post Chihuahua photos here.</p>
           </div>
         </div>
+        {% else %}
+        <p>You need to be a member to view forum</p>
 
+        {% endif %}
 
     </div>
   </div>
 
 </div>
+
+    <!-- Back to Top Button -->
+<button id="backToTop" title="Go to top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V4.707l3.147 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 4.707V11.5A.5.5 0 0 0 8 12z"/>
+  </svg>
+</button>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // back top
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 200) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    const subtab = params.get('subtab');
+
+    // Activate main tab (e.g., Forum)
+    if (tab) {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active', 'show'));
+
+      const navLink = document.querySelector(`.nav-link[href="#${tab}"]`);
+      const tabPane = document.querySelector(`#${tab}`);
+
+      if (navLink && tabPane) {
+        navLink.classList.add('active');
+        tabPane.classList.add('active', 'show');
+      }
+    }
+
+    // Activate sub-tab (e.g., Posts inside Forum)
+    if (subtab) {
+      document.querySelectorAll('#forumTabs .nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelectorAll('#nestedTabContent .tab-pane').forEach(pane => pane.classList.remove('active', 'show'));
+
+      const subNavLink = document.querySelector(`#forumTabs .nav-link[href="#${subtab}"]`);
+      const subTabPane = document.querySelector(`#${subtab}`);
+
+      if (subNavLink && subTabPane) {
+        subNavLink.classList.add('active');
+        subTabPane.classList.add('active', 'show');
+      }
+    }
+  });
+
+
+
+  $(document).ready(function () {
+  function loadRooms() {
+  const query = $('input[name="q"]').val() || '';
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'get-club-forum-rooms' %}",
+       data: { q: query },  // <-- send query here
+      success: function (response) {
+        const forumPost = $('.forum-post');
+        forumPost.empty();
+
+        if (response.rooms.length === 0) {
+          forumPost.append('<p class="text-light">No rooms found.</p>');
+        } else {
+          response.rooms.forEach(function (item) {
+            const roomHTML = `
+             <a href="/core/room/${item.id}" class="text-decoration-none text-white">
+                <div class="card bg-secondary text-white mb-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                      <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
+                      <span>@${item.host.username}</span>
+                      <small class="ms-auto text-light">${item.created_timesince}</small>
+                    </div>
+                    <h6 class="card-title mb-1">${item.title}</h6>
+                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
+                    <p class="mb-2">${item.content_truncated}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <span><i class="fas fa-users"></i> ${item.joined_count} Joined</span>
+                    </div>
+                  </div>
+                </div>
+              </a>`;
+            forumPost.append(roomHTML);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching rooms:", error);
+        $('#forum-post').html('<p class="text-danger">Failed to load rooms.</p>');
+      }
+    });
+  }
+
+
+
+  // Initial load
+  loadRooms();
+
+  // Repeat every 5 seconds (not best, but simple for now)
+  setInterval(loadRooms, 5000);
+
+
+
+  $('form').on('submit', function(e) {
+  e.preventDefault();
+  loadRooms();
+});
+});
+
+</script>
 {% endblock content %}
