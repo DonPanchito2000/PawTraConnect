@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
-from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 from django.contrib import messages
@@ -81,7 +81,7 @@ def club_page(request):
 
 
 def join_club(request, pk):
-
+    
     if request.method == 'POST':
         club = ClubProfile.objects.get(id=pk)
         membership, created = ClubMembership.objects.get_or_create(member=request.user,club=club)
@@ -97,9 +97,10 @@ def join_club(request, pk):
             else:
                 # Already has a non-removed membership
                 return redirect('club-page')
- 
+    print('JOINED')
     return redirect('club-profile-page' , club_id = pk)
 
+    
 
 def club_profile_page(request, club_id):
   
@@ -194,6 +195,72 @@ def getClubForumRooms(request):
         })
 
     return JsonResponse({"rooms": data})
+
+
+
+def club_room(request, pk):
+    user = request.user
+    print("DEBUG ROOM ID:", pk)
+    room = get_object_or_404(ClubForumRoom, id=pk)
+    room_comments = room.clubforumcomment_set.all().order_by('created')
+    participants = room.joined.all()
+
+    context ={'room':room, 'room_comments':room_comments,'paricipants':participants}
+
+    if request.method == 'POST':
+       comment = ClubForumComment.objects.create(
+           user = request.user,
+           room = room,
+           body = request.POST.get('body')
+       )
+       room.joined.add(request.user)
+       return JsonResponse({
+                    'user_profile': comment.user.profile_picture.url,
+                    'user': comment.user.username,
+                    'comment': comment.body,
+                    'created': comment.created.strftime('%Y-%m-%d %H:%M:%S'),
+                })
+    
+    # automatic view new comments ajax
+    if request.GET.get("ajax") == "1":
+        html = ""
+        for comment in room_comments:
+            html += f'''
+            <div class="comment-card">
+                <img src="{comment.user.profile_picture.url}" alt="User Profile" />
+                <div class="comment-body">
+                    <div class="username">{comment.user.username} <span class="time">· {timesince(comment.created)} ago</span></div>
+                    <div class="comment-text">{comment.body}</div>
+                </div>
+            </div>
+            '''
+        return HttpResponse(html)
+    
+    return render(request, 'owner/club_room_page.html', context)
+
+    # if user.role == 'owner':
+    #     return render(request, 'owner/room_page.html', context)
+
+    # elif user.role == 'vet':
+    #     try:
+    #         vet_profile = VetClinicProfile.objects.get(user=user)
+    #         if vet_profile.is_city_vet:
+    #             return render(request, 'ccvo/room_page.html',context)
+    #         elif vet_profile.is_approved:
+    #             return render(request, 'vet/room_page.html',context)
+    #         else:
+    #             return HttpResponse('You are not allowed here!')
+
+    #     except VetClinicProfile.DoesNotExist:
+    #         # fallback in case vet profile is missing
+    #         return HttpResponse('You are not allowed here!')
+
+    # elif user.role == 'club':
+    #     return render(request, 'club/room_page.html',context)
+
+    # else:
+    #     # optional fallback if role is not recognized
+    #      return HttpResponse('You are not allowed here!')
 # -----------------------
 # END PET_OWNER VIEWS
 # -----------------------

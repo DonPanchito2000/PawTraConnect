@@ -121,7 +121,7 @@ class ClubForumRoom(models.Model):
 
 class ClubForumComment(models.Model):
     user = models.ForeignKey(Account, on_delete= models.CASCADE)
-    room = models.ForeignKey(ForumRoom, on_delete=models.CASCADE)
+    room = models.ForeignKey(ClubForumRoom, on_delete=models.CASCADE)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

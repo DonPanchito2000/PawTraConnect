@@ -13,6 +13,8 @@
 
     {% include 'owner/partials/club_header.html' %}
 
+    
+
   <!-- Tabs Navigation -->
   <ul class="nav nav-pills nav-justified flex-column flex-sm-row mb-4" id="clubTabs" role="tablist">
     <li class="nav-item flex-sm-fill text-sm-center">
@@ -152,7 +154,7 @@
         } else {
           response.rooms.forEach(function (item) {
             const roomHTML = `
-             <a href="/core/room/${item.id}" class="text-decoration-none text-white">
+             <a href="/core/club-room-page/${item.id}" class="text-decoration-none text-white">
                 <div class="card bg-secondary text-white mb-3">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
@@ -190,7 +192,7 @@
 
 
 
-  $('form').on('submit', function(e) {
+  $('#forum-form').on('submit', function(e) {
   e.preventDefault();
   loadRooms();
 });
