@@ -15,37 +15,40 @@
   <div class="row">
     <!-- Forum Room Section -->
     <div class="col-lg-8 mb-4 d-none d-lg-block">
-      <div class="card bg-dark text-white shadow rounded-3 p-4">
+      <div class="card forum-container shadow rounded-3 p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5 class="mb-0">Forum Rooms</h5>
-          <a href="{% url 'general-forum-form' %}" class="btn btn-primary">+ Create Room</a>
+          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn"><i class="fas fa-plus"></i> Create Room</a>
         </div>
 
         <!-- Search Bar -->
-        <form method="get" action="" class="mb-3">
-          <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
-
-        </form>
+        <div class="search-bar">
+            <form method="get" action="" class="mb-3">
+              <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+            </form>
+        </div>
 
         <!-- Room List -->
         <div class="forum-post">
           {% for room in rooms %}
-          <a href="{% url 'room' room.id %}" class="text-decoration-none text-white forum-room-link">
-            <div class="card bg-secondary text-white mb-3 forum-room-card">
+          <a href="{% url 'room' room.id %}" class="text-decoration-none forum-room-link">
+            <div class="card room-card mb-3 forum-room-card">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
-                  <img src="{{ room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
-                  <span>@{{ room.host.username }}</span>
-                  <small class="ms-auto text-light">{{ room.created|timesince }} ago</small>
+                  <img src="{{ room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                  <span class="ml-2">{{ room.host.username }}</span>
+                  <small class=" ml-auto">{{ room.created|timesince }} ago</small>
                 </div>
                 <h6 class="card-title mb-1">{{ room.title }}</h6>
-                {% if room.image %}
-                <img src="{{ room.image.url }}" alt="Room Image" class="img-fluid rounded mb-2 forum-room-img">
-                {% endif %}
-                <p class="mb-2">{{ room.content|truncatewords:20 }}</p>
+              
+                <p class="mb-2">{{ room.content|truncatewords:30 }}</p>
                 <div class="d-flex justify-content-between align-items-center mt-2">
+                  <hr>
                   <span><i class="fas fa-users"></i> {{ room.participants.count }} Joined</span>
                 </div>
+                  {% if room.image %}
+                <img src="{{ room.image.url }}" alt="Room Image" class="img-fluid rounded mb-2 forum-room-img">
+                {% endif %}
               </div>
             </div>
           </a>
@@ -59,21 +62,21 @@
     <!-- Recent Activities Section -->
     <div class="col-lg-4 d-none d-lg-block">
       <div class="recent-activity-fixed">
-        <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+        <div class="card recent-act-card shadow rounded-3 p-4 h-100">
           <h5 class="mb-3">Recent Activities</h5>
           <div class="recent-activities">
             {% for message in room_comments %}
             <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">
-              <div class="card bg-secondary text-white mb-3">
+              <div class="card recent-act-inner-card mb-3">
                 <div class="card-body">
                   <div class="d-flex align-items-center mb-2">
                     <img src="{{ message.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="28" height="28" style="object-fit: cover;">
-                    <span>@{{ message.user.username }}</span>
-                    <small class="ms-auto text-light">{{ message.created|timesince }} ago</small>
+                    <span class="ml-2">{{ message.user.username }}</span>
+                    <small class="ml-auto">{{ message.created|timesince }} ago</small>
                   </div>
                   <div>
                     <strong>replied to post “{{ message.room.title }}”</strong>
-                    <div class="bg-dark text-white p-2 mt-2 rounded">
+                    <div class="recent-act-comment p-2 mt-2 rounded">
                       {{ message }}
                     </div>
                   </div>
@@ -99,10 +102,10 @@
       <div class="tab-content" id="forumTabsContent" style="min-height: 400px;">
         <div class="tab-pane fade show active" id="forum-rooms" role="tabpanel" aria-labelledby="forum-rooms-tab">
           
-          <div class="card bg-dark text-white shadow rounded-3 p-4">
+          <div class="card forum-container shadow rounded-3 p-4">
                   <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="mb-0">Forum Rooms</h5>
-          <a href="{% url 'general-forum-form' %}" class="btn btn-primary">+ Create Room</a>
+          <!-- <h5 class="mb-0">Forum Rooms</h5> -->
+          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto">+ Create Room</a>
         </div>
         
               <!-- Search Bar -->
@@ -116,7 +119,7 @@
              <div class="forum-post">
               {% for room in rooms %}
           <a href="{% url 'room' room.id %}" class="text-decoration-none text-white forum-room-link">
-            <div class="card bg-secondary text-white mb-3 forum-room-card">
+            <div class="card room-card mb-3 forum-room-card">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
                   <img src="{{ room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
@@ -144,20 +147,20 @@
 
         
         <div class="tab-pane fade" id="recent-activities" role="tabpanel" aria-labelledby="recent-activities-tab">
-          <div class="card bg-dark text-white shadow rounded-3 p-4">
+          <div class="card recent-act-card shadow rounded-3 p-4">
             <!-- Recent Activities content (same as large screen) -->
              {% for message in room_comments %}
             <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">
-              <div class="card bg-secondary text-white mb-3">
+              <div class="card recent-act-inner-card mb-3">
                 <div class="card-body">
                   <div class="d-flex align-items-center mb-2">
                     <img src="{{ message.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="28" height="28" style="object-fit: cover;">
                     <span>@{{ message.user.username }}</span>
-                    <small class="ms-auto text-light">{{ message.created|timesince }} ago</small>
+                    <small class="ml-auto">{{ message.created|timesince }} ago</small>
                   </div>
                   <div>
                     <strong>replied to post “{{ message.room.title }}”</strong>
-                    <div class="bg-dark text-white p-2 mt-2 rounded">
+                    <div class="recent-act-comment p-2 mt-2 rounded">
                       {{ message }}
                     </div>
                   </div>
@@ -218,17 +221,19 @@ $(document).ready(function () {
           response.rooms.forEach(function (item) {
             const roomHTML = `
              <a href="/core/room/${item.id}" class="text-decoration-none text-white">
-                <div class="card bg-secondary text-white mb-3">
+                <div class="card room-card mb-3">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
-                      <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
-                      <span>@${item.host.username}</span>
-                      <small class="ms-auto text-light">${item.created_timesince}</small>
+                      <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                      <span class="ml-2">${item.host.username}</span>
+                      <small class="ml-auto">${item.created_timesince}</small>
                     </div>
                     <h6 class="card-title mb-1">${item.title}</h6>
-                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
+                  
                     <p class="mb-2">${item.content_truncated}</p>
+                      ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
                     <div class="d-flex justify-content-between align-items-center mt-2">
+                      <hr>
                       <span><i class="fas fa-users"></i> ${item.participants_count} Joined</span>
                     </div>
                   </div>

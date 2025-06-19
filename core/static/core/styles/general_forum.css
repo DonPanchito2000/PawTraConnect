@@ -1,4 +1,64 @@
 /* Forum Room Card */
+
+h5{
+  color: #f77f00;
+}
+
+hr{
+  color: red !important;
+}
+
+.create-room-btn{
+  background-color: #f77f00;
+  color: #273e47;
+  transition: 0.80s ease;
+}
+
+.create-room-btn:hover {
+  background-color: #be620d;
+  color: #eae2b7;
+}
+
+.form-control{
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none !important;
+  box-shadow: none !important;
+   border-radius: 10px;
+  transition: box-shadow 0.2s ease;
+
+}
+
+.form-control:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #eae2b7;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+}
+
+
+
+
+.forum-container{
+  background-color: #273e47;
+  z-index: 1; 
+  color: #eae2b7;
+}
+
+
+.forum-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+    z-index: 2;
+    pointer-events: none; /* So clicks go through */
+  }
+
 .forum-room {
   border-radius: 20px;
   overflow: hidden;
@@ -53,7 +113,7 @@
   overflow-y: auto;
   padding-right: 5px;
   scrollbar-width: thin;
-  scrollbar-color: #adb5bd transparent;
+  scrollbar-color: #f77f00 transparent;
 }
 
 /* Modern scrollbar (Webkit browsers) */
@@ -71,20 +131,22 @@
 }
 
 /* Community Forum Cards */
-.card.bg-secondary {
-  background-color: #343a40 !important;
+.card.room-card {
+  background-color: rgba(0, 0, 0, 0.2); 
   border: none;
   border-radius: 16px;
   transition: box-shadow 0.2s ease;
+  color: #eae2b7;
+  
 }
 
-.card.bg-secondary:hover {
+.card.room-card:hover {
   box-shadow: 0 6px 12px rgba(0,0,0,0.25);
 }
-
+/* 
 .card-body img.rounded-circle {
   border: 2px solid #dee2e6;
-}
+} */
 
 
 .recent-activity-fixed {
@@ -95,7 +157,43 @@
 }
 
 
+.card.recent-act-card{
+  background-color: #273e47;
+  z-index: 1; 
+  color:#eae2b7 ;
+}
 
+.card.recent-act-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+    z-index: 2;
+    pointer-events: none; /* So clicks go through */
+  }
+
+
+.recent-act-inner-card{
+  background-color: rgba(0, 0, 0, 0.2); 
+  border: none;
+  border-radius: 16px;
+  transition: box-shadow 0.2s ease;
+  color: #eae2b7;
+}
+
+.recent-act-inner-card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+
+.recent-act-comment{
+  background-color: #273e47;
+  z-index: 1; 
+  color:#eae2b7 ;
+}
 
 
 
