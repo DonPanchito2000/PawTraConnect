@@ -19,14 +19,15 @@
 }
 
 .nav-pills .nav-link:hover {
-  background-color: #ffc107;
-  color: #1e2a38;
+  background-color: #be620d;
+  color: #eae2b7;
 }
 
 .nav-pills .nav-link.active {
-  background-color: #ffc107;
-  color: #1e2a38;
-  font-weight: bold;
+  background-color: #eae2b7;
+  color: #273e47;
+
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
 
 .tab-content {
@@ -43,11 +44,8 @@
     width: 100%;
     height: 100%;
     z-index: 2;
-    pointer-events: none; /* So clicks go through */
+    pointer-events: none; 
   }
-
-
-
 
 
 .card {
@@ -55,27 +53,32 @@
 }
 
 /* forum nav tabs */
-
+#forumTabs{
+  border-bottom: 1px solid #eae2b7 !important;
+}
 #forumTabs .nav-link {
   border-radius: 20px;
   color: #495057;
   transition: all 0.3s ease;
   padding: 0.6rem 1.2rem;
   font-weight: 500;
-  background-color: #f8f9fa;
-  border: 1px solid transparent;
+  background-color: #f77f00;
+    border: none; /* Remove existing borders */
+    transition: 0.80s ease;
+
 }
 
 #forumTabs .nav-link.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+  background-color: #eae2b7;
+  color: #273e47;
+
   box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+
 }
 
 #forumTabs .nav-link:hover {
-  background-color: #e9ecef;
-  border-color: #dee2e6;
+  background-color: #be620d;
+  color: #eae2b7;
 }
 
 /* Tab content box */
@@ -86,16 +89,13 @@
   background-color: white;
   border-radius: 0 0 0.5rem 0.5rem;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
-} */
+}  */
 
 
 
-.joined-info i {
-  font-size: 14px;
-  color: #eae2b7;
-}
 
 #nestedTabContent{
+  border: none;
   background-color: transparent; 
   z-index: 1; 
   color: #eae2b7;
@@ -157,6 +157,7 @@ hr{
 
 .forum-container{
   background-color: transparent;
+  z-index: 1;
   border: none;
   color: #eae2b7;
 }
@@ -223,7 +224,7 @@ hr{
 
 /* Recent Activities Fixed Scroll Panel */
 .recent-activities {
-  max-height: 80vh;    /* optional, keeps internal scroll */
+  max-height: 75vh;    /* optional, keeps internal scroll */
   overflow-y: auto;
   padding-right: 5px;
   scrollbar-width: thin;
@@ -271,7 +272,7 @@ hr{
 
 
 .card.recent-act-card{
-  background-color: #273e47;
+ background-color: transparent; 
   z-index: 1; 
   color:#eae2b7 ;
 }
@@ -283,7 +284,7 @@ hr{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+
     z-index: 2;
     pointer-events: none; /* So clicks go through */
   }

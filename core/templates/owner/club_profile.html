@@ -45,7 +45,7 @@
     <!-- Forum -->
 
     <div class="tab-pane fade" id="forum" role="tabpanel">
-      <h3 class="text-dark mb-3">🗨 Community Forum</h3>
+      <!-- <h3 class="text-dark mb-3">🗨 Community Forum</h3> -->
    
       {% if membership_status == 'approved' %}
 
@@ -58,7 +58,7 @@
         </li>
       </ul>
 
-        <div class="tab-content p-1" id="nestedTabContent">
+        <div class="tab-content" id="nestedTabContent">
           <div class="tab-pane fade show active" id="posts" role="tabpanel">
             {%include 'owner/partials/club_forum.html'%}
           </div>
@@ -168,9 +168,8 @@
                              <p class="mb-2">${item.content_truncated}</p>
                     ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
                 <div class="d-flex justify-content-between align-items-center mt-2">
-                      <hr>
 
-                  <span><i class="fas fa-users"></i> ${item.joined_count} Joined</span>              
+                  <span><i class="fas fa-users me-1"></i> ${item.joined_count} Joined</span>              
                     </div>
                   </div>
                 </div>
