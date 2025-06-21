@@ -29,7 +29,7 @@
   </ul>
 
   <!-- Tabs Content -->
-  <div class="tab-content bg-white p-4 shadow rounded" id="clubTabContent">
+  <div class="tab-content main-content-container p-4 shadow rounded" id="clubTabContent">
     <!-- About -->
     <div class="tab-pane fade show active" id="about" role="tabpanel">
   
@@ -63,7 +63,8 @@
             {%include 'owner/partials/club_forum.html'%}
           </div>
           <div class="tab-pane fade" id="recent-activities" role="tabpanel">
-            <p>Users can post Chihuahua photos here.</p>
+            <!-- <p>Users can post Chihuahua photos here.</p> -->
+             {% include 'owner/partials/recent_activities.html' %}
           </div>
         </div>
         {% else %}
@@ -155,18 +156,21 @@
           response.rooms.forEach(function (item) {
             const roomHTML = `
              <a href="/core/club-room-page/${item.id}" class="text-decoration-none text-white">
-                <div class="card bg-secondary text-white mb-3">
+                <div class="card room-card mb-3">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
                       <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
-                      <span>@${item.host.username}</span>
-                      <small class="ms-auto text-light">${item.created_timesince}</small>
+                      <span class="ml-2">${item.host.username}</span>
+                      <small class="ml-auto">${item.created_timesince}</small>
                     </div>
                     <h6 class="card-title mb-1">${item.title}</h6>
+
+                             <p class="mb-2">${item.content_truncated}</p>
                     ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
-                    <p class="mb-2">${item.content_truncated}</p>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                      <span><i class="fas fa-users"></i> ${item.joined_count} Joined</span>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                      <hr>
+
+                  <span><i class="fas fa-users"></i> ${item.joined_count} Joined</span>              
                     </div>
                   </div>
                 </div>

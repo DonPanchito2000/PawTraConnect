@@ -113,6 +113,8 @@ def club_profile_page(request, club_id):
         Q(host__username__icontains=query)
     ).order_by('-created')
 
+    room_comments = ClubForumComment.objects.select_related('room').filter(user=request.user).order_by('-created')[:10]
+
     membership_status =''
     club = ClubProfile.objects.get(id=club_id)
    
@@ -133,7 +135,7 @@ def club_profile_page(request, club_id):
     except ClubMembership.DoesNotExist:
         membership_status = 'none'
 
-    context = {'club':club,'membership_status':membership_status,'rooms':rooms}
+    context = {'club':club,'membership_status':membership_status,'rooms':rooms,'room_comments':room_comments}
     return render(request, 'owner/club_profile.html', context)
 
 
