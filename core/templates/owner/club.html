@@ -10,18 +10,18 @@
 {% block content %} 
        <div class="row mt-5">
         <!-- MY CLUBS -->
-        <div class="col-lg-5"> 
-            <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+        <div class="col-lg-5 mb-sm-5 mb-lg-0"> 
+            <div class="card myclubs-card shadow rounded-3 p-4 h-100">
                 <h5 class="mb-4">My Clubs</h5>
                 <div class="clubs">
                        {% for user_club in user_clubs %}
-                   <div class="card bg-secondary m-3 text-dark">
+                   <div class="card club-card m-3 text-dark">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 {% if user_club.club.user.profile_picture %}
                                 <img src="{{ user_club.club.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
-                                <span class="text-light">{{ user_club.club.club_name }}</span>
+                                <span class="ml-2">{{ user_club.club.club_name }}</span>
                                 <!-- <span class="text-light">{{ user_club.joined_at }}</span> -->
                                 <!-- <small class="ms-auto text-light">{{ room.created|timesince }} ago</small> -->
                             </div>
@@ -35,34 +35,33 @@
 
         <!-- CLUBS -->
           <div class="col-lg-7"> 
-            <div class="card bg-dark text-white shadow rounded-3 p-4 h-100">
+            <div class="card clubs-container shadow rounded-3 p-4 h-100">
                 <h5 class="mb-4">Clubs</h5>
 
             <!-- Search Bar -->
+             <div class="search-bar">
                     <form method="get" action="" class="mb-3">
                     <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
-
                     </form>
+             </div>
 
                 <div class="clubs">
                        {% for club in clubs %}
-                   <div class="card bg-secondary m-3 text-dark=">
+                   <div class="card club-card club m-3">
                         <a href="{% url 'club-profile-page' club.id %}">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 {% if club.user.profile_picture %}
                                 <img src="{{ club.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
-                                <span class="text-light">{{ club.club_name }}</span>
+                                <span class="ml-2">{{ club.club_name }}</span>
                                 <div class="ml-auto">
+
+                                    <span><i class="fas fa-users"></i> {{ club.approved_members_count }} Members</span>
             
 
-                               {% if club.id in joined_club_ids %}
-                                    <!-- {% for user_membership in user_memberships %}
-                                        {% if user_membership.club == club and user_membership.permanently_banned %}
-                                        <button>BANNED</button>
-                                        {% endif %}
-                                         {% endfor %} -->
+                               <!-- {% if club.id in joined_club_ids %}
+                                
                                     
                            
                                     <input type="submit" value="JOINED" disabled class="ml-2 btn btn-secondary">
@@ -75,7 +74,7 @@
                                         <input type="submit" value="JOIN" class="btn btn-primary float-right">
                                     </form>
                                    
-                               {% endif %}
+                               {% endif %} -->
                                </div>
                             
                             

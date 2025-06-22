@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Count, Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
@@ -74,7 +74,12 @@ def club_page(request):
 
     clubs = ClubProfile.objects.filter(
         Q(club_name__icontains=query)
-    )
+        ).annotate(
+            approved_members_count=Count(
+                'clubmembership',
+                filter=Q(clubmembership__status='approved')
+            )
+        )  
 
     context = {'user_clubs':user_clubs, 'clubs':clubs,'joined_club_ids': joined_club_ids, 'user_memberships':user_memberships,'banned_club_ids': banned_club_ids}
     return render(request, 'owner/club.html', context)
