@@ -38,6 +38,8 @@ urlpatterns = [
     # -----------------------
     path('vet-clinic-dashboard/', views.vet_clinic_dashboard,name='vet-clinic-dashboard'),
     path('pending-approval-page/', views.pending_approval_page, name="pending-approval-page"),
+    path('add-past-client/<str:owner_id>', views.add_past_client, name='add-past-client'),
+    path('view-pets-page/<str:owner_id>', views.view_pets_page, name='view-pets-page'),
     # -----------------------
     # END VET URLS
     # -----------------------
