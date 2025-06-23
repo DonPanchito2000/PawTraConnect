@@ -25,6 +25,11 @@
                                             {% csrf_token %}
                                             <input type="submit" value="Accept" class="">
                                         </form>
+
+                                          <form action="{% url 'reject-membership-request' membership_request.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="submit" value="Reject" class="">
+                                          </form>
                                     </div>
                                 </div>
                         </div>

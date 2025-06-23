@@ -114,3 +114,10 @@
 .club-card span{
   color: #eae2b7;
 }
+
+
+.club-description{
+  max-width: 330px;
+  color: #f77f00;
+  font-size: 13px;
+}

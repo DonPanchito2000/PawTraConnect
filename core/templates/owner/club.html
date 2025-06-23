@@ -27,6 +27,8 @@
                             </div>
                         </div>
                    </div>
+                   {% empty %}
+                     <p class="text-light">You are not a member of any club.</p>
                    {% endfor %}
                 </div>
              
@@ -54,7 +56,14 @@
                                 {% if club.user.profile_picture %}
                                 <img src="{{ club.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
+                                
                                 <span class="ml-2">{{ club.club_name }}</span>
+                                   <!-- <div class="club-description ml-4">
+                                 <small>Thisis a description. Club is good. Join our club to get free dog foods! hisis a description. Club is good. Join our club to get free dog foodsr club to get free dog foodsr club to get free dog foods</small>
+                                 </div> -->
+                                <!-- <div class="club-description mb-auto">
+                                    <small>Thisis a description. Club is good. Join our club to get free dog foods!</small>
+                                </div> -->
                                 <div class="ml-auto">
 
                                     <span><i class="fas fa-users"></i> {{ club.approved_members_count }} Members</span>

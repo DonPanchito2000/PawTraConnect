@@ -95,7 +95,7 @@ def join_club(request, pk):
             if membership.permanently_banned:   
                 messages.error(request, "You cannot join this club again.")
                 return redirect('club-page')   
-            if membership.status == 'removed':
+            if membership.status == 'removed' or membership.status == 'rejected':
                 membership.status = 'pending'
                 membership.joined_at = timezone.now()  # optional: reset time
                 membership.save()
@@ -279,11 +279,18 @@ def club_room(request, pk):
 # -----------------------
 @login_required(login_url='login')
 def vet_clinic_dashboard(request):
-    return render(request,'vet/dashboard.html')
+
+    query = request.GET.get('q')
+    pet_owners = PetOwnerProfile.objects.filter(owner_id=query)
+    context = {'pet_owners':pet_owners}
+    return render(request,'vet/dashboard.html', context)
 
 @login_required(login_url='login')
 def pending_approval_page(request):
     return render(request, 'vet/pending_approval.html')
+
+
+
 # -----------------------
 # END VET_CLINIC VIEWS
 # -----------------------
@@ -326,6 +333,15 @@ def accept_membership_request(request,membership_id):
         membership.save()
         return redirect('member-page')
 
+    return render(request,'club/member.html')
+
+
+def reject_membership_request(request, membership_id):
+    membership = ClubMembership.objects.get(id = membership_id)
+    if request.method == 'POST':
+            membership.status ='rejected'
+            membership.save()
+            return redirect('member-page')
     return render(request,'club/member.html')
 
 
