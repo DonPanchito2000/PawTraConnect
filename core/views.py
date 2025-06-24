@@ -285,7 +285,22 @@ def vet_clinic_dashboard(request):
     query = request.GET.get('q')
     pet_owners = PetOwnerProfile.objects.filter(owner_id=query)
     context = {'pet_owners':pet_owners,'regular_clients':regular_clients}
-    return render(request,'vet/dashboard.html', context)
+
+    user =request.user
+    if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/dashboard.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/dashboard.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
+        
+
 
 @login_required(login_url='login')
 def pending_approval_page(request):
@@ -299,10 +314,25 @@ def add_past_client(request, owner_id):
         return redirect('view-pets-page', owner_id)
     return redirect('vet-clinic-dashboard')
 
-def view_pets_page(request, owner_id):
+def owner_pets_page(request, owner_id):
     pet_owner = PetOwnerProfile.objects.get(id = owner_id)
-    context = {'pet_owner':pet_owner}
-    return render(request, 'vet/view_pets_page.html', context)
+    pets = Dog.objects.filter(owner = pet_owner)
+    context = {'pet_owner':pet_owner,'pets':pets}
+
+    user =request.user
+    if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/pets.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/pets.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
+
 # -----------------------
 # END VET_CLINIC VIEWS
 # -----------------------
@@ -434,13 +464,13 @@ def approve_clinic(request, pk):
     return render(request,'ccvo/approve_clinics.html')
 
 
-@login_required(login_url='login')
-def ccvo_dashboard(request):
-    user = request.user
-    vet_profile = VetClinicProfile.objects.get(user=user)
-    if not vet_profile.is_city_vet:
-         return HttpResponse('You are not allowed here!')
-    return render(request,'ccvo/dashboard.html')
+# @login_required(login_url='login')
+# def ccvo_dashboard(request):
+#     user = request.user
+#     vet_profile = VetClinicProfile.objects.get(user=user)
+#     if not vet_profile.is_city_vet:
+#          return HttpResponse('You are not allowed here!')
+#     return render(request,'ccvo/dashboard.html')
 # -----------------------
 # END CCVO VIEWS
 # -----------------------

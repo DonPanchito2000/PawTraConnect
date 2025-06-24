@@ -39,7 +39,7 @@ urlpatterns = [
     path('vet-clinic-dashboard/', views.vet_clinic_dashboard,name='vet-clinic-dashboard'),
     path('pending-approval-page/', views.pending_approval_page, name="pending-approval-page"),
     path('add-past-client/<str:owner_id>', views.add_past_client, name='add-past-client'),
-    path('view-pets-page/<str:owner_id>', views.view_pets_page, name='view-pets-page'),
+    path('owner-pets-page/<str:owner_id>', views.owner_pets_page, name='owner-pets-page'),
     # -----------------------
     # END VET URLS
     # -----------------------
@@ -47,7 +47,7 @@ urlpatterns = [
     # -----------------------
     # CCVO URLS
     # -----------------------
-    path('ccvo-dashboard/', views.ccvo_dashboard,name='ccvo-dashboard'),
+    # path('ccvo-dashboard/', views.ccvo_dashboard,name='ccvo-dashboard'),
     path('ccvo-announcement/', views.ccvo_announcement,name='ccvo-announcement'),
     path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
     path('approve-clinic/<str:pk>/',views.approve_clinic, name='approve-clinic'),

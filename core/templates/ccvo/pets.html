@@ -1,11 +1,11 @@
 {% extends 'ccvo/base.html' %}
 {% load static %}
-<title>{% block title %}Vet Dashboard{% endblock %}</title>
+<title>{% block title %}{{pet_owner.first_name}}'s Pets{% endblock %}</title>
 {% block extra_css %} 
 <link rel="stylesheet" href="{% static 'core/styles/ccvo/dashboard.css' %}">
 {% endblock extra_css %}
 {% block content %}
 
-{% include 'vet_dashboard.html' %}
+{% include 'owner_pets_page.html' %}
 
 {% endblock content %}
