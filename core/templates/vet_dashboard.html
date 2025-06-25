@@ -34,7 +34,7 @@
     </div>
   
     <!-- Past Clients Section -->
-    <div class="search-owner-container p-4">
+    <div class="search-owner-container past-clients p-4">
       <h3 class="mb-4 font-weight-bold">📋 Past Clients</h3>
        <div class="search-bar">
         <form method="get" action="" class="mb-3">
@@ -45,7 +45,7 @@
       <div class="card owner-card mb-3">
         <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
            
-          <div>
+          <div >
               {% if regular_client.user.profile_picture %}
                 <img src="{{ regular_client.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
               {% endif %}

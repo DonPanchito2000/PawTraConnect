@@ -1,11 +1,11 @@
 
-.search-owner-container {
+.container{
   background-color: rgba(0, 0, 0, 0.2); 
   border-radius: .25rem !important;
   color:#eae2b7 ;
 }
 
-.search-owner-container ::before {
+.container::before {
     content: "";
     position: absolute;
     top: 0;
@@ -16,8 +16,29 @@
     pointer-events: none; 
   }
 
+.pets{
+  max-height: 80vh;    /* optional, keeps internal scroll */
+  overflow-y: auto;
+  padding-right: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #f77f00 transparent;
+}
 
-.owner-card {
+/* Modern scrollbar (Webkit browsers) */
+.pets::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pets::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pets::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 4px;
+}
+
+.pet-card {
   background-color: rgba(0, 0, 0, 0.2); 
   border: none;
   border-radius: 16px;
@@ -26,9 +47,11 @@
   
 }
 
-.owner-card:hover {
+.pet-card:hover {
   box-shadow: 0 6px 12px rgba(0,0,0,0.25);
 }
+
+
 
   .form-control{
   background-color: rgba(0, 0, 0, 0.2);
@@ -48,7 +71,7 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
 }
 
-.view-pets{
+.view-health-record{
   background-color: #f77f00;
   color: #273e47;
   transition: 0.80s ease;
@@ -58,30 +81,13 @@
 }
 
 
-.view-pets:hover{
+.view-health-record:hover{
   background-color: #be620d;
   color: #eae2b7;
 }
 
 
-.past-clients{
-  max-height: 80vh;    /* optional, keeps internal scroll */
-  overflow-y: auto;
-  padding-right: 5px;
-  scrollbar-width: thin;
-  scrollbar-color: #f77f00 transparent;
-}
-
-/* Modern scrollbar (Webkit browsers) */
-.past-clients::-webkit-scrollbar {
-  width: 6px;
-}
-
-.past-clients::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.past-clients::-webkit-scrollbar-thumb {
-  background-color: #adb5bd;
-  border-radius: 4px;
+.badge-info{
+    background-color: #eae2b7;
+    color: #273e47;
 }

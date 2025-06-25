@@ -37,6 +37,7 @@ class PetOwnerProfile(models.Model):
     bio = models.TextField(blank=True)
 
     owner_id = models.CharField(max_length=50, unique=True, blank=True)
+    
 
     def save(self, *args, **kwargs):
         if not self.owner_id:

@@ -311,7 +311,7 @@ def add_past_client(request, owner_id):
         owner = PetOwnerProfile.objects.get(id =owner_id)
         vet_clinic = VetClinicProfile.objects.get(user = request.user)
         vet_clinic.regular_clients.add(owner)
-        return redirect('view-pets-page', owner_id)
+        return redirect('owner-pets-page', owner_id)
     return redirect('vet-clinic-dashboard')
 
 def owner_pets_page(request, owner_id):
