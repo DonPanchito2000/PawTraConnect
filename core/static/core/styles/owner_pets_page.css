@@ -1,4 +1,15 @@
 
+.arrow-back a{
+    text-decoration: none;
+    color: #eae2b7 ;
+    transition: 0.80s ease;
+}
+
+.arrow-back a:hover{
+    text-decoration: none;
+    color: #be620d;
+}
+
 .container{
   background-color: rgba(0, 0, 0, 0.2); 
   border-radius: .25rem !important;
@@ -15,6 +26,8 @@
     z-index: 2;
     pointer-events: none; 
   }
+
+
 
 .pets{
   max-height: 80vh;    /* optional, keeps internal scroll */
