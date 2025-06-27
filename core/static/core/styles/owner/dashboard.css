@@ -3,6 +3,7 @@
 }
 
 
+
 .form-control{
   background-color: rgba(0, 0, 0, 0.2);
   border: none !important;
@@ -81,7 +82,9 @@
 
 .clickable{
     background-color: #273e47;   
-    color: #f77f00;
+    color: #eae2b7;
+    font-style: italic;
+    font-weight: 100;
   } 
 
 
@@ -97,7 +100,9 @@
     pointer-events: none; /* So clicks go through */
   }
 
-
+.clickable span{
+  color: #f77f00 !important;
+}
   .card-body strong span{
     color:#eae2b7; 
   }
@@ -129,30 +134,23 @@
     color: #273e47;
   }
   
-  /* Button styling */
-  .btn-details {
-    background-color:  #f77f00; /* dark slate */
-    color: #273e47;
-    font-weight: bold;
-    padding: 4px 12px;
-    border: none;
-    border-radius: 20px;
-    width: 80px;
-    transition: 0.80s ease;
-    text-decoration: none;
-    outline: none; 
-    box-shadow: none;
-  }
 
-  .btn-details:focus{
-    outline: none; 
-    box-shadow: none;
-  }
-  
-  .btn-details:hover {
-    background-color: #be620d;
-    color: #eae2b7;
-  }
+
+.btn-details{
+  background-color: #f77f00;
+  color: #273e47;
+  transition: 0.80s ease;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border: none;
+}
+
+
+
+.btn-details:hover{
+  background-color: #be620d;
+  color: #eae2b7;
+}
   
   /* Border */
   .vaccine-table th, .vaccine-table td {
