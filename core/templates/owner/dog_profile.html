@@ -113,25 +113,23 @@
             <table class="table table-bordered text-center vaccine-table">
                 <thead class="thead-custom">
                   <tr>
-                    <th>Pet Name</th>
                     <th>Vaccine</th>
                     <th>Due Date</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for upcoming_vaccination in upcoming_vaccinations %}
                   <tr>
-                    <td><strong>Pancho</strong></td>
-                    <td>Anti-rabbies</td>
-                    <td>04-06-2025</td>
+                    <td>{{upcoming_vaccination.vaccine_name}}</td>
+                    <td>{{upcoming_vaccination.next_due_date}}</td>
                     <td><button class="btn btn-details">Details</button></td>
                   </tr>
+                  {% empty %}
                   <tr>
-                    <td><strong>Portia</strong></td>
-                    <td>Anti-rabbies</td>
-                    <td>03-06-2025</td>
-                    <td><button class="btn btn-details">Details</button></td>
+                    <td colspan="3">No Upcoming Vaccinations Yet.</td>
                   </tr>
+                  {% endfor %}
                 </tbody>
               </table>
         </div>

@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Barangay, PetOwnerProfile, Account, ClubProfile
+from accounts.models import Barangay, PetOwnerProfile, Account, ClubProfile,VetClinicProfile
 from django.core.exceptions import ValidationError
 
 
@@ -135,9 +135,29 @@ class ClubForumComment(models.Model):
 # CLUB FORUM MODELS END
 
 
+class VaccinationRecord(models.Model):
+    pet = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    vaccine_name = models.CharField(max_length=100)
+    vaccine_brand = models.CharField(max_length=100, blank=True, null=True)
+    date_administered = models.DateField(blank=True, null=True)
+    next_due_date = models.DateField()
+    is_completed = models.BooleanField(default=False)
+
+    veterinarian_name = models.CharField(max_length=100)
+    license_number = models.CharField(max_length=50)
+    vet_clinic = models.ForeignKey(VetClinicProfile, on_delete=models.SET_NULL, null=True, blank=True)
+
+    notes = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
+    class Meta:
+        ordering = ['-updated','-created']
+    
 
+    def __str__(self):
+        return f"{self.pet} - {self.vaccine_name} [{self.vet_clinic}] [{self.date_administered}]  [{self.next_due_date}]  [{self.is_completed}]"
 
 
 

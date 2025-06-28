@@ -136,7 +136,8 @@
   
 
 
-.btn-details{
+.btn-details,
+.btn-add-record{
   background-color: #f77f00;
   color: #273e47;
   transition: 0.80s ease;
@@ -147,7 +148,8 @@
 
 
 
-.btn-details:hover{
+.btn-details:hover,
+.btn-add-record:hover{
   background-color: #be620d;
   color: #eae2b7;
 }
@@ -165,4 +167,10 @@
 
   .tag{
     color: #f77f00;
+  }
+
+
+  .btn-add-record{
+    margin-bottom: 3rem;
+    float: right;
   }

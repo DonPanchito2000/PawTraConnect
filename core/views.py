@@ -3,12 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
-from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 from django.contrib import messages
 from django.utils.timesince import timesince
 from django.utils import timezone
+from datetime import timedelta
 
 from django.http import JsonResponse
 from django.core.serializers import serialize
@@ -50,8 +51,26 @@ def register_dog(request):
 
 @login_required(login_url='login')
 def dog_profile(request,pk):
+    pet = Dog.objects.get(id=pk)
+
+    today = timezone.now().date()
+    three_days = today + timedelta(days=3)
+ 
+    upcoming_vaccinations = VaccinationRecord.objects.filter(
+        is_completed=False,
+        next_due_date__range=(today, three_days),
+        pet = pet
+    )
+
+    overdue_vaccinations = VaccinationRecord.objects.filter(
+    is_completed=False,
+    next_due_date__lt=today,
+    pet = pet
+    )
+
+
     dog = Dog.objects.get(id=pk)
-    context = {'dog':dog}
+    context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
     return render(request,'owner/dog_profile.html',context)
 
 
