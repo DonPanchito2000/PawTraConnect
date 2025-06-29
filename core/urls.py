@@ -64,5 +64,8 @@ urlpatterns = [
     path('get-rooms/', views.getRooms, name='get-rooms'),
 
 
+    path('vaccination-details-page/<str:vaccination_id>', views.vaccination_details_page, name='vaccination-details-page'),
+
+
 
 ]

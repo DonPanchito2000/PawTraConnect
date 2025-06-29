@@ -1,0 +1,54 @@
+<!-- <h3>VACCINATION DETAILS</h3>
+
+<p>{{vaccination_record.pet.name}}</p>
+<p>{{vaccination_record.vaccine_name}}</p>
+<p>{{vaccination_record.next_due_date}}</p>
+<p>{{vaccination_record.is_completed}}</p> -->
+
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow-lg rounded-lg">
+        <div class="card-header text-center border-0">
+          <h3 class="mb-0 p-4">📋 VACCINATION DETAILS</h3>
+        </div>
+        <hr>
+        <div class="card-body text-center">
+            <div class="mb-2">
+                <span><strong class="mr-1">Pet Name:  </strong>{{vaccination_record.pet.name}}</span>
+            </div>
+            <div class="mb-2">
+                <span><strong class="mr-1">Vaccine Name:  </strong>{{vaccination_record.vaccine_name}}</span>  
+            </div>
+            <div class="mb-2">
+               <span><strong class="mr-1">Due Date:  </strong>{{vaccination_record.next_due_date}}</span>  
+            </div>
+            <div class="mb-2">    
+            {% if vaccination_record.is_completed %}
+            <span><strong class="mr-1">Completed:  </strong>Yes</span>
+            {% else %}
+            <span><strong class="mr-1">Completed:  </strong>No</span>
+            {% endif %}
+            </div>    
+        </div>
+
+        {% if user_is_vet %}
+        <div class="card-footer text-center border-0">
+          <a href="" class="">
+            <button class="btn btn-mark-complete mb-3">
+              Mark Complete
+            </button>
+        </a>
+        </div>
+        {% endif %}
+
+            <div class="arrow-back mb-4 text-center">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                </div>
+      </div>
+    </div>
+  </div>
+</div>

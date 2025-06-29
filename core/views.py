@@ -51,6 +51,7 @@ def register_dog(request):
 
 @login_required(login_url='login')
 def dog_profile(request,pk):
+
     pet = Dog.objects.get(id=pk)
 
     today = timezone.now().date()
@@ -71,7 +72,30 @@ def dog_profile(request,pk):
 
     dog = Dog.objects.get(id=pk)
     context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
-    return render(request,'owner/dog_profile.html',context)
+
+    user = request.user
+
+    if user.role == 'owner':
+        return render(request, 'owner/dog_profile.html', context)
+
+    elif user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/dog_profile.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/dog_profile.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            # fallback in case vet profile is missing
+            return HttpResponse('You are not allowed here!')
+        
+    else:
+        return HttpResponse('You are not allowed here!')
+
+    # return render(request,'owner/dog_profile.html',context)
 
 
 def ccvo_announcement_page(request):
@@ -686,4 +710,50 @@ def getRooms(request):
 
 # -----------------------
 # END GENERAL FORUM VIEWS
+# -----------------------
+
+
+# -----------------------
+# START GENERAL VIEWS
+# -----------------------
+def vaccination_details_page(request, vaccination_id):
+    user = request.user
+    user_is_vet = False
+    vaccination_record = VaccinationRecord.objects.get(id = vaccination_id)
+
+    
+
+    # if user.role == 'owner':
+    #     return render(request, 'owner/vaccination_details.html', context)
+
+    if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            user_is_vet =True
+
+            context ={'vaccination_record':vaccination_record,'user_is_vet':user_is_vet}
+
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/vaccination_details.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/vaccination_details.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
+        
+
+    elif user.role == 'owner':
+        # user_is_vet remains False
+        context = {
+            'vaccination_record': vaccination_record,
+            'user_is_vet': user_is_vet
+        }
+        return render(request, 'owner/vaccination_details.html', context)
+
+    else:
+         return HttpResponse('You are not allowed here!')
+# -----------------------
+# END GENERAL VIEWS
 # -----------------------

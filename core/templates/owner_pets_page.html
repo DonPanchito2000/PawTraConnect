@@ -26,8 +26,8 @@
                 {% endif %}
                 <span class="ml-3">{{pet.name}}</span> <span class="badge badge-info ml-2">ID: {{pet.dog_id}}</span>
             </div>
-            <a href="" class="btn view-health-record btn-sm mt-2 mt-md-0">
-            View Pets
+            <a href="{% url 'dog-profile' pet.id %}" class="btn view-health-record btn-sm mt-2 mt-md-0">
+            View Health Record
             </a>
             </div>
         </div>

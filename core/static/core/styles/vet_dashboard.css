@@ -1,3 +1,5 @@
+
+
 .container  h3{
     color: #f77f00 !important;
   }
@@ -19,6 +21,12 @@
     z-index: 2;
     pointer-events: none; 
   }
+  
+
+  .search-owner-container:hover {
+        transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
 
 
 .owner-card {
@@ -31,7 +39,8 @@
 }
 
 .owner-card:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
   .form-control{
