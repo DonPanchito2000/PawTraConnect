@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, VaccinationRecordForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -714,7 +714,7 @@ def getRooms(request):
 
 
 # -----------------------
-# START GENERAL VIEWS
+# START VACCINATION RECORD RELATED VIEWS
 # -----------------------
 def vaccination_details_page(request, vaccination_id):
     user = request.user
@@ -754,6 +754,29 @@ def vaccination_details_page(request, vaccination_id):
 
     else:
          return HttpResponse('You are not allowed here!')
+    
+
+
+def vaccine_information_form_page(request, old_vaccination_record_id):
+     user = request.user
+     form = VaccinationRecordForm()
+     old_vaccination_record = VaccinationRecord.objects.get(id = old_vaccination_record_id)
+
+     context = {'old_vaccination_record':old_vaccination_record,'form':form}
+     if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/vaccine_information_form.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/vaccine_information_form.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
+        
 # -----------------------
-# END GENERAL VIEWS
+# END VACCINATION RECORD RELATED VIEWS
 # -----------------------
