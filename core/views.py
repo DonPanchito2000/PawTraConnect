@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, VaccinationRecordForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -759,14 +759,13 @@ def vaccination_details_page(request, vaccination_id):
 
 def vaccine_information_form_page(request, old_vaccination_record_id):
      user = request.user
-     form = VaccinationRecordForm()
      old_vaccination_record = VaccinationRecord.objects.get(id = old_vaccination_record_id)
 
-     context = {'old_vaccination_record':old_vaccination_record,'form':form}
+  
      if user.role == 'vet':
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
-
+            context = {'old_vaccination_record':old_vaccination_record,'vet_profile':vet_profile}
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/vaccine_information_form.html',context)
             elif vet_profile.is_approved:

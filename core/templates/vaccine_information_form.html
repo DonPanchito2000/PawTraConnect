@@ -10,10 +10,62 @@
         </div>
         <hr>
         <div class="card-body text-center">
-            <form action="" mmethod="POST">
-                {% csrf_token %}
-                {{form.as_p}}
-            </form>
+         <form method="POST" action="">
+            {% csrf_token %}
+            
+            {% if not old_vaccination_record %}
+            <!-- Pet (Dog) select -->
+            <label for="pet">Pet:</label>
+            <select id="pet" name="pet" class="form-control" required>
+              {% for dog in dogs %}
+                <option value="{{ dog.id }}">{{ dog.name }}</option>
+              {% endfor %}
+            </select>
+            <!-- Vaccine Name -->
+            <label for="vaccine_name">Vaccine Name:</label>
+            <input type="text" id="vaccine_name" name="vaccine_name" class="form-control" required>
+            {% else %}
+            <label for="pet">Pet:</label>
+            <input type="text" id="pet" name="pet" class="form-control" value="{{old_vaccination_record.pet.name}}" readonly>
+            <!-- Vaccine Name -->
+            <label for="vaccine_name">Vaccine Name:</label>
+            <input type="text" id="vaccine_name" name="vaccine_name" class="form-control" value="{{old_vaccination_record.vaccine_name}}" readonly>
+            {% endif %}
+
+
+            <!-- Vaccine Brand -->
+            <label for="vaccine_brand">Vaccine Brand:</label>
+            <input type="text" id="vaccine_brand" name="vaccine_brand" class="form-control">
+
+            <!-- Date Administered -->
+            <label for="date_administered">Date Administered:</label>
+            <input type="date" id="date_administered" name="date_administered" class="form-control" required>
+
+            <!-- Next Due Date -->
+            <label for="next_due_date">Next Due Date:</label>
+            <input type="date" id="next_due_date" name="next_due_date" class="form-control">
+
+            <!-- Vet Clinic -->
+            <label for="vet_clinic">Vet Clinic:</label>
+            <input type="text" id="vet_clinic" name="vet_clinic" class="form-control" value="{{vet_profile.clinic_name}}" readonly>
+
+            <!-- Veterinarian Name -->
+            <label for="veterinarian_name">Veterinarian Name:</label>
+            <input type="text" id="veterinarian_name" name="veterinarian_name" class="form-control" required>
+
+            <!-- License Number -->
+            <label for="license_number">License Number:</label>
+            <input type="text" id="license_number" name="license_number" class="form-control" required>
+
+            <!-- Notes -->
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
+
+            <!-- Submit button -->
+            <br>
+            <button type="submit" class="btn btn-done">Done</button>
+          </form>
+
         </div>
 
         <!-- {% if user_is_vet %}
@@ -26,9 +78,9 @@
         </div>
         {% endif %} -->
 
-            <div class="arrow-back mb-4 text-center">
+            <div class="arrow-back mb-4 mr-4 text-center">
                     <a href="javascript:history.back()" class="arrow-back">
-                        <i class="fas fa-arrow-left mr-2"></i> Back
+                        <i class="fas fa-arrow-left mr-2"></i> Cancel
                     </a>
                 </div>
       </div>

@@ -1,3 +1,4 @@
+
 span strong{
     color: #f77f00;
     font-style: italic;
@@ -84,4 +85,78 @@ span strong{
 .arrow-back a:hover{
     text-decoration: none;
     color: #be620d;
+}
+
+
+  .form-control,
+  .form-control[readonly]{
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none !important;
+  box-shadow: none !important;
+   border-radius: 10px;
+  transition: box-shadow 0.2s ease;
+   color: #eae2b7;
+
+}
+
+.form-control:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #eae2b7;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+}
+
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2) inset !important;
+  -webkit-text-fill-color: #eae2b7 !important;
+  color: #eae2b7 !important;
+  caret-color: #eae2b7;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.btn-done{
+  background-color: #f77f00;
+  color: #273e47;
+  transition: 0.80s ease;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border: none;
+}
+
+
+.btn-done:hover{
+  background-color: #be620d;
+  color: #eae2b7;
+}
+
+
+label{
+  color: #f77f00;
+  font-style: italic;
+  margin-top: 20px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* hide native icon */
+  position: absolute;
+  right: 10px;
+  z-index: 1;
+}
+input[type="date"] {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.2); /* 🔧 your desired background */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23f77f00' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 17H5V8h14v12z'/><path d='M7 10h5v5H7z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+  padding-right: 35px;
+  color: #eae2b7;
+  border: none;
+  border-radius: 10px;
 }

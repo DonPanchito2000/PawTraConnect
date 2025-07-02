@@ -41,7 +41,11 @@
                   <tr>
                     <td>{{overdue_vaccination.vaccine_name}}</td>
                     <td>{{overdue_vaccination.next_due_date}}</td>
-                    <td><button class="btn btn-details">Details</button></td>
+                    <td>
+                      <a href="{% url 'vaccination-details-page' overdue_vaccination.id %}">
+                        <button class="btn btn-details">Details</button>
+                      </a>
+                    </td>
                   </tr>
                   {% empty %}
                   <tr>

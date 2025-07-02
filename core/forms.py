@@ -70,46 +70,46 @@ class ClubForumRoomForm(forms.ModelForm):
 
 
 # Vaccination Record Form
-class VaccinationRecordForm(forms.ModelForm):
-    class Meta:
-        model = VaccinationRecord
-        fields = [
-            'vaccine_name',
-            'vaccine_brand',
-            'date_administered',
-            'next_due_date',
-            'veterinarian_name',
-            'license_number',
-            'notes'
-        ]
-        widgets = {
-            'vaccine_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter vaccine name'
-            }),
-            'vaccine_brand': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter vaccine brand (optional)'
-            }),
-            'date_administered': forms.DateInput(attrs={
-                'class': 'form-control',
-                'type': 'date'
-            }),
-            'next_due_date': forms.DateInput(attrs={
-                'class': 'form-control',
-                'type': 'date'
-            }),
-            'veterinarian_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter veterinarian name'
-            }),
-            'license_number': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter license number'
-            }),
-            'notes': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Additional notes (optional)',
-                'rows': 3
-            }),
-        }
+# class VaccinationRecordForm(forms.ModelForm):
+#     class Meta:
+#         model = VaccinationRecord
+#         fields = [
+#             'vaccine_name',
+#             'vaccine_brand',
+#             'date_administered',
+#             'next_due_date',
+#             'veterinarian_name',
+#             'license_number',
+#             'notes'
+#         ]
+#         widgets = {
+#             'vaccine_name': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter vaccine name'
+#             }),
+#             'vaccine_brand': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter vaccine brand (optional)'
+#             }),
+#             'date_administered': forms.DateInput(attrs={
+#                 'class': 'form-control',
+#                 'type': 'date'
+#             }),
+#             'next_due_date': forms.DateInput(attrs={
+#                 'class': 'form-control',
+#                 'type': 'date'
+#             }),
+#             'veterinarian_name': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter veterinarian name'
+#             }),
+#             'license_number': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter license number'
+#             }),
+#             'notes': forms.Textarea(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Additional notes (optional)',
+#                 'rows': 3
+#             }),
+#         }
