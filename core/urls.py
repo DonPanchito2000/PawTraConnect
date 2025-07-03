@@ -68,8 +68,8 @@ urlpatterns = [
     # START Vaccination Record Related URLS
     # -----------------------
     path('vaccination-details-page/<str:vaccination_id>', views.vaccination_details_page, name='vaccination-details-page'),
-    path('vaccine-information-form-page/<str:old_vaccination_record_id>', views.vaccine_information_form_page, name='vaccine-information-form-page'),
-    
+    path('vaccine-information-form-page-update/<str:old_vaccination_record_id>', views.vaccine_information_form_page_update, name='vaccine-information-form-page-update'),
+    path('vaccine-information-form-page-new/<str:pet_id>', views.vaccine_information_form_page_new, name='vaccine-information-form-page-new'),
     # -----------------------
     # END Vaccination Record Related URLS
     # -----------------------

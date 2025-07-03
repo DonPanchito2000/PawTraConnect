@@ -14,13 +14,8 @@
             {% csrf_token %}
             
             {% if not old_vaccination_record %}
-            <!-- Pet (Dog) select -->
             <label for="pet">Pet:</label>
-            <select id="pet" name="pet" class="form-control" required>
-              {% for dog in dogs %}
-                <option value="{{ dog.id }}">{{ dog.name }}</option>
-              {% endfor %}
-            </select>
+            <input type="text" id="pet" name="pet" class="form-control" value="{{pet.name}}" readonly>
             <!-- Vaccine Name -->
             <label for="vaccine_name">Vaccine Name:</label>
             <input type="text" id="vaccine_name" name="vaccine_name" class="form-control" required>
@@ -30,6 +25,7 @@
             <!-- Vaccine Name -->
             <label for="vaccine_name">Vaccine Name:</label>
             <input type="text" id="vaccine_name" name="vaccine_name" class="form-control" value="{{old_vaccination_record.vaccine_name}}" readonly>
+            <input type="hidden" name="pet" value="{{old_vaccination_record.pet.id}}" >
             {% endif %}
 
 

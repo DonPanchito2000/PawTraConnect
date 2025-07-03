@@ -1,6 +1,6 @@
 <div class="container my-5">
             <div class="arrow-back mb-4">
-                    <a href="javascript:history.back()" class="arrow-back">
+                    <a href="{% url 'vet-clinic-dashboard' %}" class="arrow-back">
                         <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>
                 </div>
@@ -90,6 +90,11 @@
           <a href="">
           <button class="btn btn-view-history float-right mb-5">View Health Record History</button>
         </a>
+        {% if user_is_vet %}
+         <a href="{% url 'vaccine-information-form-page-new' dog.id%}">
+          <button class="btn btn-view-history float-right mb-5 mr-3">Add New Record</button>
+        </a>
+        {% endif %}
 
 </div>
 

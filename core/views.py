@@ -51,36 +51,38 @@ def register_dog(request):
 
 @login_required(login_url='login')
 def dog_profile(request,pk):
-
-    pet = Dog.objects.get(id=pk)
-
+    user_is_vet = False
+    # pet = Dog.objects.get(id=pk)
+    dog = Dog.objects.get(id=pk)
     today = timezone.now().date()
     three_days = today + timedelta(days=3)
  
     upcoming_vaccinations = VaccinationRecord.objects.filter(
         is_completed=False,
         next_due_date__range=(today, three_days),
-        pet = pet
+        pet = dog
     )
 
     overdue_vaccinations = VaccinationRecord.objects.filter(
     is_completed=False,
     next_due_date__lt=today,
-    pet = pet
+    pet = dog
     )
 
 
-    dog = Dog.objects.get(id=pk)
-    context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
+
+    # context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
 
     user = request.user
 
-    if user.role == 'owner':
-        return render(request, 'owner/dog_profile.html', context)
+    # if user.role == 'owner':
+    #     return render(request, 'owner/dog_profile.html', context)
 
-    elif user.role == 'vet':
+    if user.role == 'vet':
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
+            user_is_vet = True
+            context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations,'user_is_vet':user_is_vet}
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/dog_profile.html',context)
             elif vet_profile.is_approved:
@@ -92,10 +94,15 @@ def dog_profile(request,pk):
             # fallback in case vet profile is missing
             return HttpResponse('You are not allowed here!')
         
+    
+    elif user.role == 'owner':
+        context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations,'user_is_vet':user_is_vet}
+        return render(request, 'owner/dog_profile.html', context)
+    
     else:
         return HttpResponse('You are not allowed here!')
 
-    # return render(request,'owner/dog_profile.html',context)
+
 
 
 def ccvo_announcement_page(request):
@@ -745,7 +752,6 @@ def vaccination_details_page(request, vaccination_id):
         
 
     elif user.role == 'owner':
-        # user_is_vet remains False
         context = {
             'vaccination_record': vaccination_record,
             'user_is_vet': user_is_vet
@@ -757,11 +763,33 @@ def vaccination_details_page(request, vaccination_id):
     
 
 
-def vaccine_information_form_page(request, old_vaccination_record_id):
+def vaccine_information_form_page_update(request, old_vaccination_record_id):
      user = request.user
      old_vaccination_record = VaccinationRecord.objects.get(id = old_vaccination_record_id)
-
-  
+     vet_clinic = VetClinicProfile.objects.get(user=user)
+     if request.method == "POST":
+        pet_id = request.POST.get('pet')
+        try:
+            next_due_date_raw = request.POST.get('next_due_date')
+            next_due_date = next_due_date_raw if next_due_date_raw else None
+            pet = Dog.objects.get(id = pet_id)
+            VaccinationRecord.objects.create(
+                pet = pet,
+                vaccine_name = request.POST.get('vaccine_name'),
+                vaccine_brand = request.POST.get('vaccine_brand'),
+                date_administered = request.POST.get('date_administered'),
+                next_due_date = next_due_date,
+                veterinarian_name = request.POST.get('veterinarian_name'),
+                license_number = request.POST.get('license_number'),
+                vet_clinic = vet_clinic,
+                notes = request.POST.get('notes')
+            )
+            old_vaccination_record.is_completed = True
+            old_vaccination_record.save()
+            return redirect('dog-profile', pk = pet_id)
+        except Dog.DoesNotExist:  
+             return HttpResponse("Pet not found", status=404)
+         
      if user.role == 'vet':
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
@@ -776,6 +804,45 @@ def vaccine_information_form_page(request, old_vaccination_record_id):
         except VetClinicProfile.DoesNotExist:
             return HttpResponse('You are not allowed here!')
         
+
+
+
+def vaccine_information_form_page_new(request, pet_id):
+     user = request.user
+     vet_clinic = VetClinicProfile.objects.get(user=user)
+     pet = Dog.objects.get(id = pet_id)
+     if request.method == "POST":
+        try:
+            next_due_date_raw = request.POST.get('next_due_date')
+            next_due_date = next_due_date_raw if next_due_date_raw else None
+            VaccinationRecord.objects.create(
+                pet = pet,
+                vaccine_name = request.POST.get('vaccine_name'),
+                vaccine_brand = request.POST.get('vaccine_brand'),
+                date_administered = request.POST.get('date_administered'),
+                next_due_date = next_due_date,
+                veterinarian_name = request.POST.get('veterinarian_name'),
+                license_number = request.POST.get('license_number'),
+                vet_clinic = vet_clinic,
+                notes = request.POST.get('notes')
+            )
+            return redirect('dog-profile', pk = pet_id)
+        except Dog.DoesNotExist:  
+             return HttpResponse("Pet not found", status=404)
+         
+     if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            context = {'vet_profile':vet_profile,'pet':pet}
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/vaccine_information_form.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/vaccine_information_form.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
 # -----------------------
 # END VACCINATION RECORD RELATED VIEWS
 # -----------------------

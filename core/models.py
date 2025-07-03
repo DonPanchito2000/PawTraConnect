@@ -140,7 +140,7 @@ class VaccinationRecord(models.Model):
     vaccine_name = models.CharField(max_length=100)
     vaccine_brand = models.CharField(max_length=100, blank=True, null=True)
     date_administered = models.DateField()
-    next_due_date = models.DateField(blank=True)
+    next_due_date = models.DateField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
 
     veterinarian_name = models.CharField(max_length=100)

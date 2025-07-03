@@ -35,7 +35,7 @@
 
         {% if user_is_vet %}
         <div class="card-footer text-center border-0">
-          <a href="{% url 'vaccine-information-form-page' vaccination_record.id %}" class="">
+          <a href="{% url 'vaccine-information-form-page-update' vaccination_record.id %}" class="">
             <button class="btn btn-mark-complete mb-3">
               Mark Complete
             </button>
