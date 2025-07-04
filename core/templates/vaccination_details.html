@@ -21,11 +21,15 @@
             <div class="mb-2">
                 <span><strong class="mr-1">Vaccine Name:  </strong>{{vaccination_record.vaccine_name}}</span>  
             </div>
+            {% if vaccination_record.next_due_date %}
             <div class="mb-2">
                <span><strong class="mr-1">Due Date:  </strong>{{vaccination_record.next_due_date}}</span>  
             </div>
+            {% endif %}
             <div class="mb-2">    
-            {% if vaccination_record.is_completed %}
+            {% if is_history %}
+            <span><strong class="mr-1">Completed:  </strong>Yes</span>
+            {% elif vaccination_record.is_completed %}
             <span><strong class="mr-1">Completed:  </strong>Yes</span>
             {% else %}
             <span><strong class="mr-1">Completed:  </strong>No</span>
@@ -33,7 +37,7 @@
             </div>    
         </div>
 
-        {% if user_is_vet %}
+        {% if user_is_vet and not is_history%}
         <div class="card-footer text-center border-0">
           <a href="{% url 'vaccine-information-form-page-update' vaccination_record.id %}" class="">
             <button class="btn btn-mark-complete mb-3">

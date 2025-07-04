@@ -153,7 +153,7 @@ class VaccinationRecord(models.Model):
 
 
     class Meta:
-        ordering = ['-updated','-created']
+        ordering = ['-created']
     
 
     def __str__(self):

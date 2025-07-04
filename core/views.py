@@ -52,6 +52,7 @@ def register_dog(request):
 @login_required(login_url='login')
 def dog_profile(request,pk):
     user_is_vet = False
+    is_history = False
     # pet = Dog.objects.get(id=pk)
     dog = Dog.objects.get(id=pk)
     today = timezone.now().date()
@@ -82,7 +83,7 @@ def dog_profile(request,pk):
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
             user_is_vet = True
-            context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations,'user_is_vet':user_is_vet}
+            context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations,'user_is_vet':user_is_vet,'is_history':is_history}
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/dog_profile.html',context)
             elif vet_profile.is_approved:
@@ -96,7 +97,7 @@ def dog_profile(request,pk):
         
     
     elif user.role == 'owner':
-        context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations,'user_is_vet':user_is_vet}
+        context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations,'user_is_vet':user_is_vet,'is_history':is_history}
         return render(request, 'owner/dog_profile.html', context)
     
     else:
@@ -723,22 +724,18 @@ def getRooms(request):
 # -----------------------
 # START VACCINATION RECORD RELATED VIEWS
 # -----------------------
-def vaccination_details_page(request, vaccination_id):
+def vaccination_details_page(request, vaccination_id, is_history):
     user = request.user
     user_is_vet = False
     vaccination_record = VaccinationRecord.objects.get(id = vaccination_id)
-
-    
-
-    # if user.role == 'owner':
-    #     return render(request, 'owner/vaccination_details.html', context)
+    is_history = is_history.lower() == 'true'
 
     if user.role == 'vet':
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
             user_is_vet =True
 
-            context ={'vaccination_record':vaccination_record,'user_is_vet':user_is_vet}
+            context ={'vaccination_record':vaccination_record,'user_is_vet':user_is_vet,'is_history':is_history}
 
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/vaccination_details.html',context)
@@ -754,7 +751,8 @@ def vaccination_details_page(request, vaccination_id):
     elif user.role == 'owner':
         context = {
             'vaccination_record': vaccination_record,
-            'user_is_vet': user_is_vet
+            'user_is_vet': user_is_vet,
+            'is_history':is_history
         }
         return render(request, 'owner/vaccination_details.html', context)
 
@@ -843,6 +841,38 @@ def vaccine_information_form_page_new(request, pet_id):
 
         except VetClinicProfile.DoesNotExist:
             return HttpResponse('You are not allowed here!')
+        
+
+
+
+def vaccination_record_history_page(request, pet_id):
+    user = request.user
+    pet = Dog.objects.get(id = pet_id)
+    is_history = True
+    pet_vaccination_records = VaccinationRecord.objects.filter(pet=pet)
+
+    context = {'pet':pet,'pet_vaccination_records':pet_vaccination_records,'is_history':is_history}
+    if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/vaccination_record_history.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/vaccination_record_history.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
+        
+
+    elif user.role == 'owner':
+
+        return render(request, 'owner/vaccination_record_history.html', context)
+
+    else:
+         return HttpResponse('You are not allowed here!')
 # -----------------------
 # END VACCINATION RECORD RELATED VIEWS
 # -----------------------

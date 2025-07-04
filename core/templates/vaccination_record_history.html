@@ -1,0 +1,33 @@
+
+
+
+   <div class="row table-responsive mb-4">
+            <table class="table col-8 mx-auto mt-5 table-bordered text-center vaccine-table">
+                <thead class="thead-custom">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Date Administered</th>
+                    <th>Completed</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for vaccination_record in pet_vaccination_records %}
+                  <tr>
+                    <td>{{vaccination_record.vaccine_name}}</td>
+                    <td>{{vaccination_record.date_administered}}</td>
+                    <td><i class="fas fa-check"></i></td>
+                    <td>
+                      <a href="{% url 'vaccination-details-page' vaccination_record.id  'true'%}">
+                      <button class="btn btn-details">Details</button>
+                    </a>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="4">No Vacciantion Record Yet.</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>

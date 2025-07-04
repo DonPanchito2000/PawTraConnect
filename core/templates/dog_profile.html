@@ -73,7 +73,7 @@
                     <td>{{upcoming_vaccination.vaccine_name}}</td>
                     <td>{{upcoming_vaccination.next_due_date}}</td>
                     <td>
-                      <a href="{% url 'vaccination-details-page' upcoming_vaccination.id %}">
+                      <a href="{% url 'vaccination-details-page' upcoming_vaccination.id 'false' %}">
                       <button class="btn btn-details">Details</button>
                     </a>
                     </td>
@@ -87,7 +87,7 @@
               </table>
         </div>
 
-          <a href="">
+          <a href="{% url 'vaccination-record-history-page' dog.id %}">
           <button class="btn btn-view-history float-right mb-5">View Health Record History</button>
         </a>
         {% if user_is_vet %}

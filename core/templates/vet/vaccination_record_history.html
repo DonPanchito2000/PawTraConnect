@@ -1,0 +1,10 @@
+{% extends 'vet/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/vaccination_record_history.css' %}">
+{% endblock extra_css %}
+<title>{% block title %}Vaccination Record History{% endblock %}</title>
+
+{% block content %}
+    {% include 'vaccination_record_history.html' %}
+{% endblock content %}

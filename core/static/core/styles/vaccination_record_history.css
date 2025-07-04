@@ -1,0 +1,52 @@
+/* TABLES */
+.thead-custom {
+    background-color: #eae2b7; /* light beige header */
+    color: #273e47;
+  }
+  
+  /* Table rows */
+  .vaccine-table tbody tr:nth-child(odd) {
+    background-color: #b3b3b3; /* lighter gray */
+    color: #273e47;
+  }
+  
+  .vaccine-table tbody tr:nth-child(even) {
+    background-color: #8c8c8c; /* darker gray */
+    color: #273e47;
+  }
+
+
+
+  
+  /* Border */
+  .vaccine-table th, .vaccine-table td {
+    border: 2px solid black;
+  }
+  
+  /* Optional: Reduce spacing */
+  .vaccine-table td, .vaccine-table th {
+    padding: 8px;
+  }
+  
+
+  
+.btn-details{
+  background-color: #f77f00;
+  color: #273e47;
+  transition: 0.80s ease;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border: none;
+}
+
+
+
+.btn-details:hover{
+  background-color: #be620d;
+  color: #eae2b7;
+}
+
+
+.fa-check{
+    color: green;
+}
