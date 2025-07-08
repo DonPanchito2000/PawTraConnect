@@ -1,8 +1,14 @@
 <div class="container my-5">
             <div class="arrow-back mb-4">
-                    <a href="{% url 'vet-clinic-dashboard' %}" class="arrow-back">
+              {% if user_is_vet %}
+                    <a href="{% url 'owner-pets-page' dog.owner.id %}" class="arrow-back">
                         <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>
+                    {% else %}
+                       <a href="{% url 'pet-owner-dashboard' %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                    {% endif %}
                 </div>
     <div class="text-center">
         <img src="{{ dog.pet_profile.url }}" alt="Dog Profile" class="profile-img">
