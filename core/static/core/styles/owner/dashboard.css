@@ -152,11 +152,21 @@
 
 
 
+
+.btn-details:focus,
+.btn-details:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .btn-details:hover,
 .btn-add-record:hover{
   background-color: #be620d;
   color: #eae2b7;
 }
+
+
+
   
   /* Border */
   .vaccine-table th, .vaccine-table td {

@@ -1,3 +1,15 @@
+
+
+.arrow-back a{
+    text-decoration: none;
+    color: #eae2b7 ;
+    transition: 0.80s ease;
+}
+
+.arrow-back a:hover{
+    text-decoration: none;
+    color: #be620d;
+}
 /* TABLES */
 .thead-custom {
     background-color: #eae2b7; /* light beige header */

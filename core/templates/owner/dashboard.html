@@ -51,19 +51,19 @@
 
             <div class="col-md-4 mb-3">
                 <div class="card card-view text-center p-3">
-                    <h5>Upcoming Vaccinations</h5>
-                    <h3>3</h3>
+                    <h5>Overdue Vaccinations</h5>
+                    <h3>{{overdue_vaccinations.count}}</h3>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="card card-view text-center p-3">
-                    <h5>Overdue Vaccinations</h5>
-                    <h3>1</h3>
+                    <h5>Upcoming Vaccinations</h5>
+                    <h3>{{upcoming_vaccinations.count}}</h3>
                 </div>
             </div>
         </div>
 
-        <h5 class="tag">Upcoming Vaccinations</h5>
+        <h5 class="tag">Overdue Vaccinations</h5>
         <div class="table-responsive mb-4">
             <table class="table table-bordered text-center vaccine-table">
                 <thead class="thead-custom">
@@ -75,23 +75,23 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for overdue_vaccination in overdue_vaccinations %}
                   <tr>
-                    <td><strong>Pancho</strong></td>
-                    <td>Anti-rabbies</td>
-                    <td>04-06-2025</td>
-                    <td><button class="btn btn-details">Details</button></td>
+                    <td><strong>{{overdue_vaccination.pet.name}}</strong></td>
+                    <td>{{overdue_vaccination.vaccine_name}}</td>
+                    <td>{{overdue_vaccination.next_due_date}}</td>
+                    <td> 
+                      <a href="{% url 'vaccination-details-page' overdue_vaccination.id 'false' %}">
+                        <button class="btn btn-details">Details</button>
+                      </a>
+                    </td>
                   </tr>
-                  <tr>
-                    <td><strong>Portia</strong></td>
-                    <td>Anti-rabbies</td>
-                    <td>03-06-2025</td>
-                    <td><button class="btn btn-details">Details</button></td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
         </div>
 
-        <h5 class="tag">Overdue Vaccinations</h5>
+        <h5 class="tag">Upcoming Vaccinations</h5>
         <div class="table-responsive">
             <table class="table table-bordered text-center vaccine-table">
                 <thead class="thead-custom">
@@ -103,18 +103,16 @@
                   </tr>
                 </thead>
                 <tbody>
+                 {% for upcoming_vaccination in upcoming_vaccinations %}
                   <tr>
-                    <td><strong>Pancho</strong></td>
-                    <td>Anti-rabbies</td>
-                    <td>04-06-2025</td>
-                    <td><button class="btn btn-details">Details</button></td>
+                    <td><strong>{{upcoming_vaccination.pet.name}}</strong></td>
+                    <td>{{upcoming_vaccination.vaccine_name}}</td>
+                    <td>{{upcoming_vaccination.next_due_date}}</td>
+                    <td> <a href="{% url 'vaccination-details-page' upcoming_vaccination.id 'false' %}">
+                        <button class="btn btn-details">Details</button>
+                      </a></td>
                   </tr>
-                  <tr>
-                    <td><strong>Portia</strong></td>
-                    <td>Anti-rabbies</td>
-                    <td>03-06-2025</td>
-                    <td><button class="btn btn-details">Details</button></td>
-                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
         </div>

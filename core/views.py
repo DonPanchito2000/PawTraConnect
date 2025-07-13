@@ -28,8 +28,16 @@ from django.urls import reverse
 def pet_owner_dashboard(request):
     owner =  get_object_or_404(PetOwnerProfile, user=request.user)
     registered_dogs= Dog.objects.filter(owner = owner)
-    context = {'registered_dogs':registered_dogs}
+
+    today = timezone.now().date()
+    three_days = today + timedelta(days=3)
+ 
+    upcoming_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__range=(today, three_days),pet__in=registered_dogs)
+    overdue_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__lt=today, pet__in=registered_dogs)
+
+    context = {'registered_dogs':registered_dogs,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
     return render(request,'owner/dashboard.html',context)
+
 
 
 @login_required(login_url='login')
@@ -71,13 +79,7 @@ def dog_profile(request,pk):
     )
 
 
-
-    # context = {'dog':dog,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
-
     user = request.user
-
-    # if user.role == 'owner':
-    #     return render(request, 'owner/dog_profile.html', context)
 
     if user.role == 'vet':
         try:
