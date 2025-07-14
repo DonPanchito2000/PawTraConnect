@@ -244,7 +244,7 @@ def getClubForumRooms(request):
         data.append({
             "id": room.id,
             "title": room.title,
-            "content_truncated": room.content[:100],
+            "content_truncated": room.content[:300]+ "..." if len(room.content) > 100 else room.content,
             "created_timesince": timesince(room.created) + " ago",
             "host": {
                 "username": room.host.username,

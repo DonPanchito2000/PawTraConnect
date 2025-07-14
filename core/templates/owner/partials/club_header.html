@@ -9,21 +9,21 @@
 
  <div class="text-center text-white mb-5">
   <img src="{{ club.user.profile_picture.url }}" class="rounded-circle border border-warning mb-3 shadow" width="140" height="140">
-  <h2 class="font-weight-bold">{{club.club_name}}</h2>
-  <p class="lead text-light">{{club.description}}</p>
+  <h2 class="font-weight-bold club-name">{{club.club_name}}</h2>
+  <p class=" club-description">{{club.description}}</p>
     
       {% if membership_status == 'pending' %}                                            
-    <button disabled class="btn btn-primary">Reuqest Sent</button>                     
+    <button disabled class="btn ">Reuqest Sent</button>                     
     {% elif membership_status == 'approved' %}
-        <input type="button" value="MEMBER" class="btn btn-success" disabled>
+        <input type="button" value="MEMBER" class="btn " disabled>
      {% elif membership_status == 'banned' %}
-        <button disabled class="btn btn-danger mb-5">You are banned by the admin</button> 
+        <button disabled class="btn mb-5">You are banned by the admin</button> 
 
 
     {% else %}
     <form action="{% url 'join-club' club.id %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="JOIN" class="btn btn-primary">
+        <input type="submit" value="JOIN" class="btn btn-join">
     </form>                          
      {% endif %}
 </div>

@@ -49,6 +49,10 @@
       line-height: 1.7;
       color: #333;
       margin-top: 20px;
+
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .comment-section {
@@ -56,12 +60,15 @@
     }
 
     .comment-card {
-      background: #f8f9fa;
+        background: #f8f9fa;
       border-radius: 15px;
       padding: 15px 20px;
       margin-bottom: 20px;
       display: flex;
       align-items: flex-start;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .comment-card img {
