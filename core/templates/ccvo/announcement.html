@@ -1,5 +1,10 @@
 {% extends 'ccvo/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/ccvo_announcement.css' %}">
+{% endblock extra_css %}
+{% block title %}CCVO - Announcement{% endblock %}
 
 {% block content %}
-<h1>ANNOUNCEMENT</h1>
+{% include 'ccvo_announcement.html' %}
 {% endblock content %}

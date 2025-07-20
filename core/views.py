@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
-from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 from django.contrib import messages
@@ -106,10 +106,6 @@ def dog_profile(request,pk):
         return HttpResponse('You are not allowed here!')
 
 
-
-
-def ccvo_announcement_page(request):
-    return render(request,'owner/ccvo_announcement_page.html')
 
 
 def club_page(request):
@@ -478,21 +474,53 @@ def kick_member(request, membership_id):
 def ccvo_announcement(request):
     user = request.user
 
+    announcements = CCVOAnnouncement.objects.all()
+
+    context = {'announcements':announcements}
+
     if user.role == 'vet':  # Check if the user is a vet
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:  # Check if it's a city vet
                 # City vet is authorized to view this page
-                return render(request, 'ccvo/announcement.html')
+                return render(request, 'ccvo/announcement.html', context)
             else:
                 # If the vet is not a city vet, redirect to another page (e.g., 'another_page')
                 return HttpResponse('You are not allowed here!')  # Change 'another_page' to your desired URL name
         except VetClinicProfile.DoesNotExist:
             # No vet profile found for this user
             return redirect('login')  # Same as above, redirect to another page
+    
+    elif user.role == 'owner':
+        return render(request, 'owner/ccvo_announcement_page.html', context)
+
     else:
         # If the user is not a vet (i.e., pet owner or other role), redirect to another page
         return redirect('login')  # Change 'another_page' to your desired URL name
+    
+
+def getAnnouncements(request):
+    query = request.GET.get('q', '')
+
+    announcements = CCVOAnnouncement.objects.all()
+
+    data = []
+
+    for announcement in announcements:
+        data.append({
+            "id": announcement.id,
+            "title": announcement.title,
+            "content_truncated": announcement.content[:300]+ "..." if len(announcement.content) > 100 else announcement.content,
+            "created_timesince": timesince(announcement.created) + " ago",
+            "host": {
+                "username": announcement.host.username,
+                "profile_picture_url": announcement.host.profile_picture.url if announcement.host.profile_picture else "",
+            },
+            "image_url": announcement.image.url if announcement.image else "",
+        })
+
+    return JsonResponse({"announcements": data})
+
 
 @login_required(login_url='login')
 def approve_clinics_page(request):

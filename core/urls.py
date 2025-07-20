@@ -8,7 +8,7 @@ urlpatterns = [
     path('pet-owner-dashboard/', views.pet_owner_dashboard,name='pet-owner-dashboard'),
     path('register-dog/',views.register_dog,name='register-dog'),
     path('dog-profile/<str:pk>', views.dog_profile,name='dog-profile'),
-    path('ccvo-announcement-page/', views.ccvo_announcement_page, name='ccvo-announcement-page'),
+    # path('ccvo-announcement-page/', views.ccvo_announcement_page, name='ccvo-announcement-page'),
     path('club-page/', views.club_page, name='club-page'),
     path('join-club/<str:pk>', views.join_club, name='join-club'),
     path('club-profile-page/<str:club_id>', views.club_profile_page, name ='club-profile-page'),
@@ -63,6 +63,8 @@ urlpatterns = [
 
     path('get-rooms/', views.getRooms, name='get-rooms'),
 
+
+    path('get-announcements/', views.getAnnouncements, name='get-announcements'),
 
     # -----------------------
     # START Vaccination Record Related URLS

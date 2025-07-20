@@ -86,6 +86,10 @@
                       </a>
                     </td>
                   </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="4">No Overdue Vaccinations Yet.</td>
+                  </tr>
                   {% endfor %}
                 </tbody>
               </table>
@@ -112,7 +116,12 @@
                         <button class="btn btn-details">Details</button>
                       </a></td>
                   </tr>
+                    {% empty %}
+                  <tr>
+                    <td colspan="4">No Upcoming Vaccinations Yet.</td>
+                  </tr>
                   {% endfor %}
+               
                 </tbody>
               </table>
         </div>
