@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -473,16 +473,17 @@ def kick_member(request, membership_id):
 @login_required(login_url='login')
 def ccvo_announcement(request):
     user = request.user
-
+    is_cv = False
     announcements = CCVOAnnouncement.objects.all()
 
-    context = {'announcements':announcements}
+    
 
     if user.role == 'vet':  # Check if the user is a vet
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
-            if vet_profile.is_city_vet:  # Check if it's a city vet
-                # City vet is authorized to view this page
+            if vet_profile.is_city_vet:  
+                is_cv = True
+                context = {'announcements':announcements,'is_cv':is_cv}
                 return render(request, 'ccvo/announcement.html', context)
             else:
                 # If the vet is not a city vet, redirect to another page (e.g., 'another_page')
@@ -492,6 +493,7 @@ def ccvo_announcement(request):
             return redirect('login')  # Same as above, redirect to another page
     
     elif user.role == 'owner':
+        context = {'announcements':announcements,'is_cv':is_cv}
         return render(request, 'owner/ccvo_announcement_page.html', context)
 
     else:
@@ -520,6 +522,44 @@ def getAnnouncements(request):
         })
 
     return JsonResponse({"announcements": data})
+
+
+def ccvo_announcement_form(request):
+    user = request.user
+
+    if request.method == 'POST':
+            form = CCVOAnnouncementForm(request.POST, request.FILES)
+            if form.is_valid():
+                room = form.save(commit=False)
+                room.host = user
+                room.save()
+                return redirect('ccvo-announcement')
+    else:
+        form = CCVOAnnouncementForm()
+
+
+
+    context ={'form':form}
+
+
+
+    if user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/announcement_form.html',context)
+      
+            else:
+                 return HttpResponse('You are not allowed here!')
+        except VetClinicProfile.DoesNotExist:
+            # fallback in case vet profile is missing
+           return HttpResponse('You are not allowed here!')
+
+    else:
+        # optional fallback if role is not recognized
+        return HttpResponse('You are not allowed here!')
+
+
 
 
 @login_required(login_url='login')

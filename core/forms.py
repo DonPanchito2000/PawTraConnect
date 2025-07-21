@@ -113,3 +113,29 @@ class ClubForumRoomForm(forms.ModelForm):
 #                 'rows': 3
 #             }),
 #         }
+
+
+# CCVO Annoucement Form 
+class CCVOAnnouncementForm(forms.ModelForm):
+    class Meta:
+        model = ForumRoom
+        fields = ['title', 'content', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter room title',
+                'required': True
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Write something about the room...',
+                'required': True
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'accept': 'image/*',
+                'onchange': 'previewImage(event)',
+                'hidden': True,  # hide native input
+                'id': 'image'
+            })
+        }
