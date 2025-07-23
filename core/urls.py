@@ -52,6 +52,7 @@ urlpatterns = [
     path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
     path('approve-clinic/<str:pk>/',views.approve_clinic, name='approve-clinic'),
     path('ccvo-announcement-form/',views.ccvo_announcement_form,name='ccvo-announcement-form'),
+    path('announcement-room/<str:pk>/', views.announcement_room, name= "announcement-room"),
     # -----------------------
     # CCVO VET URLS
     # -----------------------

@@ -18,7 +18,7 @@
         <!-- Room List -->
         <div class="announcement-post">
           {% for announcement in announcements %}
-          <a href="" class="text-decoration-none forum-room-link">
+          <a href="{% url 'announcement-room' announcement.id %}" class="text-decoration-none forum-room-link">
             <div class="card room-card mb-3 forum-room-card">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
@@ -82,7 +82,7 @@ $(document).ready(function () {
         } else {
           response.announcements.forEach(function (item) {
             const announcementHTML = `
-              <a href="/core/room/${item.id}" class="text-decoration-none text-white">
+              <a href="/core/announcement-room/${item.id}" class="text-decoration-none text-white">
                 <div class="card room-card mb-3">
                   <div class="card-body">
                     <div class="d-flex align-items-center mb-2">

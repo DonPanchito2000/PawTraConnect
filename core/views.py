@@ -501,6 +501,36 @@ def ccvo_announcement(request):
         return redirect('login')  # Change 'another_page' to your desired URL name
     
 
+
+
+def announcement_room(request, pk):
+    user = request.user
+
+    announcement = get_object_or_404(CCVOAnnouncement, id=pk)
+
+    context ={'announcement':announcement}
+
+    if user.role == 'owner':
+        return render(request, 'owner/announcement_room.html', context)
+
+    elif user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/announcement_room.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            # fallback in case vet profile is missing
+            return HttpResponse('You are not allowed here!')
+
+    else:
+        # optional fallback if role is not recognized
+         return HttpResponse('You are not allowed here!')
+
+    
+
 def getAnnouncements(request):
     query = request.GET.get('q', '')
 

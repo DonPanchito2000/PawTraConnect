@@ -1,0 +1,10 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/announcement_room.css' %}">
+{% endblock extra_css %}
+{% block title %}Announcement{% endblock %}
+
+{% block content %}
+    {% include 'announcement_room.html' %}
+{% endblock content %}
