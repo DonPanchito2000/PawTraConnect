@@ -164,13 +164,12 @@
                       <small class="ml-auto">${item.created_timesince}</small>
                     </div>
                     <h6 class="card-title mb-1">${item.title}</h6>
-
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                      </div>
                              <p class="mb-2">${item.content_truncated}</p>
                     ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
-                <div class="d-flex justify-content-between align-items-center mt-2">
-
-                  <span><i class="fas fa-users me-1"></i> ${item.joined_count} Joined</span>              
-                    </div>
+                       
+                 
                   </div>
                 </div>
               </a>`;

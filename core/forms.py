@@ -1,5 +1,5 @@
 from django import forms
-from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord
+from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement
 
 class DogRegistrationForm(forms.ModelForm):
     class Meta:
@@ -118,7 +118,7 @@ class ClubForumRoomForm(forms.ModelForm):
 # CCVO Annoucement Form 
 class CCVOAnnouncementForm(forms.ModelForm):
     class Meta:
-        model = ForumRoom
+        model = CCVOAnnouncement
         fields = ['title', 'content', 'image']
         widgets = {
             'title': forms.TextInput(attrs={
