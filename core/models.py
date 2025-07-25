@@ -38,7 +38,7 @@ class Dog(models.Model):
 
 
 class ForumRoom(models.Model):
-     host = models.ForeignKey(Account, on_delete = models.SET_NULL,null=True)
+     host = models.ForeignKey(Account, on_delete=models.CASCADE, null=False)
      title = models.CharField(max_length=200, blank=True)
      content = models.TextField()
      participants = models.ManyToManyField(Account, related_name='participants',blank=True)

@@ -157,7 +157,6 @@ def join_club(request, pk):
     
 
 def club_profile_page(request, club_id):
-  
     # This is to display club forum rooms
     query = request.GET.get('q') if request.GET.get('q') else ''
     print(f"Query: {query}")
@@ -189,6 +188,7 @@ def club_profile_page(request, club_id):
     except ClubMembership.DoesNotExist:
         membership_status = 'none'
 
+  
     context = {'club':club,'membership_status':membership_status,'rooms':rooms,'room_comments':room_comments}
     return render(request, 'owner/club_profile.html', context)
 
@@ -391,9 +391,7 @@ def owner_pets_page(request, owner_id):
 # -----------------------
 # CLUB VIEWS
 # -----------------------
-# @login_required(login_url='login')
-# def club_dashboard(request):
-#     return render(request,'club/dashboard.html')
+
 
 @login_required(login_url='login')
 def club_announcement(request):
@@ -457,9 +455,45 @@ def kick_member(request, membership_id):
     
 
 
+def club_forum_page(request):
+    club = ClubProfile.objects.get(user = request.user)
 
-    
+    query = request.GET.get('q') if request.GET.get('q') else ''
+    print(f"Query: {query}")
+    rooms = ClubForumRoom.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(host__username__icontains=query)
+    ).order_by('-created')
 
+    room_comments = ClubForumComment.objects.select_related('room').filter(user=request.user).order_by('-created')[:10]
+
+    context = {'club':club,'rooms':rooms,'room_comments':room_comments}
+    return render(request, 'club/club_forum_page.html', context)
+
+
+def club_form(request):
+    user = request.user
+    club = ClubProfile.objects.get(user = request.user)
+
+
+
+    if request.method == 'POST':
+            form = ClubForumRoomForm(request.POST, request.FILES)
+            if form.is_valid():
+                room = form.save(commit=False)
+                room.host = user
+                room.save()
+                # url = reverse('club-profile-page', kwargs={'club_id': club_id})
+                return redirect('club-forum-page')
+    else:
+        form = ClubForumRoomForm()
+
+
+
+    context ={'form':form, 'club':club}
+
+    return render(request, 'owner/club_forum_form.html',context)
 
 # -----------------------
 # END CLUB VIEWS
@@ -804,10 +838,10 @@ def getRooms(request):
         data.append({
             "id": room.id,
             "title": room.title,
-            "content_truncated": room.content[:300]+ "..." if len(room.content) > 100 else room.content,
+           "content_truncated": (room.content[:300] + "...") if len(room.content) > 300 else room.content,
             "created_timesince": timesince(room.created) + " ago",
             "host": {
-                "username": room.host.username,
+                "username": room.host.username if room.host else "Unknown",
                 "profile_picture_url": room.host.profile_picture.url if room.host.profile_picture else "",
             },
             "image_url": room.image.url if room.image else "",

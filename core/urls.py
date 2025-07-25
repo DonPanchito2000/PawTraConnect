@@ -24,11 +24,13 @@ urlpatterns = [
     # CLUB URLS
     # -----------------------
     path('club-announcement/', views.club_announcement,name='club-announcement'),
-    path('member-page', views.member_page, name='member-page'),
+    path('member-page/', views.member_page, name='member-page'),
     path('accept-membership-request/<str:membership_id>', views.accept_membership_request, name='accept-membership-request'),
     path('reject-membership-request/<str:membership_id>', views.reject_membership_request, name='reject-membership-request'),
     path('kick-member-confirmation-page/<str:membership_id>', views.kick_member_confirmation_page, name='kick-member-confirmation-page'),
     path('kick-member/<str:membership_id>', views.kick_member, name='kick-member'),
+    path('club-forum-page/', views.club_forum_page, name='club-forum-page'),
+    path('club-form/', views.club_form, name='club-form'),
     # -----------------------
     # END CLUB URLS
     # -----------------------
