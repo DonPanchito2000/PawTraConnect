@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Account</title>
+  <link rel="stylesheet" href="{% static 'accounts/styles/account.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+
+    <!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card p-4">
+
+                    <div class="arrow-back mb-4">
+                      {% if user.role == 'owner' %}
+                          <a href="{% url 'pet-owner-dashboard' %}" class="arrow-back">
+                                <i class="fas fa-arrow-left mr-2"></i> Back
+                          </a>
+                      {% elif user.role == 'club' %}
+                          <a href="{% url 'club-announcement' %}" class="arrow-back">
+                                <i class="fas fa-arrow-left mr-2"></i> Back
+                          </a>
+                      {% elif user.role == 'vet' %}
+                          <a href="{% url 'vet-clinic-dashboard' %}" class="arrow-back">
+                                <i class="fas fa-arrow-left mr-2"></i> Back
+                          </a>
+                      {% endif %}
+            
+                
+                </div>
+          <div class="text-center">
+            {% if user.profile_picture %}
+            <img src="{{user.profile_picture.url}}" alt="Profile Picture" class="  profile-img mb-3">
+            {% endif %}
+            <h3 class="mb-1">{{ user.email }}</h3>
+            <p class="text-muted">{{ user.get_role_display }}</p>
+          </div>
+
+          <hr>
+
+        <div class="text-center">
+          <!-- Profile Info Display -->
+          {% if user.role == 'owner' %}
+          <p><span>Name:</span> {{ user.petownerprofile.first_name }} {{ user.petownerprofile.last_name }}</p>
+          <p><span>Barangay:</span> {{ user.petownerprofile.barangay }}</p>
+          <p><span>Contact:</span> {{ user.petownerprofile.contact_number }}</p>
+          <p><span>Bio:</span> {{ user.petownerprofile.bio }}</p>
+          {% elif user.role == 'vet' %}
+          <p><span>Clinic Name:</span> {{ user.vetclinicprofile.clinic_name }}</p>
+          <p><span>Contact:</span> {{ user.vetclinicprofile.contact_number }}</p>
+          <p><span>Location:</span> {{ user.vetclinicprofile.location }}</p>
+          {% elif user.role == 'club' %}
+          <p><span>Club Name:</span> {{ user.clubprofile.club_name }}</p>
+          <p><span>Contact:</span> {{ user.clubprofile.contact_number }}</p>
+          <p><span>Description:</span> {{ user.clubprofile.description }}</p>
+          {% endif %}
+          </div>
+
+          <div class="mt-4">
+        <a href="{% url 'edit-profile' %}" class="btn btn-outline-primary btn-lg mb-3">
+              ✏️ Edit Profile
+            </a>
+            <a href="" class="btn btn-outline-warning btn-lg mb-3">
+              🔐 Change Password
+            </a>
+            <a href="" class="btn btn-outline-danger btn-lg">
+              ❌ Delete Account
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

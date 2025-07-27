@@ -134,3 +134,66 @@ class LoginForm(forms.Form):
         'class': 'form-control',
         'placeholder': 'Password'
     }))
+
+
+
+
+# --------------------
+# Pet Owner Edit Form
+# --------------------
+
+
+class EditPetOwnerProfileForm(forms.ModelForm):
+    class Meta:
+        model = PetOwnerProfile
+        fields = ['first_name', 'last_name', 'barangay', 'contact_number', 'bio']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'barangay': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+
+  
+
+# --------------------
+# Vet Clinic Edit Form
+# --------------------
+class EditVetClinicProfileForm(forms.ModelForm):
+    class Meta:
+        model = VetClinicProfile
+        fields = ['clinic_name', 'location', 'contact_number']
+        widgets = {
+            'clinic_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+# --------------------
+# Club Edit Form
+# --------------------
+class EditClubProfileForm(forms.ModelForm):
+    class Meta:
+        model = ClubProfile
+        fields = ['club_name', 'admin_name', 'contact_number', 'description', 'admin_email']
+        widgets = {
+            'club_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'admin_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'admin_email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
+ 
+
+
+class EditAccountForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['profile_picture','email']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+        }

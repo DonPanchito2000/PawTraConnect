@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from  PIL import Image
 class Account(AbstractUser):
     email = models.EmailField(unique=True)
     USER_ROLES = (
@@ -17,6 +17,16 @@ class Account(AbstractUser):
     def __str__(self):
         return f"{self.email} ({self.role})"
     
+    def save(self, *args, **kwargs):
+        # Your custom logic here (if any)
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.profile_picture.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300,300)
+            img.thumbnail(output_size)
+            img.save(self.profile_picture.path)
+
 
 
 class Barangay(models.Model):
@@ -87,4 +97,6 @@ class ClubProfile(models.Model):
 
     def __str__(self):
         return f"{self.club_name} ({self.admin_name})"
+    
+
 

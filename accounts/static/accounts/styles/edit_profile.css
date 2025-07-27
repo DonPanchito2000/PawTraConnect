@@ -1,0 +1,73 @@
+body{
+      background-color: #273e47 !important; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #dee2e6;
+}
+
+/* Ensure all form fields look clean and uniform */
+input.form-control,
+textarea.form-control,
+select.form-control {
+  width: 100%;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.btn-block {
+  font-weight: 600;
+  padding: 10px;
+}
+
+
+
+.arrow-back a{
+    text-decoration: none;
+    color: #eae2b7 ;
+    transition: 0.80s ease;
+}
+
+.arrow-back a:hover{
+    text-decoration: none;
+    color: #be620d;
+}
+
+
+    .card{
+  background-color: #273e47 !important;
+  z-index: 1; 
+  color: #eae2b7;
+}
+
+  .card:hover {
+    transform: translateY(-2px);
+
+  }
+
+  
+
+
+    .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+    z-index: 2;
+    pointer-events: none; /* So clicks go through */
+  }

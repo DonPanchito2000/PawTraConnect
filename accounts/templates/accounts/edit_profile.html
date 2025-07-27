@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Profile</title>
+
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <!-- Google Fonts (optional for modern look) -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'accounts/styles/edit_profile.css' %}">
+</head>
+<body style="font-family: 'Open Sans', sans-serif; background-color: #f4f6f8;">
+
+<div class="container py-5">
+ 
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-9">
+
+      <div class="card shadow-sm p-4">
+
+              <div class="arrow-back mb-4">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
+        <h4 class="mb-4 text-center">Edit Profile</h4>
+
+        <!-- Profile Picture Preview -->
+        {% if request.user.profile_picture %}
+          <img src="{{ request.user.profile_picture.url }}" class="m-auto custom-profile-img mb-3"  width="40%" id="previewImage" alt="Profile Picture">
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+            {{ account_form.as_p }}
+                   {{ form.as_p }}
+          </fieldset>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary btn-block">💾 Save Changes</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Preview Image JS -->
+<script>
+  const fileInput = document.querySelector('input[type="file"]');
+  if (fileInput) {
+    fileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('previewImage').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

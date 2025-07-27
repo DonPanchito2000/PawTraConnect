@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
-from .forms import PetOwnerRegistrationForm, VetClinicRegistrationForm, ClubRegistrationForm, LoginForm
+from .forms import PetOwnerRegistrationForm, VetClinicRegistrationForm, ClubRegistrationForm, LoginForm, EditPetOwnerProfileForm, EditVetClinicProfileForm, EditClubProfileForm, EditAccountForm
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 def register_pet_owner(request):
     form = PetOwnerRegistrationForm(request.POST or None, request.FILES or None)
@@ -38,16 +39,6 @@ def choose_role(request):
 
 
 def user_login(request):
-    # if request.user.is_authenticated:
- 
-    #     if request.user.role == 'owner':
-    #         return redirect('pet-owner-dashboard')
-    #     elif request.user.role == 'vet':
-    #         return redirect('vet-clinic-dashboard')
-    #     elif request.user.role == 'club':
-    #         return redirect('club-dashboard')
-    #     else:
-    #         return HttpResponse('You are not allowed here')
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -96,3 +87,58 @@ def user_logout(request):
     return redirect('login')
 
 
+
+# START ACCOUNT SETTING
+
+def account_page(request):
+    user = request.user
+    context = {'user':user}
+    return render(request, 'accounts/account.html', context)
+
+
+
+from .models import Barangay  # Ensure you import the Barangay model
+
+@login_required
+def edit_profile(request):
+    user = request.user
+
+    if request.method == 'POST':
+        if user.role == 'owner':
+            form = EditPetOwnerProfileForm(request.POST, instance=user.petownerprofile)
+            account_form = EditAccountForm(request.POST, request.FILES, instance=user)
+        elif user.role == 'club':
+            form = EditClubProfileForm(request.POST, instance=user.clubprofile)
+            account_form = EditAccountForm(request.POST, request.FILES, instance=user)
+        elif user.role == 'vet':
+            form = EditVetClinicProfileForm(request.POST, instance=user.vetclinicprofile)
+            account_form = EditAccountForm(request.POST, request.FILES, instance=user)
+        else:
+            return redirect('login')
+
+        if form.is_valid() and account_form.is_valid():
+            form.save()
+            account_form.save()
+            return redirect('account-page')  # Or wherever you want to redirect after saving
+    else:
+        if user.role == 'owner':
+            form = EditPetOwnerProfileForm(instance=user.petownerprofile)
+            account_form = EditAccountForm(instance=user)
+        elif user.role == 'club':
+            form = EditClubProfileForm(instance=user.clubprofile)
+            account_form = EditAccountForm(instance=user)
+        elif user.role == 'vet':
+            form = EditVetClinicProfileForm(instance=user.vetclinicprofile)
+            account_form = EditAccountForm(instance=user)
+        else:
+            return redirect('login')
+
+    context = {
+        'form': form,
+        'account_form': account_form,
+        'user': user
+    }
+    return render(request, 'accounts/edit_profile.html', context)
+
+
+# END ACCOUNT SETTING
