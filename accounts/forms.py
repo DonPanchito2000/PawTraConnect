@@ -150,7 +150,7 @@ class EditPetOwnerProfileForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'barangay': forms.TextInput(attrs={'class': 'form-control'}),
+            'barangay': forms.Select(attrs={'class': 'form-control custom-select-style'}),  # FIXED
             'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
             'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
@@ -192,8 +192,11 @@ class EditClubProfileForm(forms.ModelForm):
 class EditAccountForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['profile_picture','email']
+        fields = ['profile_picture', 'email']
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'profile_picture': forms.ClearableFileInput(attrs={
+                'class': 'form-control-file',
+                'id': 'profilePictureInput'
+            }),
         }

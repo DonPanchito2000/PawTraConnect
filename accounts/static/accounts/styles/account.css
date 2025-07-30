@@ -51,15 +51,6 @@ hr{
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .btn-lg {
-      width: 100%;
-      transition: 0.2s ease-in-out;
-    }
-
-    .btn-lg:hover {
-      transform: scale(1.03);
-    }
-
     .text-muted {
       font-size: 0.9rem;
     }
@@ -74,4 +65,41 @@ hr{
 .arrow-back a:hover{
     text-decoration: none;
     color: #be620d;
+}
+
+
+.btn-edit-profile{
+  border: 1px solid #eae2b7 !important;
+   color: #f77f00 !important;
+
+}
+
+.btn-change-password{
+   border: 1px solid #f77f00 !important;
+    color: #eae2b7 !important;
+}
+
+.btn-edit-profile:hover{
+  background-color: #eae2b7;
+}
+.btn-change-password:hover{
+  background-color: #f77f00;
+}
+
+    .btn-lg {
+      width: 100%;
+      transition: 0.2s ease-in-out;
+    }
+
+    .btn-lg:hover {
+      transform: scale(1.03);
+    }
+
+    .btn:focus{
+      outline: none !important;
+    }
+
+    .btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

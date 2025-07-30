@@ -97,7 +97,7 @@ def account_page(request):
 
 
 
-from .models import Barangay  # Ensure you import the Barangay model
+
 
 @login_required
 def edit_profile(request):

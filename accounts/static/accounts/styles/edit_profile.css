@@ -71,3 +71,85 @@ select.form-control {
     z-index: 2;
     pointer-events: none; /* So clicks go through */
   }
+
+
+  .btn-select-profile{
+    border: 1px solid #f77f00 !important;
+    margin-top: 30px;
+    color: #f77f00;
+    width: 250px;
+    transition: 0.2s ease-in-out;
+    
+  }
+
+  .btn-select-profile:hover{
+  background-color: #be620d;
+    color: #eae2b7;
+     transform: scale(1.03);
+}
+
+
+      .form-control{
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none !important;
+  box-shadow: none !important;
+   border-radius: 10px;
+  transition: box-shadow 0.2s ease;
+   color: #eae2b7;
+      height: 40px;
+}
+
+.form-control:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #eae2b7;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+}
+
+/* .form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2) inset !important;
+  -webkit-text-fill-color: #eae2b7 !important;
+  color: #eae2b7 !important;
+  caret-color: #eae2b7;
+  transition: background-color 5000s ease-in-out 0s;
+} */
+
+
+
+/* Style the <select> box */
+.custom-select-style {
+  background-color: rgba(0, 0, 0, 0.2);; /* Light background */
+  color:#eae2b7 ; /* Dark text */
+  border: 1px solid #eae2b7 ;
+  border-radius: 4px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+}
+
+/* Style the dropdown options (some browsers may not fully support this) */
+.custom-select-style option {
+ background-color: rgba(0, 0, 0, 0.2);  /* White option background */
+  color:  #273e47;           /* Option text color */
+}
+
+.btn-save {
+    border: 1px solid  #f77f00 !important;
+    margin-top: 30px;
+    color: #f77f00;
+    width: 250px;
+    transition: 0.2s ease-in-out;
+    margin: auto;
+    font-weight: 500;
+  }
+
+.btn-save:hover{
+  background-color:  #f77f00;
+    color: #eae2b7 ;
+     transform: scale(1.03);
+}

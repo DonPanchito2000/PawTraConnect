@@ -40,16 +40,48 @@
           <img src="{{ request.user.profile_picture.url }}" class="m-auto custom-profile-img mb-3"  width="40%" id="previewImage" alt="Profile Picture">
         {% endif %}
 
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <fieldset class="form-group">
-            {{ account_form.as_p }}
-                   {{ form.as_p }}
-          </fieldset>
-          <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary btn-block">💾 Save Changes</button>
-          </div>
-        </form>
+       <form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+
+
+
+
+<div class="form-group mb-3 text-center">
+  <label for="profilePictureInput" class="btn btn-select-profile">
+   <i class="fas fa-camera"></i> Select a Profile Picture
+  </label>
+  <input type="file" name="profile_picture" id="profilePictureInput" accept="image/*" class="d-none" onchange="previewProfileImage(event)">
+</div>
+
+
+
+
+
+  <!-- Delete Button -->
+  <!-- {% if request.user.profile_picture %}
+    <div class="form-group">
+      <form method="POST" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">🗑️ Delete Profile Picture</button>
+      </form>
+    </div>
+  {% endif %} -->
+
+    <!-- Email field -->
+  <div class="form-group">
+    <label for="id_email">Email</label>
+    {{ account_form.email }}
+  </div>
+
+  <!-- Render the role-based profile form -->
+  {{ form.as_p }}
+
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-save btn-block">💾 Save Changes</button>
+  </div>
+</form>
+
       </div>
 
     </div>
@@ -58,18 +90,21 @@
 
 <!-- Preview Image JS -->
 <script>
-  const fileInput = document.querySelector('input[type="file"]');
-  if (fileInput) {
-    fileInput.addEventListener('change', function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          document.getElementById('previewImage').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+  function previewProfileImage(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('previewImage');
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '#';
+      preview.classList.add('d-none');
+    }
   }
 </script>
 
