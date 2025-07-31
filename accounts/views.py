@@ -1,9 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
-from .forms import PetOwnerRegistrationForm, VetClinicRegistrationForm, ClubRegistrationForm, LoginForm, EditPetOwnerProfileForm, EditVetClinicProfileForm, EditClubProfileForm, EditAccountForm
+from .forms import PetOwnerRegistrationForm, VetClinicRegistrationForm, ClubRegistrationForm, LoginForm, EditPetOwnerProfileForm, EditVetClinicProfileForm, EditClubProfileForm, EditAccountForm, PasswordChangingForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+
+
+# change password
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    success_url = reverse_lazy('account-page')
+
+    def form_valid(self, form):
+        messages.success(self.request, "✅ Your password has been successfully changed.")
+        return super().form_valid(form)
+
 
 def register_pet_owner(request):
     form = PetOwnerRegistrationForm(request.POST or None, request.FILES or None)
@@ -91,6 +105,7 @@ def user_logout(request):
 # START ACCOUNT SETTING
 
 def account_page(request):
+
     user = request.user
     context = {'user':user}
     return render(request, 'accounts/account.html', context)

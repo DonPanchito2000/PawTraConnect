@@ -103,3 +103,25 @@ hr{
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* .alert-success {
+  background-color: #28a745; 
+  color: white;
+  border: none;
+}
+
+.alert-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.alert-info {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.alert-warning {
+  background-color: #ffc107;
+  color: black;
+} */

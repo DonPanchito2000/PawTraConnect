@@ -69,16 +69,30 @@
         <a href="{% url 'edit-profile' %}" class="btn btn-edit-profile btn-lg mb-3">
               ✏️ Edit Profile
             </a>
-            <a href="" class="btn btn-change-password btn-lg mb-3">
+            <a href="{% url 'change-password' %}" class="btn btn-change-password btn-lg mb-3">
               🔐 Change Password
             </a>
             <!-- <a href="" class="btn btn-outline-danger btn-lg">
               ❌ Delete Account
             </a> -->
+        {% if messages %}
+          {% for message in messages %}
+            {% if "logged in" not in message|lower %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+            
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </body>
 </html>
