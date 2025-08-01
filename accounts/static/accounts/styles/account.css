@@ -95,9 +95,7 @@ hr{
       transform: scale(1.03);
     }
 
-    .btn:focus{
-      outline: none !important;
-    }
+
 
     .btn:focus {
   outline: none !important;

@@ -27,15 +27,33 @@ from django.urls import reverse
 @login_required(login_url='login')
 def pet_owner_dashboard(request):
     owner =  get_object_or_404(PetOwnerProfile, user=request.user)
-    registered_dogs= Dog.objects.filter(owner = owner)
+    query = request.GET.get('q') if request.GET.get('q') else ''
+
+
+    # registered_dogs = Dog.objects.filter(owner=owner)
+
+    # if query:
+    #     registered_dogs = registered_dogs.filter(
+    #         Q(name__icontains=query) | Q(breed__icontains=query)
+    #     )
+ 
+    all_registered_dogs = Dog.objects.filter(owner=owner)
+
+    # This is only for the search (used in the sidebar)
+    if query:
+        filtered_dogs = all_registered_dogs.filter(
+            Q(name__icontains=query) | Q(breed__icontains=query)
+        )
+    else:
+        filtered_dogs = all_registered_dogs
 
     today = timezone.now().date()
     three_days = today + timedelta(days=3)
  
-    upcoming_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__range=(today, three_days),pet__in=registered_dogs)
-    overdue_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__lt=today, pet__in=registered_dogs)
+    upcoming_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__range=(today, three_days),pet__in=all_registered_dogs)
+    overdue_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__lt=today, pet__in=all_registered_dogs)
 
-    context = {'registered_dogs':registered_dogs,'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
+    context = {'registered_dogs':filtered_dogs,'all_dogs': all_registered_dogs,   'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
     return render(request,'owner/dashboard.html',context)
 
 
@@ -671,7 +689,7 @@ def approve_clinic(request, pk):
 def general_forum_view(request):
 
     query = request.GET.get('q') if request.GET.get('q') else ''
-    print(f"Query: {query}")
+    # print(f"Query: {query}")
     rooms = ForumRoom.objects.filter(
         Q(title__icontains=query) |
         Q(content__icontains=query) |

@@ -153,3 +153,9 @@ select.form-control {
     color: #eae2b7 ;
      transform: scale(1.03);
 }
+
+
+hr{
+  background-color: #eae2b7;
+  margin-bottom: 20px;
+}

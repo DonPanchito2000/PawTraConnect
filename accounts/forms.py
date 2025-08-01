@@ -206,17 +206,17 @@ class EditAccountForm(forms.ModelForm):
 class PasswordChangingForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Email',
+        'placeholder': 'Old Password',
         'type':'password'
     }))
     new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Password',
+        'placeholder': 'New Password',
         'type':'password'
     }))
     new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Password',
+        'placeholder': 'Confirm Password',
         'type':'password'
     }))
 
