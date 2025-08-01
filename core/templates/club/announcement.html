@@ -1,10 +1,158 @@
 {% extends 'club/base.html' %}
 {% load static %}
 {% block extra_css %} 
-<!-- <link rel="stylesheet" href="{% static 'core/styles/owner/dashboard.css' %}"> -->
+<link rel="stylesheet" href="{% static 'core/styles/club/announcement.css' %}">
 {% endblock extra_css %}
 {% block title %}Announcent - PawTraConnect{% endblock %}
 {% block content %}
 
-    <h1>CLUB ANNOUNCEMENT</h1>
+    
+<div class="container-fluid py-4">
+
+
+  <div class="row">
+    <!-- Forum Room Section -->
+    <div class="col-lg-10 col-sm-12 mb-4 m-auto">
+      <div class="card forum-container shadow rounded-3 p-4">
+        {% if is_cv %}
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <!-- <h5 class="mb-0">Forum Rooms</h5> -->
+          <a href="{% url 'ccvo-announcement-form' %}" class="btn create-room-btn ml-auto"><i class="fas fa-plus"></i> Create Announcement</a>
+        </div>
+        {% endif %}
+
+
+
+        <!-- Room List -->
+        <div class="announcement-post">
+          {% for announcement in announcements %}
+          <a href="{% url 'club-announcement-room' announcement.id %}" class="text-decoration-none forum-room-link">
+            <div class="card room-card mb-3 forum-room-card">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <img src="{{announcement.host.profile_picture.url}}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                  <span class="ml-2">{{ announcement.host.username }}</span>
+                  <small class=" ml-auto">{{ announcement.created|timesince }} ago</small>
+                </div>
+                <h6 class="card-title mb-1">{{ announcement.title }}</h6>
+              
+                <p class="mb-2">{{ announcement.content_truncated }}</p>
+           
+                  {% if announcement.image %}
+                <img src="{{ announcement.image.url }}" alt="Room Image" class="img-fluid rounded mb-2 forum-room-img">
+                {% endif %}
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-light">No rooms found.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+        
+
+
+<!-- Back to Top Button -->
+<button id="backToTop" title="Go to top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V4.707l3.147 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 4.707V11.5A.5.5 0 0 0 8 12z"/>
+  </svg>
+</button>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+$(document).ready(function () {
+  function loadClubAnnouncements() {
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'get-club-announcements' club.id  %}",
+      success: function (response) {
+        console.log("Received announcements:", response.announcements);
+        const announcementPost = $('.announcement-post');
+        announcementPost.empty();
+
+        if (response.announcements.length === 0) {
+          announcementPost.append('<p class="text-light">No announcement yet.</p>');
+        } else {
+          response.announcements.forEach(function (item) {
+            const announcementHTML = `
+              <a href="/core/club-announcement-room/${item.id}" class="text-decoration-none text-white">
+                <div class="card room-card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                      <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                      <span class="ml-2">${item.host.username}</span>
+                      <small class="ml-auto">${item.created_timesince}</small>
+                    </div>
+                    <h6 class="card-title mb-1">${item.title}</h6>
+                    <p class="mb-2">${item.content_truncated}</p>
+                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+              </a>`;
+            announcementPost.append(announcementHTML);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching announcements:", error);
+       $('.announcement-post').html('<p class="text-danger">Failed to load announcements.</p>');
+
+      }
+    });
+  }
+
+  // Initial load
+  loadClubAnnouncements();
+
+  // FIXED: call correct function name here
+  setInterval(loadClubAnnouncements, 5000);
+
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    loadClubAnnouncements();
+  });
+});
+
+
+
+
+// back top
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 200) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+
+
+
+
+</script>
+
 {% endblock content %}

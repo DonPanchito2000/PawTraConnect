@@ -1,0 +1,62 @@
+
+<div class="container-fluid py-4">
+
+
+  <div class="row">
+    <!-- Forum Room Section -->
+    <div class="col-lg-10 col-sm-12 mb-4 m-auto">
+      <div class="card forum-container shadow rounded-3 p-4">
+        {% if is_cv %}
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <!-- <h5 class="mb-0">Forum Rooms</h5> -->
+          <a href="{% url 'ccvo-announcement-form' %}" class="btn create-room-btn ml-auto"><i class="fas fa-plus"></i> Create Announcement</a>
+        </div>
+        {% endif %}
+
+
+
+        <!-- Room List -->
+        <div class="announcement-post">
+          {% for announcement in announcements %}
+          <a href="{% url 'club-announcement-room' announcement.id %}" class="text-decoration-none forum-room-link">
+            <div class="card room-card mb-3 forum-room-card">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <img src="{{announcement.host.profile_picture.url}}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                  <span class="ml-2">{{ announcement.host.username }}</span>
+                  <small class=" ml-auto">{{ announcement.created|timesince }} ago</small>
+                </div>
+                <h6 class="card-title mb-1">{{ announcement.title }}</h6>
+              
+                <p class="mb-2">{{ announcement.content_truncated }}</p>
+           
+                  {% if announcement.image %}
+                <img src="{{ announcement.image.url }}" alt="Room Image" class="img-fluid rounded mb-2 forum-room-img">
+                {% endif %}
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-light">No rooms found.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+        
+
+
+<!-- Back to Top Button -->
+<button id="backToTop" title="Go to top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V4.707l3.147 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 4.707V11.5A.5.5 0 0 0 8 12z"/>
+  </svg>
+</button>

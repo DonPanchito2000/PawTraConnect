@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm
-from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 from django.contrib import messages
@@ -188,7 +188,9 @@ def club_profile_page(request, club_id):
 
     membership_status =''
     club = ClubProfile.objects.get(id=club_id)
-   
+
+    # ANNOUNCEMENTS
+    announcements = ClubAnnouncement.objects.filter(host=club.user).order_by('-created')
 
     try:
         user_membership = ClubMembership.objects.get(club = club, member = request.user)
@@ -205,12 +207,37 @@ def club_profile_page(request, club_id):
             membership_status = 'pending'
     except ClubMembership.DoesNotExist:
         membership_status = 'none'
-
   
-    context = {'club':club,'membership_status':membership_status,'rooms':rooms,'room_comments':room_comments}
+    context = {'club':club,'membership_status':membership_status,'rooms':rooms,'room_comments':room_comments,'announcements':announcements}
     return render(request, 'owner/club_profile.html', context)
 
 
+def getClubAnnouncements(request, club_id):
+    query = request.GET.get('q', '')
+
+    try:
+        club = ClubProfile.objects.get(id=club_id)
+        announcements = ClubAnnouncement.objects.filter(host=club.user)
+
+        data = []
+
+        for announcement in announcements:
+            data.append({
+                "id": announcement.id,
+                "title": announcement.title,
+                "content_truncated": announcement.content[:300]+ "..." if len(announcement.content) > 100 else announcement.content,
+                "created_timesince": timesince(announcement.created) + " ago",
+                "host": {
+                    "username": announcement.host.username,
+                    "profile_picture_url": announcement.host.profile_picture.url if announcement.host.profile_picture else "",
+                },
+                "image_url": announcement.image.url if announcement.image else "",
+            })
+
+        return JsonResponse({"announcements": data})
+    
+    except ClubProfile.DoesNotExist:
+        return JsonResponse({"announcements": []}, status=404)
 
 def club_forum_form(request, club_id):
     user = request.user
@@ -417,6 +444,25 @@ def club_announcement(request):
 
 
 @login_required(login_url='login')
+def club_announcement_room(request, pk):
+    user = request.user
+
+    announcement = get_object_or_404(ClubAnnouncement, id=pk)
+
+    context ={'announcement':announcement}
+
+    if user.role == 'owner':
+        return render(request, 'owner/club_announcement_room.html', context)
+
+    elif user.role == 'club':
+        return render(request, 'club/announcement_room.html', context)
+
+    else:
+        # optional fallback if role is not recognized
+         return HttpResponse('You are not allowed here!')
+
+
+@login_required(login_url='login')
 def member_page(request):
     club = ClubProfile.objects.get(user=request.user)
     memberships = ClubMembership.objects.filter(club=club)
@@ -512,6 +558,19 @@ def club_form(request):
     context ={'form':form, 'club':club}
 
     return render(request, 'owner/club_forum_form.html',context)
+
+
+@login_required(login_url='login')
+def club_announcement(request):
+    user = request.user
+   # ANNOUNCEMENTS
+    announcements = ClubAnnouncement.objects.filter(host=request.user).order_by('-created')
+
+    club = ClubProfile.objects.get(user = request.user)
+    
+    context = {'announcements':announcements,'club':club}
+    return render(request, 'club/announcement.html', context)
+
 
 # -----------------------
 # END CLUB VIEWS

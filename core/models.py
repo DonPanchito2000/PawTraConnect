@@ -180,6 +180,24 @@ class CCVOAnnouncement(models.Model):
 
 
 
+#CLUB ANNOUNCEMENT
+class ClubAnnouncement(models.Model):
+     host = models.ForeignKey(Account, on_delete = models.SET_NULL,null=True)
+     title = models.CharField(max_length=200, blank=True)
+     content = models.TextField()
+     created = models.DateTimeField(auto_now_add=True)
+     updated = models.DateTimeField(auto_now=True)
+     image = models.ImageField(upload_to='ccvo_announcement_images/', blank=True, null=True)
+
+     def __str__(self):
+        return self.title
+    
+     class Meta:
+        ordering = ['-updated', '-created']
+
+
+
+
 
 
 

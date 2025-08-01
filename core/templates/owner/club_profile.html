@@ -38,8 +38,11 @@
 
     <!-- Announcements -->
     <div class="tab-pane fade" id="announcements" role="tabpanel">
-      
-   
+      {% if membership_status == 'approved' %}
+        {% include 'owner/partials/club_announcement.html' %}
+      {% else  %}
+        <p>You need to be a member to view announcements.</p>
+      {% endif %}
     </div>
 
     <!-- Forum -->
@@ -199,6 +202,75 @@
   loadRooms();
 });
 });
+
+
+
+
+
+
+
+
+// announcement
+$(document).ready(function () {
+  function loadAnnouncements() {
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'get-club-announcements' club.id  %}",
+      success: function (response) {
+        console.log("Received announcements:", response.announcements);
+        const announcementPost = $('.announcement-post');
+        announcementPost.empty();
+
+        if (response.announcements.length === 0) {
+          announcementPost.append('<p class="text-light">No announcement yet.</p>');
+        } else {
+          response.announcements.forEach(function (item) {
+            const announcementHTML = `
+              <a href="/core/club-announcement-room/${item.id}" class="text-decoration-none text-white">
+                <div class="card room-card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                      <img src="${item.host.profile_picture_url}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                      <span class="ml-2">${item.host.username}</span>
+                      <small class="ml-auto">${item.created_timesince}</small>
+                    </div>
+                    <h6 class="card-title mb-1">${item.title}</h6>
+                    <p class="mb-2">${item.content_truncated}</p>
+                    ${item.image_url ? `<img src="${item.image_url}" alt="Room Image" class="img-fluid rounded mb-2" style="max-height:700px;  object-fit: cover; width: 100%;">` : ''}
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+              </a>`;
+            announcementPost.append(announcementHTML);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching announcements:", error);
+       $('.announcement-post').html('<p class="text-danger">Failed to load announcements.</p>');
+
+      }
+    });
+  }
+
+  // Initial load
+  loadAnnouncements();
+
+  // FIXED: call correct function name here
+  setInterval(loadAnnouncements, 5000);
+
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    loadAnnouncements();
+  });
+});
+
+
+
+
+
 
 </script>
 {% endblock content %}

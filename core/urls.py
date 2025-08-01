@@ -31,6 +31,7 @@ urlpatterns = [
     path('kick-member/<str:membership_id>', views.kick_member, name='kick-member'),
     path('club-forum-page/', views.club_forum_page, name='club-forum-page'),
     path('club-form/', views.club_form, name='club-form'),
+    path('club-announcement-room/<str:pk>/', views.club_announcement_room, name= "club-announcement-room"),
     # -----------------------
     # END CLUB URLS
     # -----------------------
@@ -69,6 +70,8 @@ urlpatterns = [
 
 
     path('get-announcements/', views.getAnnouncements, name='get-announcements'),
+
+    path('get-club-announcements/<str:club_id>/', views.getClubAnnouncements, name='get-club-announcements'),
 
     # -----------------------
     # START Vaccination Record Related URLS
