@@ -81,7 +81,7 @@
       url: "{% url 'club-room-page' room.id %}",
       data: $(this).serialize(),
       success: function (data) {
-        // Create new comment card HTML
+     
         const commentHTML = `
           <div class="comment-card">
             <img src="${data.user_profile}" alt="User Profile" />
@@ -92,16 +92,16 @@
           </div>
         `;
 
-        // Append it to the comment list
+        
         $("#commentList").append(commentHTML);
 
-        // Clear the textarea
+  
         $("#commentTextarea").val('');
       }
     });
   });
 
-  // polling script to load new comments every few seconds
+  
   function fetchNewComments() {
     $.ajax({
       url: "{% url 'club-room-page' room.id %}?ajax=1",
@@ -112,8 +112,8 @@
     });
   }
 
-  // ✅ This is the missing piece:
-  setInterval(fetchNewComments, 5000); // Call it every 5 seconds
+
+  setInterval(fetchNewComments, 5000); 
 
 
 

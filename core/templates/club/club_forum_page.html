@@ -207,7 +207,10 @@
     $.ajax({
       type: 'GET',
       url: "{% url 'get-club-forum-rooms' %}",
-       data: { q: query },  // <-- send query here
+           data: {
+    q: query,
+    club_id: "{{ club.id }}"
+  },  
       success: function (response) {
         const forumPost = $('.forum-post');
         forumPost.empty();

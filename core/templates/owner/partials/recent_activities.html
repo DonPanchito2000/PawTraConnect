@@ -5,7 +5,7 @@
           <h5 class="mb-3">Recent Activities</h5>
           <div class="recent-activities">
             {% for message in room_comments %}
-            <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">
+            <a href="{% url 'club-room-page' message.room.id %}" class="text-decoration-none text-white">
               <div class="card recent-act-inner-card mb-3">
                 <div class="card-body">
                   <div class="d-flex align-items-center mb-2">

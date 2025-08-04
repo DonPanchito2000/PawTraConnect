@@ -148,7 +148,10 @@
     $.ajax({
       type: 'GET',
       url: "{% url 'get-club-forum-rooms' %}",
-       data: { q: query },  // <-- send query here
+      data: {
+    q: query,
+    club_id: "{{ club.id }}"
+  },  
       success: function (response) {
         const forumPost = $('.forum-post');
         forumPost.empty();
@@ -261,7 +264,7 @@ $(document).ready(function () {
   // FIXED: call correct function name here
   setInterval(loadAnnouncements, 5000);
 
-  $('form').on('submit', function(e) {
+  $('form.announcement-form').on('submit', function(e) {
     e.preventDefault();
     loadAnnouncements();
   });
@@ -269,7 +272,14 @@ $(document).ready(function () {
 
 
 
-
+  document.addEventListener('DOMContentLoaded', function () {
+    const joinForm = document.querySelector('form[action^="/core/join-club"]');
+    if (joinForm) {
+      joinForm.addEventListener('submit', function () {
+        console.log('🚀 JOIN form submitted!');
+      });
+    }
+  });
 
 
 </script>

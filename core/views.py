@@ -153,23 +153,23 @@ def club_page(request):
 
 
 def join_club(request, pk):
-    
+    print("🛠️ join_club view called with pk =", pk)
     if request.method == 'POST':
         club = ClubProfile.objects.get(id=pk)
         membership, created = ClubMembership.objects.get_or_create(member=request.user,club=club)
 
-    if not created:
-            if membership.permanently_banned:   
-                messages.error(request, "You cannot join this club again.")
-                return redirect('club-page')   
-            if membership.status == 'removed' or membership.status == 'rejected':
-                membership.status = 'pending'
-                membership.joined_at = timezone.now()  # optional: reset time
-                membership.save()
-            else:
-                # Already has a non-removed membership
-                return redirect('club-page')
-    print('JOINED')
+        if not created:
+                if membership.permanently_banned:   
+                    messages.error(request, "You cannot join this club again.")
+                    return redirect('club-page')   
+                if membership.status == 'removed' or membership.status == 'rejected':
+                    membership.status = 'pending'
+                    membership.joined_at = timezone.now()  # optional: reset time
+                    membership.save()
+                else:
+                    # Already has a non-removed membership
+                    return redirect('club-page')
+                    print('JOINED')
     return redirect('club-profile-page' , club_id = pk)
 
     
@@ -177,17 +177,20 @@ def join_club(request, pk):
 def club_profile_page(request, club_id):
     # This is to display club forum rooms
     query = request.GET.get('q') if request.GET.get('q') else ''
+    club = ClubProfile.objects.get(id=club_id)
     print(f"Query: {query}")
     rooms = ClubForumRoom.objects.filter(
+    Q(club=club) & (
         Q(title__icontains=query) |
         Q(content__icontains=query) |
         Q(host__username__icontains=query)
-    ).order_by('-created')
-
+    )
+).order_by('-created')
+    print(rooms.query)
     room_comments = ClubForumComment.objects.select_related('room').filter(user=request.user).order_by('-created')[:10]
 
     membership_status =''
-    club = ClubProfile.objects.get(id=club_id)
+    
 
     # ANNOUNCEMENTS
     announcements = ClubAnnouncement.objects.filter(host=club.user).order_by('-created')
@@ -257,6 +260,7 @@ def club_forum_form(request, club_id):
             if form.is_valid():
                 room = form.save(commit=False)
                 room.host = user
+                room.club = club
                 room.save()
                 url = reverse('club-profile-page', kwargs={'club_id': club_id})
                 return redirect(f'{url}?tab=forum&subtab=posts')
@@ -272,11 +276,14 @@ def club_forum_form(request, club_id):
 
 def getClubForumRooms(request):
     query = request.GET.get('q', '')
+    club_id = request.GET.get('club_id')
 
     rooms = ClubForumRoom.objects.filter(
-        Q(title__icontains=query) |
-        Q(content__icontains=query) |
-        Q(host__email__icontains=query)
+        Q(club_id=club_id) & (
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(host__email__icontains=query)
+        )
     ).order_by('-created')
 
     data = []
@@ -446,10 +453,9 @@ def club_announcement(request):
 @login_required(login_url='login')
 def club_announcement_room(request, pk):
     user = request.user
-
     announcement = get_object_or_404(ClubAnnouncement, id=pk)
-
-    context ={'announcement':announcement}
+    club = ClubProfile.objects.get(user = announcement.host)
+    context ={'announcement':announcement,'club':club}
 
     if user.role == 'owner':
         return render(request, 'owner/club_announcement_room.html', context)
@@ -547,6 +553,7 @@ def club_form(request):
             if form.is_valid():
                 room = form.save(commit=False)
                 room.host = user
+                room.club = club
                 room.save()
                 # url = reverse('club-profile-page', kwargs={'club_id': club_id})
                 return redirect('club-forum-page')

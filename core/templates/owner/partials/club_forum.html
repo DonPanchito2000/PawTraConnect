@@ -15,7 +15,7 @@
       <!-- Room List -->
         <div class="forum-post">
           {% for room in rooms %}
-          <a href="{% url 'room' room.id %}" class="text-decoration-none forum-room-link">
+          <a href="{% url 'club-room-page' room.id %}" class="text-decoration-none forum-room-link">
             <div class="card room-card mb-3 forum-room-card">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">

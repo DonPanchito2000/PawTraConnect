@@ -91,6 +91,10 @@ class ClubRegistrationForm(UserCreationForm):
         cleaned_data = super().clean()
         has_professional_services = cleaned_data.get('has_professional_services')
 
+
+        cpc = cleaned_data.get('cpc_document')
+        ptr = cleaned_data.get('ptr_document')
+
         # Only validate these if checkbox is checked
         if has_professional_services:
             if not cleaned_data.get('cpc_document'):
@@ -102,6 +106,12 @@ class ClubRegistrationForm(UserCreationForm):
             if not cleaned_data.get('ptr_issued_date'):
                 self.add_error('ptr_issued_date', 'This field is required if professional services are enabled.')
 
+
+        # Check if files are PDFs
+        if cpc and not cpc.name.lower().endswith('.pdf'):
+          self.add_error('cpc_document', 'Only PDF files are allowed.')
+        if ptr and not ptr.name.lower().endswith('.pdf'):
+            self.add_error('ptr_document', 'Only PDF files are allowed.')
                 
     def save(self, commit=True):
         user = super().save(commit=False)

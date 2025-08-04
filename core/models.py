@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Barangay, PetOwnerProfile, Account, ClubProfile,VetClinicProfile
+from accounts.models import Barangay, PetOwnerProfile, Account, ClubProfile, VetClinicProfile
 from django.core.exceptions import ValidationError
 
 
@@ -69,7 +69,7 @@ class ForumComment(models.Model):
 
 
 class ClubMembership(models.Model):
-    member = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+    member = models.ForeignKey(Account, on_delete=models.CASCADE)
     club = models.ForeignKey(ClubProfile, on_delete =models.CASCADE )
     joined_at = models.DateTimeField(auto_now_add=True)
 
@@ -104,6 +104,7 @@ class ClubMembership(models.Model):
 
 # CLUB FORUM MODELS
 class ClubForumRoom(models.Model):
+     club = models.ForeignKey(ClubProfile, on_delete=models.CASCADE)
      host = models.ForeignKey(Account, on_delete = models.SET_NULL,null=True)
      title = models.CharField(max_length=200, blank=True)
      content = models.TextField()
