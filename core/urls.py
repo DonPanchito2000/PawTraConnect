@@ -24,6 +24,7 @@ urlpatterns = [
     # CLUB URLS
     # -----------------------
     path('club-announcement/', views.club_announcement,name='club-announcement'),
+    path('club-announcement-form/', views.club_announcement_form, name="club-announcement-form"),
     path('member-page/', views.member_page, name='member-page'),
     path('accept-membership-request/<str:membership_id>', views.accept_membership_request, name='accept-membership-request'),
     path('reject-membership-request/<str:membership_id>', views.reject_membership_request, name='reject-membership-request'),

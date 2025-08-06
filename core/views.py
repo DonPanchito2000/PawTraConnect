@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -450,6 +450,34 @@ def club_announcement(request):
     return render(request,'club/announcement.html')
 
 
+
+def club_announcement_form(request):
+    user = request.user
+
+    if request.method == 'POST':
+            form = ClubAnnouncementForm(request.POST, request.FILES)
+            if form.is_valid():
+                room = form.save(commit=False)
+                room.host = user
+                room.save()
+                return redirect('club-announcement')
+    else:
+        form = ClubAnnouncementForm()
+
+
+
+    context ={'form':form}
+
+
+
+    if user.role == 'club':
+       return render(request,'club/announcement_form.html', context)
+
+    else:
+        # optional fallback if role is not recognized
+        return HttpResponse('You are not allowed here!')
+    
+
 @login_required(login_url='login')
 def club_announcement_room(request, pk):
     user = request.user
@@ -642,6 +670,9 @@ def announcement_room(request, pk):
         except VetClinicProfile.DoesNotExist:
             # fallback in case vet profile is missing
             return HttpResponse('You are not allowed here!')
+        
+    elif user.role == "club":
+        return render(request, 'club/announcement_room.html', context)
 
     else:
         # optional fallback if role is not recognized

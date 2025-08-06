@@ -1,5 +1,5 @@
 from django import forms
-from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement
+from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement
 
 class DogRegistrationForm(forms.ModelForm):
     class Meta:
@@ -119,6 +119,32 @@ class ClubForumRoomForm(forms.ModelForm):
 class CCVOAnnouncementForm(forms.ModelForm):
     class Meta:
         model = CCVOAnnouncement
+        fields = ['title', 'content', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter room title',
+                'required': True
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Write something about the room...',
+                'required': True
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'accept': 'image/*',
+                'onchange': 'previewImage(event)',
+                'hidden': True,  # hide native input
+                'id': 'image'
+            })
+        }
+
+
+# CLUB Annoucement Form 
+class ClubAnnouncementForm(forms.ModelForm):
+    class Meta:
+        model = ClubAnnouncement
         fields = ['title', 'content', 'image']
         widgets = {
             'title': forms.TextInput(attrs={

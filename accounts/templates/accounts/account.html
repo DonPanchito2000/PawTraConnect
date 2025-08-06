@@ -50,6 +50,7 @@
         <div class="text-center">
           <!-- Profile Info Display -->
           {% if user.role == 'owner' %}
+          <p><span>ID:</span> {{ user.petownerprofile.owner_id }}</p>
           <p><span>Name:</span> {{ user.petownerprofile.first_name }} {{ user.petownerprofile.last_name }}</p>
           <p><span>Barangay:</span> {{ user.petownerprofile.barangay }}</p>
           <p><span>Contact:</span> {{ user.petownerprofile.contact_number }}</p>
