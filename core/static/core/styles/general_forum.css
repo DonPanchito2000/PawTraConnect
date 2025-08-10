@@ -238,3 +238,16 @@ hr{
 .tab-content > .tab-pane {
   min-height: 400px; /* or adjust as needed */
 }
+
+a{
+  text-decoration: none !important;
+  color: #eae2b7;
+}
+a:hover{
+  text-decoration: none;
+  color: #eae2b7;
+}
+
+strong{
+  color: #eae2b7;
+}

@@ -956,6 +956,7 @@ def getRooms(request):
            "content_truncated": (room.content[:300] + "...") if len(room.content) > 300 else room.content,
             "created_timesince": timesince(room.created) + " ago",
             "host": {
+                "id": room.host.id if room.host else None,
                 "username": room.host.username if room.host else "Unknown",
                 "profile_picture_url": room.host.profile_picture.url if room.host.profile_picture else "",
             },
@@ -964,6 +965,12 @@ def getRooms(request):
         })
 
     return JsonResponse({"rooms": data})
+
+
+def user_forum_profile(request, user_id):
+    user = Account.objects.get(id = user_id)
+    context = {'user':user}
+    return render(request, 'owner/user_forum_profile.html', context)
 
 # -----------------------
 # END GENERAL FORUM VIEWS

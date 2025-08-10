@@ -65,6 +65,7 @@ urlpatterns = [
     path('general-forum/',views.general_forum_view,name='general-forum'),
     path('general-forum-form/',views.general_forum_form,name='general-forum-form'),
     path('room/<int:pk>',views.room,name='room'),
+    path('user-forum-profile/<str:user_id>/', views.user_forum_profile, name ="user-forum-profile"),
 
 
     path('get-rooms/', views.getRooms, name='get-rooms'),

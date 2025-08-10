@@ -1,0 +1,61 @@
+.joined-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px; /* or adjust for spacing */
+  color: #eae2b7;
+  font-size: 0.95rem;
+}
+.btn{
+
+  background-color: #273e47;
+  z-index: 1; 
+  color:#eae2b7 ;
+}
+
+  
+.btn:hover{
+  background-color:#f77f00;
+  color: #eae2b7;
+  cursor: pointer !important;
+}
+
+
+
+.btn-join{
+  background-color: #f77f00;
+  color: #273e47;
+  transition: 0.80s ease;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border: none;
+}
+
+
+.btn-join:hover{
+  background-color: #be620d;
+  color: #eae2b7;
+}
+
+
+.club-description{
+  font-style: italic;
+  font-size: 17px;
+  color: #f77f00;
+}
+
+.club-name{
+  color: #eae2b7;
+}
+
+
+.arrow-back a{
+    text-decoration: none;
+    color: #eae2b7 ;
+    transition: 0.80s ease;
+}
+
+.arrow-back a:hover{
+    text-decoration: none;
+    color: #be620d;
+}
