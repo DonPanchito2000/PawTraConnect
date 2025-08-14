@@ -22,23 +22,19 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
 }
 
-.btn-register{
-    background-color: #f77f00;
-    color: #273e47;
-    transition: 0.80s ease;
-    font-size: 1rem;
-    padding: 5px 10px;
-    border: none;
-    transition: 0.80s ease;
-    width: 250px;
-    margin: auto;
-    transition: 0.80s ease;
-  }
-  .btn-register:hover {
-     background-color: #be620d;
+   .btn-register:hover{
+  background-color:#be620d;
   color: #eae2b7;
+      transform: scale(1.03);
+}
+   .btn-register{
+      width: 100%;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      margin: auto;
+    }
 
-  }
 
 
 .view-pets{
@@ -140,14 +136,11 @@
   
 
 
-.btn-details,
-.btn-add-record{
-  background-color: #f77f00;
-  color: #273e47;
-  transition: 0.80s ease;
-  font-size: 1rem;
-  padding: 5px 10px;
-  border: none;
+.btn-details{
+      width: 50%;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
 }
 
 
@@ -159,11 +152,27 @@
   box-shadow: none !important;
 }
 
-.btn-details:hover,
-.btn-add-record:hover{
-  background-color: #be620d;
+.btn-details:hover{
+ background-color:#be620d;
   color: #eae2b7;
+      transform: scale(1.03);
 }
+
+
+
+/* 
+    .btn-update-pass:hover{
+  background-color:#be620d;
+  color: #eae2b7;
+      transform: scale(1.03);
+}
+    .btn-update-pass{
+      width: 100%;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+    } */
+
 
 
 

@@ -26,35 +26,31 @@ from django.urls import reverse
 # -----------------------
 @login_required(login_url='login')
 def pet_owner_dashboard(request):
-    owner =  get_object_or_404(PetOwnerProfile, user=request.user)
     query = request.GET.get('q') if request.GET.get('q') else ''
+    user = request.user
+    if user.role == 'owner':
+         try:
+            owner = PetOwnerProfile.objects.get(user=user)
+            all_registered_dogs = Dog.objects.filter(owner=owner)
+            if query:
+                filtered_dogs = all_registered_dogs.filter(
+                    Q(name__icontains=query) | Q(breed__icontains=query)
+                )
+            else:
+                filtered_dogs = all_registered_dogs
 
-
-    # registered_dogs = Dog.objects.filter(owner=owner)
-
-    # if query:
-    #     registered_dogs = registered_dogs.filter(
-    #         Q(name__icontains=query) | Q(breed__icontains=query)
-    #     )
- 
-    all_registered_dogs = Dog.objects.filter(owner=owner)
-
-    # This is only for the search (used in the sidebar)
-    if query:
-        filtered_dogs = all_registered_dogs.filter(
-            Q(name__icontains=query) | Q(breed__icontains=query)
-        )
+            today = timezone.now().date()
+            three_days = today + timedelta(days=3)
+        
+            upcoming_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__range=(today, three_days),pet__in=all_registered_dogs)
+            overdue_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__lt=today, pet__in=all_registered_dogs)
+            context = {'registered_dogs':filtered_dogs,'all_dogs': all_registered_dogs,   'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
+            
+            return render(request,'owner/dashboard.html',context)
+         except PetOwnerProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
     else:
-        filtered_dogs = all_registered_dogs
-
-    today = timezone.now().date()
-    three_days = today + timedelta(days=3)
- 
-    upcoming_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__range=(today, three_days),pet__in=all_registered_dogs)
-    overdue_vaccinations = VaccinationRecord.objects.filter(is_completed=False,next_due_date__lt=today, pet__in=all_registered_dogs)
-
-    context = {'registered_dogs':filtered_dogs,'all_dogs': all_registered_dogs,   'upcoming_vaccinations':upcoming_vaccinations,'overdue_vaccinations':overdue_vaccinations}
-    return render(request,'owner/dashboard.html',context)
+        return HttpResponse('You are not allowed here!')
 
 
 
@@ -344,7 +340,11 @@ def club_room(request, pk):
             '''
         return HttpResponse(html)
     
-    return render(request, 'owner/club_room_page.html', context)
+    if user.role == 'owner':
+        return render(request, 'owner/club_room_page.html', context)
+    else:
+        return render(request, 'club/club_room_page.html', context)
+    
 
     # if user.role == 'owner':
     #     return render(request, 'owner/room_page.html', context)
@@ -380,17 +380,19 @@ def club_room(request, pk):
 # -----------------------
 @login_required(login_url='login')
 def vet_clinic_dashboard(request):
-    vet_clinic = VetClinicProfile.objects.get(user = request.user)
-    regular_clients = vet_clinic.regular_clients.all()
+    
 
     query = request.GET.get('q')
     pet_owners = PetOwnerProfile.objects.filter(owner_id=query)
-    context = {'pet_owners':pet_owners,'regular_clients':regular_clients}
+    
 
     user =request.user
     if user.role == 'vet':
         try:
-            vet_profile = VetClinicProfile.objects.get(user=user)
+            vet_profile = VetClinicProfile.objects.get(user = request.user)
+            regular_clients = vet_profile.regular_clients.all()
+            context = {'pet_owners':pet_owners,'regular_clients':regular_clients}
+            # vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/dashboard.html',context)
             elif vet_profile.is_approved:
@@ -400,7 +402,8 @@ def vet_clinic_dashboard(request):
 
         except VetClinicProfile.DoesNotExist:
             return HttpResponse('You are not allowed here!')
-        
+    else:
+        return HttpResponse('You are not allowed here!')
 
 
 @login_required(login_url='login')
@@ -445,9 +448,9 @@ def owner_pets_page(request, owner_id):
 # -----------------------
 
 
-@login_required(login_url='login')
-def club_announcement(request):
-    return render(request,'club/announcement.html')
+# @login_required(login_url='login')
+# def club_announcement(request):
+#     return render(request,'club/announcement.html')
 
 
 
@@ -599,12 +602,21 @@ def club_form(request):
 def club_announcement(request):
     user = request.user
    # ANNOUNCEMENTS
-    announcements = ClubAnnouncement.objects.filter(host=request.user).order_by('-created')
-
-    club = ClubProfile.objects.get(user = request.user)
     
-    context = {'announcements':announcements,'club':club}
-    return render(request, 'club/announcement.html', context)
+
+    if user.role == 'club':
+        try:
+            club = ClubProfile.objects.get(user = user)
+            announcements = ClubAnnouncement.objects.filter(host=club.user).order_by('-created')
+            context = {'announcements':announcements,'club':club}
+            return render(request, 'club/announcement.html', context)
+        except ClubProfile.DoesNotExist:
+            return HttpResponse('You are not allowed here!')
+    else:
+        return HttpResponse('You are not allowed here!')
+    
+    
+   
 
 
 # -----------------------
@@ -1016,7 +1028,7 @@ def vaccination_details_page(request, vaccination_id, is_history):
          return HttpResponse('You are not allowed here!')
     
 
-
+@login_required(login_url='login')
 def vaccine_information_form_page_update(request, old_vaccination_record_id):
      user = request.user
      old_vaccination_record = VaccinationRecord.objects.get(id = old_vaccination_record_id)

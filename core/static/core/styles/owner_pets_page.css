@@ -91,22 +91,22 @@ transform: translateY(-2px);
 }
 
 .view-health-record{
-  background-color: #f77f00;
-  color: #273e47;
-  transition: 0.80s ease;
-  font-size: 1rem;
-  padding: 5px 10px;
-  border: none;
+ width: 230px;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      margin-right: 1rem;
 }
 
 
 .view-health-record:hover{
-  background-color: #be620d;
+  background-color:#be620d;
   color: #eae2b7;
+      transform: scale(1.03);
 }
 
 
 .badge-info{
-    background-color: #eae2b7;
-    color: #273e47;
+    background-color: #be620d;
+    color: #eae2b7;
 }

@@ -1,0 +1,127 @@
+  <div class="container room-container">
+
+<a href="javascript:history.back()" class="back-link">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+    <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 1-.708 0L4.5 8.207l-.354-.354.354-.353L7.646 4.646a.5.5 0 0 1 .708.708L6.207 8l2.147 2.146a.5.5 0 0 1 0 .708z"/>
+    <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 1-.5.5H5a.5.5 0 0 1 0-1h6a.5.5 0 0 1 .5.5z"/>
+  </svg>
+  <span>Back</span>
+</a>
+
+    <div class="host-header">
+      <img src="{{room.host.profile_picture.url}}" alt="Host Profile" />
+      <div class="host-info">
+        <div class="host-name">{{room.host.username}}</div>
+        <div class="post-time">{{room.created|timesince}} ago</div>
+      </div>
+    </div>
+
+    <div class="room-title">{{room.title}}</div>
+    {% if room.image %}
+    <div class="room-img text-center"><img src="{{room.image.url}}" alt="" class="img-fluid"></div>
+    {% endif %}
+    <div class="room-content">
+      {{room.content}}
+    </div>
+
+    <div class="comment-section">
+      <h5 class="mb-4 mt-5">💬 Comments</h5>
+
+      <div id="commentList">
+      {% for comment in room_comments %}
+      <div class="comment-card">
+        <img src="{{comment.user.profile_picture.url}}" alt="User Profile" />
+        <div id="comment-body" class="comment-body">
+          <div  class="username">{{comment.user.username}} <span class="time">· {{comment.created|timesince}} ago</span></div>
+          <div class="comment-text">{{comment.body}}</div>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+  
+
+      <form class="comment-form mt-4" method="POST" id="commentForm">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="commentTextarea"><strong>Add a Comment</strong></label>
+          <textarea name="body" class="form-control" id="commentTextarea" rows="3" placeholder="Write your comment..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+      </form>
+    </div>
+  </div>
+
+  
+  <!-- Back to Top Button -->
+<button id="backToTop" title="Go to top">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V4.707l3.147 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 4.707V11.5A.5.5 0 0 0 8 12z"/>
+  </svg>
+</button>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $("#commentForm").on("submit", function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'club-room-page' room.id %}",
+      data: $(this).serialize(),
+      success: function (data) {
+     
+        const commentHTML = `
+          <div class="comment-card">
+            <img src="${data.user_profile}" alt="User Profile" />
+            <div class="comment-body">
+              <div class="username">${data.user} <span class="time">· just now</span></div>
+              <div class="comment-text">${data.comment}</div>
+            </div>
+          </div>
+        `;
+
+        
+        $("#commentList").append(commentHTML);
+
+  
+        $("#commentTextarea").val('');
+      }
+    });
+  });
+
+  
+  function fetchNewComments() {
+    $.ajax({
+      url: "{% url 'club-room-page' room.id %}?ajax=1",
+      type: 'GET',
+      success: function (data) {
+        $("#commentList").html(data);
+      }
+    });
+  }
+
+
+  setInterval(fetchNewComments, 5000); 
+
+
+
+
+  // back top
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 200) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+</script>

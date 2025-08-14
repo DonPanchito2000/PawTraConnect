@@ -27,16 +27,16 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'club-announcement' %}">Announcement</a>
+                    <a class="nav-link" href="{% url 'club-announcement' %}">Announcements</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'member-page' %}">Member Managament</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'general-forum' %}">Community Forum</a>
+                    <a class="nav-link" href="{% url 'general-forum' %}">General Forum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'club-forum-page' %}">Club Forum</a>
+                    <a class="nav-link" href="{% url 'club-forum-page' %}">Member Forum</a>
                 </li>
 
                 <!-- Mobile-only user info + links -->
@@ -45,7 +45,7 @@
                     <span class="nav-link text-muted"><i class="fas fa-user"></i> {{ request.user.username }}</span>
                 </li>
                 <li class="nav-item d-lg-none">
-                    <a class="nav-link" href="{% url 'account-page' %}">Account</a>
+                    <a class="nav-link" href="{% url 'account-page' %}">Profile</a>
                 </li>
                 <li class="nav-item d-lg-none">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -59,7 +59,7 @@
               
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="{% url 'account-page' %}">Account</a>
+                <a class="dropdown-item" href="{% url 'account-page' %}">Profile</a>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
             </div>
         </div>
