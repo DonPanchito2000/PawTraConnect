@@ -160,7 +160,7 @@ class EditPetOwnerProfileForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'barangay': forms.Select(attrs={'class': 'form-control custom-select-style'}),  # FIXED
+            'barangay': forms.Select(attrs={'class': 'form-control custom-select-style'}), 
             'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
             'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }

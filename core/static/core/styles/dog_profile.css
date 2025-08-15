@@ -112,3 +112,10 @@
   color: #eae2b7;
       transform: scale(1.03);
 }
+
+.edit-profile a{
+  font-style: italic;
+  border: 1px solid #eae2b7;
+  padding: 5px 20px;
+  border-radius: 30px;
+}

@@ -15,6 +15,7 @@ urlpatterns = [
     path('club-forum-form/<str:club_id>',views.club_forum_form,name='club-forum-form'),
     path('get-club-forum-rooms/', views.getClubForumRooms, name='get-club-forum-rooms'),
     path('club-room-page/<int:pk>',views.club_room,name='club-room-page'),
+    path('edit-pet-profile/<str:pet_id>/', views.edit_pet_profile , name ='edit-pet-profile'),
     # -----------------------
     # END PET_OWNER URLS
     # -----------------------

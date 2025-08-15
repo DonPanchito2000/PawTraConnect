@@ -7,7 +7,15 @@
 {% block content %}
 <div class="container">
     <div class="card register-card p-4">
+        <div class="arrow-back mb-4">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
+
         <div class="text-center">
+            
             <!-- <img src="{% static 'core/images/logo.jpg' %}" alt="paw icon"> -->
             <h3 class="mb-4">Register Dog</h3>
         </div>
@@ -23,20 +31,26 @@
             {% endif %}
 
             <div class="form-group text-center">
-                <img id="previewImage" src="../../media/pet_profile/default_pet_profile.png" alt="pet preview" class="img-fluid mb-3" style="max-height: 200px;">
-                {{ form.pet_profile.label_tag }} 
+                <img id="previewImage" src="../../media/pet_profile/default_pet_profile.png" alt="pet preview" class="img-fluid  custom-profile-img mb-3">
+                <!-- {{ form.pet_profile.label_tag }} 
                 {{ form.pet_profile }}
                 {% if form.pet_profile.errors %}
                     <small class="text-danger">{{ form.pet_profile.errors }}</small>
-                {% endif %}
+                {% endif %} -->
+
+                
+            <div class="form-group mb-3 text-center">
+            <label for="id_pet_profile" class="btn btn-select-profile">
+            <i class="fas fa-camera"></i> Select a Profile Picture
+            </label>
+           {{ form.pet_profile }}
+              {% if form.pet_profile.errors %}
+                 <small class="text-danger">{{ form.pet_profile.errors }}</small>
+              {% endif %}
             </div>
 
-            <!-- <div class="form-group">
-                {{ form.pet_profile.label_tag }} {{ form.pet_profile }}
-                {% if form.pet_profile.errors %}
-                    <small class="text-danger">{{ form.pet_profile.errors }}</small>
-                {% endif %}
-            </div> -->
+            </div>
+
 
             <div class="form-group">
                 {{ form.name.label_tag }} {{ form.name }}
@@ -81,7 +95,7 @@
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block">Register Dog</button>
+                <button type="submit" class="btn btn-register">💾 Register Dog</button>
             </div>
         </form>
     </div>

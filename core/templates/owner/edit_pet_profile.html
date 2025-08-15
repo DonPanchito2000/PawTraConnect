@@ -1,0 +1,104 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/owner/edit_pet_profile.css' %}">
+{% endblock extra_css %}
+{% block title %}Edit Pet Profile{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+ 
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-9">
+
+      <div class="card shadow-sm p-4">
+
+              <div class="arrow-back mb-4">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
+        <h4 class="mb-4 text-center">  ✏️ Edit Pet Profile</h4>
+        <hr>
+
+        <!-- Profile Picture Preview -->
+        {% if pet.pet_profile %}
+          <img src="{{ pet.pet_profile.url }}" class="m-auto custom-profile-img mb-3"  width="40%" id="previewImage" alt="Profile Picture">
+        {% endif %}
+
+       <form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+
+
+
+
+<div class="form-group mb-3 text-center">
+  <label for="profilePictureInput" class="btn btn-select-profile">
+   <i class="fas fa-camera"></i> Select a Pet Profile Picture
+  </label>
+  <input type="file" name="pet_profile" id="profilePictureInput" accept="image/*" class="d-none" onchange="previewProfileImage(event)">
+</div>
+
+
+
+ <div class="form-group">
+    {{ form.name.label_tag }}
+    {{ form.name }}
+  </div>
+  <div class="form-group">
+    {{ form.breed.label_tag }}
+    {{ form.breed }}
+  </div>
+  <div class="form-group">
+    {{ form.color.label_tag }}
+    {{ form.color }}
+  </div>
+  <div class="form-group">
+    {{ form.age.label_tag }}
+    {{ form.age }}
+  </div>
+  <div class="form-group">
+    {{ form.sex.label_tag }}
+    {{ form.sex }}
+  </div>
+  <div class="form-group">
+    {{ form.barangay.label_tag }}
+    {{ form.barangay }}
+  </div>
+
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-save btn-block">💾 Save Changes</button>
+  </div>
+</form>
+
+      </div>
+
+    </div>
+  </div>
+</div> 
+
+
+<script>
+  function previewProfileImage(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('previewImage');
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '#';
+      preview.classList.add('d-none');
+    }
+  }
+</script>
+
+{% endblock content %}

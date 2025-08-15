@@ -1,13 +1,64 @@
-body {
-    background: #f8f9fa;
+body{
+      background-color: #273e47 !important; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
-    .card {
-    max-width: 600px;
-    margin: 40px auto;
-    background-color: #273e47 !important;
+
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #dee2e6;
+}
+
+/* Ensure all form fields look clean and uniform */
+input.form-control,
+textarea.form-control,
+select.form-control {
+  width: 100%;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.btn-block {
+  font-weight: 600;
+  padding: 10px;
+}
+
+
+
+.arrow-back a{
+    text-decoration: none;
+    color: #eae2b7 ;
+    transition: 0.80s ease;
+}
+
+.arrow-back a:hover{
+    text-decoration: none;
+    color: #be620d;
+}
+
+
+    .card{
+  background-color: #273e47 !important;
   z-index: 1; 
   color: #eae2b7;
 }
+
+  .card:hover {
+    transform: translateY(-2px);
+
+  }
+
+  
+
 
     .card::before {
     content: "";
@@ -20,48 +71,7 @@ body {
     z-index: 2;
     pointer-events: none; /* So clicks go through */
   }
-.register-card img {
-    width: 80px;
-    margin-bottom: 20px;
-}
-.form-group label {
-    font-weight: 600;
-}
 
-  .card:hover {
-    transform: translateY(-2px);
-
-  }
-
-h3{
-    color: #eae2b7;
-}
-
-hr{
-    background-color: #eae2b7;
-}
-
-
-.custom-profile-img {
-  width: 70% !important;
-  height: 70% !important;
-}
-
-
-#id_pet_profile {
-    display: none;
-}
-
-.arrow-back a{
-    text-decoration: none;
-    color: #eae2b7 ;
-    transition: 0.80s ease;
-}
-
-.arrow-back a:hover{
-    text-decoration: none;
-    color: #be620d;
-}
 
   .btn-select-profile{
     border: 1px solid #f77f00 !important;
@@ -93,7 +103,7 @@ hr{
   outline: none !important;
   box-shadow: none !important;
   border: none !important;
-  background-color: rgba(0, 0, 0, 0.2) !important;
+  background-color: rgba(0, 0, 0, 0.2);
   color: #eae2b7;
   box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
 }
@@ -114,7 +124,7 @@ hr{
 
 /* Style the <select> box */
 .custom-select-style {
-  background-color: rgba(0, 0, 0, 0.2) !important; 
+  background-color: rgba(0, 0, 0, 0.2);; /* Light background */
   color:#eae2b7 ; /* Dark text */
   border: 1px solid #eae2b7 ;
   border-radius: 4px;
@@ -124,10 +134,11 @@ hr{
 
 /* Style the dropdown options (some browsers may not fully support this) */
 .custom-select-style option {
- background-color: rgba(0, 0, 0, 0.2) !important;  /* White option background */
-  color:  #273e47 !important;           /* Option text color */
+ background-color: rgba(0, 0, 0, 0.2);  /* White option background */
+  color:  #273e47;           /* Option text color */
 }
-.btn-register  {
+
+.btn-save {
     border: 1px solid  #f77f00 !important;
     margin-top: 30px;
     color: #f77f00;
@@ -137,19 +148,19 @@ hr{
     font-weight: 500;
   }
 
-.btn-register:hover{
+.btn-save:hover{
   background-color:  #f77f00;
     color: #eae2b7 ;
      transform: scale(1.03);
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+
+hr{
+  background-color: #eae2b7;
+  margin-bottom: 20px;
 }
 
 
-input[type=number] {
-    -moz-appearance: textfield;
+#profilePictureInput{
+    display: none;
 }

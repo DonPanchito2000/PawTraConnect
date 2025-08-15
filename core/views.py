@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -325,7 +325,7 @@ def club_room(request, pk):
                     'created': comment.created.strftime('%Y-%m-%d %H:%M:%S'),
                 })
     
-    # automatic view new comments ajax
+ 
     if request.GET.get("ajax") == "1":
         html = ""
         for comment in room_comments:
@@ -346,29 +346,20 @@ def club_room(request, pk):
         return render(request, 'club/club_room_page.html', context)
     
 
-    # if user.role == 'owner':
-    #     return render(request, 'owner/room_page.html', context)
+def edit_pet_profile(request, pet_id):
+    pet  =Dog.objects.get(id =pet_id)
 
-    # elif user.role == 'vet':
-    #     try:
-    #         vet_profile = VetClinicProfile.objects.get(user=user)
-    #         if vet_profile.is_city_vet:
-    #             return render(request, 'ccvo/room_page.html',context)
-    #         elif vet_profile.is_approved:
-    #             return render(request, 'vet/room_page.html',context)
-    #         else:
-    #             return HttpResponse('You are not allowed here!')
+    if request.method == 'POST':
+        form = EditPetProfileForm(request.POST, request.FILES, instance=pet)
+        if form.is_valid():
+            form.save()
+            return redirect('dog-profile', pet.id)
+    else:
+        form = EditPetProfileForm(instance= pet)
 
-    #     except VetClinicProfile.DoesNotExist:
-    #         # fallback in case vet profile is missing
-    #         return HttpResponse('You are not allowed here!')
-
-    # elif user.role == 'club':
-    #     return render(request, 'club/room_page.html',context)
-
-    # else:
-    #     # optional fallback if role is not recognized
-    #      return HttpResponse('You are not allowed here!')
+    context = {'pet':pet, 'form':form}
+    return render(request,'owner/edit_pet_profile.html', context)
+  
 # -----------------------
 # END PET_OWNER VIEWS
 # -----------------------

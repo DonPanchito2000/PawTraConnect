@@ -10,9 +10,9 @@ class DogRegistrationForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter dog name'}),
             'breed': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Breed (optional)'}),
             'color': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Color (optional)'}),
-            'age': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Age in years'}),
-            'barangay': forms.Select(attrs={'class': 'form-control'}),
-            'sex': forms.Select(attrs={'class': 'form-control'}),
+            'age': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Age'}),
+            'barangay': forms.Select(attrs={'class': 'form-control custom-select-style'}),
+            'sex': forms.Select(attrs={'class': 'form-control custom-select-style'}),
         }
 
 
@@ -165,3 +165,25 @@ class ClubAnnouncementForm(forms.ModelForm):
                 'id': 'image'
             })
         }
+
+
+# Edit Pet Profile Form
+
+class EditPetProfileForm(forms.ModelForm):
+    class Meta:
+        model = Dog
+        fields = ['pet_profile', 'name', 'breed', 'color', 'age','sex','barangay']
+        widgets = {
+            'pet_profile': forms.ClearableFileInput(attrs={
+                'class': 'form-control-file',
+                'id': 'profilePictureInput'
+            }),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'breed':forms.TextInput(attrs={'class': 'form-control', 'rows': 4}),
+            'age': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Age'}),
+            'color': forms.TextInput(attrs={'class': 'form-control', 'rows': 4}),
+            'sex': forms.Select(attrs={'class': 'form-control custom-select-style'}),
+            'barangay': forms.Select(attrs={'class': 'form-control custom-select-style'}),
+            
+        }
+

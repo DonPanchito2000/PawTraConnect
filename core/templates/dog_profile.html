@@ -8,7 +8,13 @@
                        <a href="{% url 'pet-owner-dashboard' %}" class="arrow-back">
                         <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>
+                    <div class="float-right edit-profile"><a href="{% url 'edit-pet-profile' dog.id  %}">
+                      Edit Profile
+                    </a></div>
                     {% endif %}
+
+
+                    
                 </div>
     <div class="text-center">
         <img src="{{ dog.pet_profile.url }}" alt="Dog Profile" class="profile-img">
