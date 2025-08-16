@@ -75,6 +75,7 @@ class ClubMembership(models.Model):
 
 
     STATUS_CHOICE = [
+        ('canceled','Canceled'),
         ('pending','Pending'),
         ('approved','Approved'),
         ('rejected','Rejected'),

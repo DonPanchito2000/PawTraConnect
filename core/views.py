@@ -158,16 +158,25 @@ def join_club(request, pk):
                 if membership.permanently_banned:   
                     messages.error(request, "You cannot join this club again.")
                     return redirect('club-page')   
-                if membership.status == 'removed' or membership.status == 'rejected':
+                if membership.status == 'removed' or membership.status == 'rejected' or membership.status == 'canceled':
                     membership.status = 'pending'
                     membership.joined_at = timezone.now()  # optional: reset time
                     membership.save()
                 else:
                     # Already has a non-removed membership
-                    return redirect('club-page')
+                    return redirect('club-profile-page',club_id = pk)
                     print('JOINED')
     return redirect('club-profile-page' , club_id = pk)
 
+
+def cancel_request(request, club_id):
+    club = ClubProfile.objects.get(id=club_id)
+    membership = ClubMembership.objects.get(member=request.user,club=club)
+    
+    if request.method =='POST':
+        membership.status = 'canceled'
+        membership.save()
+        return redirect('club-profile-page', club_id = club_id)
     
 
 def club_profile_page(request, club_id):
@@ -193,8 +202,9 @@ def club_profile_page(request, club_id):
 
     try:
         user_membership = ClubMembership.objects.get(club = club, member = request.user)
-
-        if user_membership.status == 'approved':
+        if user_membership.status == 'canceled':
+            membership_status = 'canceled'
+        elif user_membership.status == 'approved':
             membership_status = 'approved'
         elif user_membership.status == 'rejected':
             membership_status = 'rejected'

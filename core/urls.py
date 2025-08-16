@@ -11,6 +11,7 @@ urlpatterns = [
     # path('ccvo-announcement-page/', views.ccvo_announcement_page, name='ccvo-announcement-page'),
     path('club-page/', views.club_page, name='club-page'),
     path('join-club/<str:pk>', views.join_club, name='join-club'),
+    path('cancel-request/<str:club_id>', views. cancel_request, name = 'cancel-request'),
     path('club-profile-page/<str:club_id>', views.club_profile_page, name ='club-profile-page'),
     path('club-forum-form/<str:club_id>',views.club_forum_form,name='club-forum-form'),
     path('get-club-forum-rooms/', views.getClubForumRooms, name='get-club-forum-rooms'),

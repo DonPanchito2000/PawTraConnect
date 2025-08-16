@@ -12,8 +12,14 @@
   <h2 class="font-weight-bold club-name">{{club.club_name}}</h2>
   <p class=" club-description">{{club.description}}</p>
     
+     
+
       {% if membership_status == 'pending' %}                                            
-    <button disabled class="btn ">Reuqest Sent</button>                     
+    <form action="{% url 'cancel-request' club.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn" type="submit">Cancel Request</button>
+    </form>
+        
     {% elif membership_status == 'approved' %}
         <input type="button" value="MEMBER" class="btn " disabled>
      {% elif membership_status == 'banned' %}
