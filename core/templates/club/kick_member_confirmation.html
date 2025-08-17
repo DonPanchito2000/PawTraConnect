@@ -1,25 +1,42 @@
+{% extends 'club/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/club/kick_member_confirmation.css' %}">
+{% endblock extra_css %}
+{% block title %}Announcent - PawTraConnect{% endblock %}
+{% block content %}
+
+    <div class="container mt-5 text-center">
+        <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4">
     <form method="POST" action="{% url 'kick-member' membership.id %}">
         {% csrf_token %}
-        <h1>Are you sure you want to kick {{membership.member.petownerprofile.first_name}} {{membership.member.petownerprofile.last_name}} from the club?</h1>
+        <h3>Are you sure you want to kick {{membership.member.petownerprofile.first_name}} {{membership.member.petownerprofile.last_name}} from the club?</h3>
+        <hr>
         <small>Do you want to permanently ban this user?</small>
         <small>The user will not be able to join your club again.</small>
+        <div class="m-4">
         <label>
             <input type="radio" name="ban_user" value="yes" required> Yes, ban permanently
         </label><br>
         <label>
             <input type="radio" name="ban_user" value="no"> No, just kick
         </label>
-        <a href=""><button>CANCEL</button></a>
-        <button type="submit">KICK</button>
+        </div>
+        
+        <button class="action-btn" type="submit">KICK</button>
     </form>
-</body>
-</html>
+
+    
+            <div class="arrow-back mt-3 text-center">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Cancel
+                    </a>
+                </div>
+    </div>
+            
+      </div>
+    </div>
+  </div>
+{% endblock content %}

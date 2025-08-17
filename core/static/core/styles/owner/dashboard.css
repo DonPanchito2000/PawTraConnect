@@ -37,7 +37,7 @@
 
 
 
-.view-pets{
+/* .view-pets{
   background-color: #f77f00;
   color: #273e47;
   transition: 0.80s ease;
@@ -50,7 +50,7 @@
 .view-pets:hover{
   background-color: #be620d;
   color: #eae2b7;
-}
+} */
 
   .registered-pets{
   max-height: 70vh;    /* optional, keeps internal scroll */
