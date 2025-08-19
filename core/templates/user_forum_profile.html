@@ -1,19 +1,55 @@
 
  <!-- ✅ ADDED: Back arrow icon in top-left -->
-                <div class="arrow-back mb-4">
+          
+
+
+ <div class="container mt-5">
+          <div class="arrow-back mb-4">
                     <a href="javascript:history.back()" class="arrow-back">
                         <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>
                 </div>
+    <div class="row">
+        <div class="col-9 m-auto">
+        <div class="text-center text-white mb-5">
+        <img src="{{ user.profile_picture.url }}" class="rounded-circle border border-warning mb-3 shadow" width="140" height="140">
+        {% if user.role == "owner" %}
+        <h2 class="font-weight-bold club-name">{{user.petownerprofile.first_name}} {{user.petownerprofile.last_name}}</h2>
+        <p class=" club-description">{{user.petownerprofile.bio}}</p>
+            {% endif %}
+            </div>
+</div>
+        </div>
 
-
- <div class="text-center text-white mb-5">
-  <img src="{{ user.profile_picture.url }}" class="rounded-circle border border-warning mb-3 shadow" width="140" height="140">
-  {% if user.role == "owner" %}
-  <h2 class="font-weight-bold club-name">{{user.petownerprofile.first_name}} {{user.petownerprofile.last_name}}</h2>
-  <p class=" club-description">{{user.petownerprofile.bio}}</p>
-    {% endif %}
-
+<div class="rooms-container py-5 px-3">
+    {% for user_room in user_rooms %}
+    <div class="card room-card mx-auto mb-5">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                   <a href="">
+                  <img src="{{ user_room.host.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="42" height="42" style="object-fit: cover;">
+                    <span class="ml-2 username">{{ user_room.host.username }}</span>
+                    </a>
+                  <small class=" ml-auto">{{ user_room.created|timesince }} ago</small>
+                </div>
+                 <a href="{% url 'room' user_room.id%}" class="text-decoration-none forum-room-link">
+                <h6 class="card-title mb-1">{{ user_room.title }}</h6>
+              
+                <p class="mb-2">{{ user_room.content|truncatechars:300 }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+        
+                </div>
+                  {% if user_room.image %}
+                <img src="{{ user_room.image.url }}" alt="Room Image" width="100%" class="img-fluid rounded mb-2 forum-room-img">
+                {% endif %}
+                </a>
+                <hr>
+                  <span  class="float-right"><i class="fas fa-users"></i> {{ user_room.participants.count }} Joined</span>
+                  
+              </div>
+    </div>
+    {% endfor %}
+</div> 
 </div>
  
 

@@ -982,7 +982,8 @@ def getRooms(request):
 
 def user_forum_profile(request, user_id):
     user = Account.objects.get(id = user_id)
-    context = {'user':user}
+    user_rooms = ForumRoom.objects.filter(host = user)
+    context = {'user':user,'user_rooms':user_rooms}
     return render(request, 'owner/user_forum_profile.html', context)
 
 # -----------------------
