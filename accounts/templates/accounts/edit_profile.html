@@ -57,25 +57,12 @@
 
 
 
-
-
-  <!-- Delete Button -->
-  <!-- {% if request.user.profile_picture %}
-    <div class="form-group">
-      <form method="POST" action="">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger btn-sm">🗑️ Delete Profile Picture</button>
-      </form>
-    </div>
-  {% endif %} -->
-
-    <!-- Email field -->
   <div class="form-group">
     <label for="id_email">Email</label>
     {{ account_form.email }}
   </div>
 
-  <!-- Render the role-based profile form -->
+
   {{ form.as_p }}
 
   <div class="form-group text-center">
@@ -89,7 +76,7 @@
   </div>
 </div>
 
-<!-- Preview Image JS -->
+
 <script>
   function previewProfileImage(event) {
     const file = event.target.files[0];

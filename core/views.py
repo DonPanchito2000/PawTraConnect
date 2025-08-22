@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm, ServiceForm
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -782,6 +782,18 @@ def services_page(request):
     services = Service.objects.all()
     context = {'services':services}
     return render(request, 'ccvo/services_page.html',context)
+
+def add_service_form_page(request):
+    
+    if request.method == 'POST':
+       form = ServiceForm(request.POST)
+       if form.is_valid():
+            form.save()
+            return redirect('services-page')
+
+    form = ServiceForm()
+    context = {'form':form}
+    return render(request, 'ccvo/add_service_form.html', context)
 # -----------------------
 # END CCVO VIEWS
 # -----------------------

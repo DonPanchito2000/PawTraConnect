@@ -1,0 +1,36 @@
+{% extends 'ccvo/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/add_service_form.css' %}">
+{% endblock extra_css %}
+<title>{% block title %}Services{% endblock %}</title>
+
+{% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-12 col-md-8 col-lg-6">
+
+      <div class="card shadow-sm p-4">
+
+              <div class="arrow-back mb-4">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
+        <h4 class="mb-4 text-center">  <i class="fa-solid fa-heart-pulse"></i> Add New Service</h4>
+        <hr>
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {{form.as_p}}
+      <div class="form-group text-center">
+    <button type="submit" class="btn btn-add mt-3">Add Service</button>
+  </div>
+</form>
+
+  </div>
+  </div>
+</div>
+
+{% endblock content %}  

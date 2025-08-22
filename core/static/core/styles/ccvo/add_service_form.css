@@ -1,0 +1,84 @@
+
+.arrow-back a{
+    text-decoration: none;
+    color: #eae2b7 ;
+    transition: 0.80s ease;
+}
+
+.arrow-back a:hover{
+    text-decoration: none;
+    color: #be620d;
+}
+
+
+    .card{
+  background-color: #273e47 !important;
+  z-index: 1; 
+  color: #eae2b7;
+
+}
+
+  .card:hover {
+    transform: translateY(-2px);
+
+  }
+
+  
+
+
+    .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
+    z-index: 2;
+    pointer-events: none; /* So clicks go through */
+  }
+
+
+    .form-control{
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none !important;
+  box-shadow: none !important;
+   border-radius: 10px;
+  transition: box-shadow 0.2s ease;
+   color: #eae2b7;
+      height: 40px;
+}
+
+.form-control:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #eae2b7;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+}
+
+
+.btn-block {
+  font-weight: 600;
+  padding: 10px;
+}
+
+
+.btn-add:hover{
+  background-color:#be620d;
+  color: #eae2b7;
+      transform: scale(1.03);
+}
+.btn-add{
+      width: 100%;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+    }
+
+
+.btn-add:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

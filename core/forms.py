@@ -1,5 +1,5 @@
 from django import forms
-from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement
+from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
 
 class DogRegistrationForm(forms.ModelForm):
     class Meta:
@@ -187,3 +187,14 @@ class EditPetProfileForm(forms.ModelForm):
             
         }
 
+
+# Service Form
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Service Name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Service Description (optional)'}),
+
+        }
