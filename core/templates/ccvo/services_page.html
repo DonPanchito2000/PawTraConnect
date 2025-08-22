@@ -1,0 +1,42 @@
+{% extends 'ccvo/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/services_page.css' %}">
+{% endblock extra_css %}
+<title>{% block title %}Services{% endblock %}</title>
+
+{% block content %}
+
+     <div class="container">
+         <div class="services-container p-4 mt-5">
+      <h3 class=" font-weight-bold">Services</h3>
+
+      <a href="" class="btn view-pets btn-sm mt-2 mt-md-0 mb-4 float-right mr-5 add-btn">
+        <i class="fas fa-plus">   </i>    Add New Service
+          </a>
+      <a href="" class="btn view-pets btn-sm mt-2 mt-md-0 mb-4 float-right mr-5 add-btn">
+        <i class="fas fa-plus">   </i>    Record Service
+          </a>
+       <div class="search-bar">
+        <form method="get" action="" class="mb-3">
+          <input type="text" name="p" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.p }}">
+        </form>
+      </div>
+      <div class="past-clients">
+      {% for service in services %}
+      <div class="card owner-card mb-3">
+        <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
+            {{service.name}} -- {{service.description}}
+    
+          <a href="" class="btn view-pets btn-sm mt-2 mt-md-0">
+          View Reports
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <p>No Service Available</p>
+      {% endfor %}
+      </div>
+    </div>
+     </div>
+{% endblock content %}  

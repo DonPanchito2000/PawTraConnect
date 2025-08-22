@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm
-from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
 from django.contrib import messages
@@ -777,13 +777,11 @@ def approve_clinic(request, pk):
     return render(request,'ccvo/approve_clinics.html')
 
 
-# @login_required(login_url='login')
-# def ccvo_dashboard(request):
-#     user = request.user
-#     vet_profile = VetClinicProfile.objects.get(user=user)
-#     if not vet_profile.is_city_vet:
-#          return HttpResponse('You are not allowed here!')
-#     return render(request,'ccvo/dashboard.html')
+
+def services_page(request):
+    services = Service.objects.all()
+    context = {'services':services}
+    return render(request, 'ccvo/services_page.html',context)
 # -----------------------
 # END CCVO VIEWS
 # -----------------------
