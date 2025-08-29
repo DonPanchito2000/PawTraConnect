@@ -1,5 +1,5 @@
 from django import forms
-from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
+from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service, ServiceRecord
 
 class DogRegistrationForm(forms.ModelForm):
     class Meta:
@@ -198,3 +198,21 @@ class ServiceForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Service Description (optional)'}),
 
         }
+
+
+
+# class ServiceRecordForm(forms.ModelForm):
+#     pet = forms.ModelChoiceField(
+#         queryset=Dog.objects.all(),
+#         to_field_name="id",  # search by Pet ID
+#         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter Pet ID"})
+#     )
+    
+#     service = forms.ModelChoiceField(
+#         queryset=Service.objects.all(),
+#         widget=forms.Select(attrs={"class": "form-control select2"})  # searchable dropdown
+#     )
+
+#     class Meta:
+#         model = ServiceRecord
+#         fields = ["pet", "service"] 

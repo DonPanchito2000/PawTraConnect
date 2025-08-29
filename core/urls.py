@@ -61,6 +61,8 @@ urlpatterns = [
     path('announcement-room/<str:pk>/', views.announcement_room, name= "announcement-room"),
     path('services-page', views.services_page, name= 'services-page'),
     path('add-service-form-page/', views.add_service_form_page , name='add-service-form-page'),
+    path('add-service-record-form-page/', views.add_service_record, name='add-service-record'),
+    path('add-service-record-form/<str:selected_pet_id>/', views.service_form, name='add-service-record-form'),
     # -----------------------
     # CCVO VET URLS
     # -----------------------

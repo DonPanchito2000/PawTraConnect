@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Dog, ForumComment, ForumRoom, ClubMembership, ClubForumComment, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
+from .models import Dog, ForumComment, ForumRoom, ClubMembership, ClubForumComment, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service, ServiceRecord
 # Register your models here.
 
 admin.site.register(Dog)
@@ -12,4 +12,5 @@ admin.site.register(VaccinationRecord)
 admin.site.register(CCVOAnnouncement)
 admin.site.register(ClubAnnouncement)
 admin.site.register(Service)
+admin.site.register(ServiceRecord)
  

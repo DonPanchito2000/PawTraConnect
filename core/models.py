@@ -3,6 +3,7 @@ from accounts.models import Barangay, PetOwnerProfile, Account, ClubProfile, Vet
 from django.core.exceptions import ValidationError
 from datetime import date
 
+from django.utils import timezone
 
 class Dog(models.Model):
     dog_id = models.CharField(max_length=150, unique=True, blank=True, null=True)
@@ -214,19 +215,20 @@ class Service(models.Model):
         return self.name
 
 
-# class ServiceRecord(models.Model):
-#     pet = models.ForeignKey("Pet", on_delete=models.CASCADE, related_name="service_records")
-#     service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="records")
-#     date_avail = models.DateField(default=date.today)
+class ServiceRecord(models.Model):
+    pet = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    date_avail = models.DateField(default=timezone.now)
 
-#     class Meta:
-#         indexes = [
-#             models.Index(fields=["date_avail"]),
-#             models.Index(fields=["service", "date_avail"]),
-#         ]
+    class Meta:
+      indexes = [
+            models.Index(fields=["date_avail"]),
+            models.Index(fields=["service", "date_avail"]),
+        ]
+      ordering = ["-date_avail"] 
 
-#     def __str__(self):
-#         return f"{self.dog.dog_id} - {self.service.name} ({self.date_avail})"
+    def __str__(self):
+        return f"{self.pet.dog_id} - {self.service.name} ({self.date_avail})"
 
 
 

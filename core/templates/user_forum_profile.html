@@ -16,6 +16,11 @@
         {% if user.role == "owner" %}
         <h2 class="font-weight-bold club-name">{{user.petownerprofile.first_name}} {{user.petownerprofile.last_name}}</h2>
         <p class=" club-description">{{user.petownerprofile.bio}}</p>
+        {% elif user.role == "club" %}
+        <h2 class="font-weight-bold club-name">{{user.clubprofile.club_name}}</h2>
+        <p class=" club-description">{{user.clubprofile.description}}</p>
+            {% elif user.role == "vet" %}
+        <h2 class="font-weight-bold club-name">{{user.vetclinicprofile.clinic_name}}</h2>
             {% endif %}
             </div>
 </div>

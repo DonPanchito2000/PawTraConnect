@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
-from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm, ServiceForm
+from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm, ServiceForm, ServiceRecord
 from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
 from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
 from django.http import HttpResponse
@@ -794,6 +794,50 @@ def add_service_form_page(request):
     form = ServiceForm()
     context = {'form':form}
     return render(request, 'ccvo/add_service_form.html', context)
+
+def add_service_record(request):
+
+
+    query = request.GET.get("q")
+    pet = None
+
+    # Only fetch pet if query is provided
+    if query:
+        try:
+            pet = Dog.objects.get(dog_id=query)
+        except Dog.DoesNotExist:
+            pet = None
+
+
+
+    context={'pet':pet}
+    return render(request, "ccvo/add_service_record_page.html" ,context)
+
+
+def service_form(request, selected_pet_id):
+    query = request.GET.get("q")
+    pet = None
+    services = Service.objects.all()
+
+    if query:
+        try:
+            pet = Dog.objects.get(dog_id=query)
+        except Dog.DoesNotExist:
+            pet = None
+
+    selected_pet = Dog.objects.get(id = selected_pet_id)
+    context ={'selected_pet':selected_pet, 'pet':pet,'services':services}
+
+    if request.method == 'POST':
+        service = request.POST.get("service")
+        notes = request.POST.get("notes")
+        
+        ServiceRecord.objects.create(
+            pet = selected_pet 
+
+        )
+
+    return render(request, 'ccvo/add_service_record_page.html', context)
 # -----------------------
 # END CCVO VIEWS
 # -----------------------
