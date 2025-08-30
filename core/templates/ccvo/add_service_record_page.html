@@ -64,16 +64,14 @@
 
         <datalist id="service_list">
             {% for s in services %}
-                <option value="{{ s.id }} - {{ s.name }}">
+                <option value="{{ s.name }}">
             {% endfor %}
         </datalist>
          <label for="date-administered">Date Administered:</label>
             <input type="date" id="date-administered" name="date-administered" class="form-control">
-          <div class="card-body">
-            
-          </div>
 
-        <input type="hidden" name="pet" value="{{pet.dog_id}}">
+
+        <button type="submit">Submit</button>
       </form>
     </div>
   

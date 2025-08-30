@@ -829,13 +829,16 @@ def service_form(request, selected_pet_id):
     context ={'selected_pet':selected_pet, 'pet':pet,'services':services}
 
     if request.method == 'POST':
-        service = request.POST.get("service")
-        notes = request.POST.get("notes")
-        
+        service_name = request.POST.get("service")
+        service = Service.objects.get(name = service_name)
+        date_administered = request.POST.get("date-administered")
+        pet = request.POST.get("selected_pet")
         ServiceRecord.objects.create(
-            pet = selected_pet 
-
+            pet = selected_pet,
+            service = service,
+            date_avail = date_administered
         )
+        return redirect('services-page')
 
     return render(request, 'ccvo/add_service_record_page.html', context)
 # -----------------------

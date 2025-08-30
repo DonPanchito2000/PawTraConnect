@@ -104,3 +104,36 @@
     background-color: #be620d;
     color: #eae2b7;
 }
+
+
+
+@media (max-width: 1000px) {
+  .view-pets{
+    width: 100%;
+    margin: 0 !important;
+  }
+  .name-id-container{
+    width: 100%;
+    margin: auto;
+    display: block !important;
+    text-align: center;
+
+  }
+ .img-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+ }
+
+
+
+  .badge-info{
+   width: 100%;
+   margin: 0 !important;
+  }
+
+.name-badge-container{
+  width: 100%;
+}
+
+}
