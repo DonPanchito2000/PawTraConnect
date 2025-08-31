@@ -1,7 +1,7 @@
 <div class="container py-5">
     <!-- Search Client Section -->
     <div class="search-owner-container rounded mb-5 p-4">
-      <h3 class="mb-4  font-weight-bold">🔍 Search Client by ID</h3>
+      <h5 class="mb-4  font-weight-bold">🔍 Search Client by ID</h5>
       <div class="search-bar">
         <form method="get" action="" class="mb-3">
           <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
@@ -10,18 +10,19 @@
       <div id="clientResult" class=" text-center">
         {% for pet_owner in pet_owners %}
              <div class="card owner-card m-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-2">
+                        <div class="card-body flex-wrap">
+                            <div class="name-id-container d-flex align-items-center">
                                 {% if pet_owner.user.profile_picture %}
                                 <img src="{{ pet_owner.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 {% endif %}
-                                
+                                 <div class="name-badge-container">
                                 <span class="ml-3">{{ pet_owner.first_name }} {{ pet_owner.last_name }}</span>
                                 <span class="badge badge-info ml-2">{{pet_owner.owner_id}}</span>
+                                </div>
                                 <div class="ml-auto">
                                   <form action="{% url 'add-past-client' pet_owner.id %}" method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn view-pets btn-sm mr-2 mt-2 mt-md-0">
+                                    <button type="submit" class="btn view-pets btn-sm mr-2 mt-2 mt-md-0 float-right">
                                         View Pets
                                     </button>
                                       </form>
@@ -35,7 +36,7 @@
   
     <!-- Past Clients Section -->
     <div class="search-owner-container p-4">
-      <h3 class="mb-4 font-weight-bold">📋 Past Clients</h3>
+      <h5 class="mb-4 font-weight-bold">📋 Past Clients</h5>
        <div class="search-bar">
         <form method="get" action="" class="mb-3">
           <input type="text" name="p" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.p }}">

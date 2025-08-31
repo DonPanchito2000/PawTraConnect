@@ -3,6 +3,8 @@
   background-color: rgba(0, 0, 0, 0.2); 
   border-radius: .25rem !important;
   color:#eae2b7 ;
+  max-width: 900px;
+  margin: auto;
 }
 
 .search-pet-container ::before {
@@ -29,6 +31,7 @@
   border-radius: 16px;
   transition: box-shadow 0.2s ease;
   color: #eae2b7;
+
   
 }
 
@@ -43,6 +46,8 @@
   box-shadow: none !important;
    border-radius: 10px;
   transition: box-shadow 0.2s ease;
+  width: 60%;
+    margin: auto;
 
 }
 
@@ -53,6 +58,11 @@
   background-color: rgba(0, 0, 0, 0.2);
   color: #eae2b7;
   box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+}
+
+label{
+  color: #eae2b7;
+ 
 }
 
 .view{
@@ -69,7 +79,7 @@
 .view:hover{
   background-color:#be620d;
   color: #eae2b7;
-      transform: scale(1.03);
+  transform: scale(1.03);
 }
 
 .view:focus,
@@ -83,3 +93,106 @@
     background-color: #be620d;
     color: #eae2b7;
 }
+
+.selected-pet-container{
+  max-width: 500px;
+  
+}
+
+
+h5{
+  color:#be620d;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* hide native icon */
+  position: absolute;
+  right: 10px;
+  z-index: 1;
+}
+input[type="date"] {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.2); /* 🔧 your desired background */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23f77f00' viewBox='0 0 24 24'><path d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 17H5V8h14v12z'/><path d='M7 10h5v5H7z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+  padding-right: 35px;
+  color: #eae2b7;
+  border: none;
+  border-radius: 10px;
+}
+
+
+
+
+.submit-btn{
+     width: 300px;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      background-color: transparent;
+      
+      
+}
+
+
+.submit-btn:hover{
+  background-color:#be620d;
+  color: #eae2b7;
+  transform: scale(1.03);
+}
+
+.submit-btn:focus,
+.submit-btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 1000px) {
+  .action-btn{
+    width: 100%;
+    margin: 0 !important;
+  }
+  .view{
+    width: 100%;
+  }
+  .name-id-container{
+    width: 100%;
+    margin: auto;
+    display: block !important;
+    text-align: center;
+
+  }
+ .img-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+ }
+
+
+
+  .badge-info{
+   width: 100%;
+   margin: 0 !important;
+  }
+
+.name-badge-container{
+  width: 100%;
+}
+.search-pet-container{
+  padding: 5px !important;
+  width: 100% !important;
+}
+
+.container{
+  margin-top: 20px;
+  padding: 0 !important;
+}
+
+  input{
+    width: 90% !important;
+  }
+}
+
+

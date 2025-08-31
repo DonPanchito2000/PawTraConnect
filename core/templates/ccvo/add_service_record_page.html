@@ -8,26 +8,34 @@
 {% block content %}
 <div class="container py-5">
     <!-- Search Client Section -->
-    <div class="search-pet-container rounded mb-5 p-4">
-      <h3 class="mb-4  font-weight-bold">🔍 Search Client by ID</h3>
+    <div class="text-center search-pet-container rounded mb-5 p-4">
+      <h5 class=" mb-3  font-weight-bold">🔍 Pet</h5>
       <div class="search-bar">
         <form method="get" action="" class="mb-3">
-          <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+          <input type="text" name="q" class="form-control" placeholder="Search for pet..." value="{{ request.GET.q }}">
         </form>
       </div>
       <div id="clientResult" class=" text-center">
         {% if pet %}
              <div class="card owner-card m-3">
                         <div class="card-body">
-                            <div class="d-flex align-items-center mb-2">
+                            <div class="searched-pet mb-2">
                                 {% if pet.pet_profile %}
+                                <div class="img-container mb-3">
                                 <img src="{{ pet.pet_profile.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                </div>
                                 {% endif %}
-                                
-                                <span class="ml-3">{{ pet.name }} </span>
-                                <span class="badge badge-info ml-2">{{pet.dog_id}}</span>
-                                <div class="ml-auto">
-                               <a href=""><button class="view">View</button></a>
+                                <div>
+                                <span class="">{{ pet.name }} </span>
+                                </div>
+                                <div class="">
+                                <span class="badge badge-info">{{pet.dog_id}}</span>
+                                </div>
+                                <div class="mb-3">
+                                <span class="">{{pet.barangay}}</span>
+                                </div>
+                                <div class="ml-auto action-btn">
+                               <a href=""><button class="view mb-2">View</button></a>
                                <a href="{% url 'add-service-record-form' pet.id %}"><button class="view">Select</button></a>
                                </div>
                             </div>
@@ -37,26 +45,28 @@
       </div>
     </div>
 
-    <div class="search-pet-container">
+    <div class="w-100">
 {% if selected_pet %}
-         <div class="card owner-card m-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-2">
+         <div class="card owner-card selected-pet-container m-auto">
+                        <div class="card-body  d-flex  justify-content-center w-100">
+                            <div class=" align-items-center mb-2 text-center">
+                              <div class="d-flex justify-content-center mb-3">
                                 {% if selected_pet.pet_profile %}
-                                <img src="{{ selected_pet.pet_profile.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                <img src="{{ selected_pet.pet_profile.url }}" alt="avatar" class="rounded-circle me-2" width="40%"  style="object-fit: cover;">
                                 {% endif %}
+                                </div>
+                                <span class="">{{ selected_pet.name }} </span>
+                                <div class="">
+                                  <span class="badge badge-info">{{selected_pet.dog_id}}</span>
+                                </div>
+                                <div class="">
+                                    <span class="">{{ selected_pet.barangay }} </span>
+                                </div>
                                 
-                                <span class="ml-3">{{ selected_pet.name }} </span>
-                                <span class="badge badge-info ml-2">{{selected_pet.dog_id}}</span>
-                                <div class="ml-auto">
-                               <a href=""><button class="view">View</button></a>
-                               <a href=""><button class="view">Select</button></a>
-                               </div>
                             </div>
                         </div>
                    </div>
-                   {% endif %}
-      <form action="" method="POST">
+                         <form action="" method="POST" class="text-center mt-5">
         {% csrf_token %}
         <input type="hidden" name="selected_pet" value="{{selected_pet.id}}">
         <label for="service">Service:</label>
@@ -70,9 +80,14 @@
          <label for="date-administered">Date Administered:</label>
             <input type="date" id="date-administered" name="date-administered" class="form-control">
 
-
-        <button type="submit">Submit</button>
+        <div class="d-flex justify-content-center">
+        <button type="submit" class="btn submit-btn mb-4 mt-4 mr-0"><i class="fa-solid fa-check"></i> Add Record</button>
+        </div>
       </form>
+                   {% endif %}
+
+      
+
     </div>
   
 
