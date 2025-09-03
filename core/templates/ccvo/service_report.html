@@ -1,0 +1,42 @@
+{% load static %}
+
+<h2>{{ service.name }} Report</h2>
+
+<!-- 🔹 Year Filter -->
+<form method="get" class="form-inline mb-3">
+  <label for="year" class="mr-2">Select Year:</label>
+  <select name="year" id="year" class="form-control mr-2">
+    {% for y in years %}
+      <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>
+        {{ y }}
+      </option>
+    {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-primary">View</button>
+</form>
+
+<!-- 🔹 Report Table -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Barangay</th>
+      <th>Total Registered Pets</th>
+      <th>Pets Availed This Service</th>
+      <th>% Vaccinated</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report %}
+      <tr>
+        <td>{{ row.barangay }}</td>
+        <td>{{ row.registered }}</td>
+        <td>{{ row.availed }}</td>
+        <td>{{ row.percentage }}%</td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="4">No records found for {{ selected_year }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

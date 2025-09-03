@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
 from .forms import DogRegistrationForm, ForumRoomForm, ClubForumRoomForm, CCVOAnnouncementForm, ClubAnnouncementForm ,EditPetProfileForm, ServiceForm, ServiceRecord
-from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service
-from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account
+from .models import Dog, ForumRoom, ForumComment, ClubMembership, ClubForumRoom, ClubForumComment, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service, ServiceRecord
+from accounts.models import PetOwnerProfile, VetClinicProfile, ClubProfile, Account, Barangay
 from django.http import HttpResponse
 from django.contrib import messages
 from django.utils.timesince import timesince
@@ -18,6 +18,10 @@ import json
 from django.template.loader import render_to_string
 
 from django.urls import reverse
+
+
+from django.db.models.functions import ExtractYear
+from django.utils.timezone import now
 
 # Create your views here.
 
@@ -841,6 +845,82 @@ def service_form(request, selected_pet_id):
         return redirect('services-page')
 
     return render(request, 'ccvo/add_service_record_page.html', context)
+def service_report(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+
+    # 🔹 Get all years that have records for this service
+    years = (
+        ServiceRecord.objects.filter(service=service)
+        .annotate(year=ExtractYear("date_avail"))
+        .values_list("year", flat=True)
+        .distinct()
+        .order_by("-year")
+    )
+
+    # 🔹 Select year (default = latest year)
+    selected_year = request.GET.get("year")
+    if not selected_year and years:
+        selected_year = years[0]
+
+    report = []
+    if selected_year:
+        barangays = Barangay.objects.all()
+
+        for brgy in barangays:
+            total_registered = Dog.objects.filter(barangay=brgy).count()
+
+            # ✅ Count DISTINCT pets, not duplicate service records
+            availed = (
+                ServiceRecord.objects.filter(
+                    pet__barangay=brgy,
+                    service=service,
+                    date_avail__year=selected_year,
+                )
+                .values("pet")   # group by pet
+                .distinct()
+                .count()
+            )
+
+            percentage = round((availed / total_registered) * 100, 2) if total_registered > 0 else 0
+
+            report.append({
+                "barangay": brgy.name,
+                "registered": total_registered,
+                "availed": availed,
+                "percentage": percentage,
+            })
+
+        # ✅ Handle "Unknown" barangay pets
+        unknown_pets = Dog.objects.filter(barangay__isnull=True).count()
+        if unknown_pets > 0:
+            availed_unknown = (
+                ServiceRecord.objects.filter(
+                    pet__barangay__isnull=True,
+                    service=service,
+                    date_avail__year=selected_year,
+                )
+                .values("pet")
+                .distinct()
+                .count()
+            )
+
+            percentage_unknown = round((availed_unknown / unknown_pets) * 100, 2) if unknown_pets > 0 else 0
+            report.append({
+                "barangay": "Unknown",
+                "registered": unknown_pets,
+                "availed": availed_unknown,
+                "percentage": percentage_unknown,
+            })
+
+    # 🔹 Use context dictionary
+    context = {
+        "service": service,
+        "years": years,
+        "selected_year": int(selected_year) if selected_year else None,
+        "report": report,
+    }
+
+    return render(request, "ccvo/service_report.html", context)
 # -----------------------
 # END CCVO VIEWS
 # -----------------------

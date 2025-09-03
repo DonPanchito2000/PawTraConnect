@@ -63,6 +63,7 @@ urlpatterns = [
     path('add-service-form-page/', views.add_service_form_page , name='add-service-form-page'),
     path('add-service-record-form-page/', views.add_service_record, name='add-service-record'),
     path('add-service-record-form/<str:selected_pet_id>/', views.service_form, name='add-service-record-form'),
+    path('service-report-page/<str:service_id>/', views.service_report, name='service-report-page'),
     # -----------------------
     # CCVO VET URLS
     # -----------------------
