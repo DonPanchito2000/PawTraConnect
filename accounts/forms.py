@@ -43,10 +43,18 @@ class VetClinicRegistrationForm(UserCreationForm):
     contact_number = forms.CharField()
     location = forms.CharField()
     profile_picture = forms.ImageField(required=False)
+    bp_document = forms.FileField(required=True)
 
     class Meta:
         model = Account
         fields = ['username', 'email', 'password1', 'password2', 'profile_picture']
+
+    def clean(self):
+         cleaned_data = super().clean()
+         bp_document = cleaned_data.get('bp_document')
+
+         if bp_document and not bp_document.name.lower().endswith('.pdf'):
+             self.add_error('bp_document', 'Only PDF files are allowed.')
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -59,8 +67,9 @@ class VetClinicRegistrationForm(UserCreationForm):
                 business_permit_number=self.cleaned_data['business_permit_number'],
                 issuing_office=self.cleaned_data['issuing_office'],
                 contact_number=self.cleaned_data['contact_number'],
+                bp_document=self.cleaned_data['bp_document'],
                 location=self.cleaned_data['location'],
-                is_city_vet=False, # always default to False
+                is_city_vet=False, 
                 is_approved=False 
             )
         return user

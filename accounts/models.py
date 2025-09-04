@@ -65,6 +65,7 @@ class VetClinicProfile(models.Model):
     business_permit_number = models.CharField(max_length=100)
     issuing_office = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=20)
+    bp_document = models.FileField(upload_to='bp_documents/', null=True, blank=True)
     location = models.CharField(max_length=255)
 
     is_city_vet = models.BooleanField(default=False)

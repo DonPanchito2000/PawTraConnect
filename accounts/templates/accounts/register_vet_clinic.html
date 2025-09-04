@@ -85,11 +85,18 @@
                                 <small class="text-danger">{{ form.business_permit_number.errors|striptags }}</small>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ form.location.label_tag }}
-                            {{ form.location }}
-                            <small class="text-danger">{{ form.location.errors|striptags }}</small>
-                        </div>
+                  
+                            <div class="form-group">
+                                {{ form.bp_document.label_tag }}
+                                {{ form.bp_document }}
+                                <small class="text-danger">{{ form.bp_document.errors|striptags }}</small>
+                            </div>
+                            <div class="form-group">
+                                {{ form.location.label_tag }}
+                                {{ form.location }}
+                                <small class="text-danger">{{ form.location.errors|striptags }}</small>
+                            </div>
+                      
 
                         <button type="submit" class="btn btn-register btn-block mt-4 col-md-4 m-auto">REGISTER</button>
                     </form>
