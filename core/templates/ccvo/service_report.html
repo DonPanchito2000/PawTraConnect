@@ -1,8 +1,19 @@
+
+{% extends 'ccvo/base.html' %}
 {% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/service_report.css' %}">
+{% endblock extra_css %}
+<title>{% block title %}Service Report{% endblock %}</title>
 
+{% block content %}
+
+
+<div class="service-name">
 <h2>{{ service.name }} Report</h2>
-
+</div>
 <!-- 🔹 Year Filter -->
+ <div class="form-container">
 <form method="get" class="form-inline mb-3">
   <label for="year" class="mr-2">Select Year:</label>
   <select name="year" id="year" class="form-control mr-2">
@@ -12,12 +23,13 @@
       </option>
     {% endfor %}
   </select>
-  <button type="submit" class="btn btn-primary">View</button>
+  <button type="submit" class="btn ">View</button>
 </form>
-
+</div>
 <!-- 🔹 Report Table -->
-<table class="table table-bordered">
-  <thead>
+ <div class="table-responsive mb-4">
+<table class="table table-bordered text-center report-table">
+  <thead class="thead-custom">
     <tr>
       <th>Barangay</th>
       <th>Total Registered Pets</th>
@@ -35,8 +47,21 @@
       </tr>
     {% empty %}
       <tr>
+        {% if selected_year %}
         <td colspan="4">No records found for {{ selected_year }}</td>
+        {% else %}
+        <td colspan="4">No records found</td>
+        {% endif %}
       </tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
+
+<div class="arrow-back mb-4 d-flex justify-content-center">
+                    <a href="{% url 'services-page' %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
+{% endblock content %}
