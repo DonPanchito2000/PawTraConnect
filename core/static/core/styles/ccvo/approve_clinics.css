@@ -1,0 +1,56 @@
+  .card {
+    background-color: rgba(0, 0, 0, 0.2); 
+  border: none;
+  border-radius: 16px;
+  transition: box-shadow 0.2s ease;
+  color: #eae2b7;
+  }
+
+  h2{
+    color: #be620d;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-view{
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+}
+
+.btn-view:focus,
+.btn-view:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-view:hover{
+ background-color:#be620d;
+  color: #eae2b7;
+      transform: scale(1.03);
+}
+
+.card-title{
+    color: #eae2b7;
+}
+
+
+.badge{
+    background-color: #be620d;
+}
+
+hr{
+    background-color: #eae2b7;
+}
+
+
+h4{
+    color: #eae2b7;
+}
+
+.fa-hospital{
+color: #be620d;
+}

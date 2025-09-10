@@ -21,7 +21,11 @@
     </form>
         
     {% elif membership_status == 'approved' %}
-        <input type="button" value="MEMBER" class="btn " disabled>
+        <!-- <input type="button" value="MEMBER" class="btn " disabled> -->
+           <form action="{% url 'cancel-request' club.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger btn-leave" type="submit">Leave Club</button>
+    </form>
      {% elif membership_status == 'banned' %}
         <button disabled class="btn mb-5">You are banned by the admin</button> 
 

@@ -755,6 +755,10 @@ def ccvo_announcement_form(request):
         # optional fallback if role is not recognized
         return HttpResponse('You are not allowed here!')
 
+def view_clinic_details(request, clinic_id):
+    vet_clinic = VetClinicProfile.objects.get(id=clinic_id)
+    context = {'vet_clinic':vet_clinic}
+    return render(request , 'ccvo/clinic_details.html',context)
 
 
 
@@ -779,6 +783,7 @@ def approve_clinic(request, pk):
         return redirect('approve-clinics-page')
 
     return render(request,'ccvo/approve_clinics.html')
+
 
 
 

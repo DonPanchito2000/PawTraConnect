@@ -1,0 +1,66 @@
+{% extends 'ccvo/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/clinic_details.css' %}">
+{% endblock extra_css %}
+{% block title %}Clinic Details{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow-lg rounded-lg">
+        <div class="card-header text-center border-0">
+          <h3 class="mb-0 p-4">📋 {{vet_clinic.user.username|upper}} DETAILS</h3>
+        </div>
+        <hr>
+        <div class="card-body text-center">
+            <div class="mb-2">
+                <span><strong class="mr-1">Clinic Name:  </strong>{{vet_clinic.clinic_name}}</span>
+            </div>
+            <div class="mb-2">
+                <span><strong class="mr-1">Location:  </strong>{{vet_clinic.location}}</span>  
+            </div>
+            <div class="mb-2">
+               <span><strong class="mr-1">Contact #:  </strong>{{vet_clinic.contact_number}}</span>  
+            </div>
+            <div class="mb-2">
+               <span><strong class="mr-1">Business Permit #:  </strong>{{vet_clinic.business_permit_number}}</span>  
+            </div>
+            <div class="mb-2">
+               <span><strong class="mr-1">Business Permit #:  </strong>{{vet_clinic.issuing_office}}</span>  
+            </div>
+            <div class="mb-2">
+               <span><strong class="mr-1">Business Permit Document:  </strong>
+                <a href="{{vet_clinic.bp_document.url}}" target="_blank" rel="noopener noreferrer">
+                    View Document
+               </a></span>  
+            </div>
+            {% if not vet_clinic.is_approved %}
+              <form method="post" action="{% url 'approve-clinic' vet_clinic.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-approve btn-sm mt-4">Approve Clinic</button>
+              </form>
+              {% endif %}
+        </div>
+
+        {% if user_is_vet and not is_history%}
+        <div class="card-footer text-center border-0">
+          <a href="{% url 'vaccine-information-form-page-update' vaccination_record.id %}" class="">
+            <button class="btn btn-mark-complete mb-3">
+              Mark Complete
+            </button>
+        </a>
+        </div>
+        {% endif %}
+
+            <div class="arrow-back mb-4 text-center">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

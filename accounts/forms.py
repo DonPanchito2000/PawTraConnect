@@ -43,7 +43,7 @@ class VetClinicRegistrationForm(UserCreationForm):
     contact_number = forms.CharField()
     location = forms.CharField()
     profile_picture = forms.ImageField(required=False)
-    bp_document = forms.FileField(required=True)
+    bp_document = forms.FileField(required=True, label="Business Permit Document")
 
     class Meta:
         model = Account

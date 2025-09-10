@@ -1,33 +1,36 @@
 {% extends 'ccvo/base.html' %}
-
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/approve_clinics.css' %}">
+{% endblock extra_css %}
+{% block title %}Clinic Management{% endblock %}
 {% block content %}
 <div class="container py-5">
     <!-- Page Header -->
     <div class="text-center mb-5">
-        <h2 class="display-5 font-weight-bold text-primary">Vet Clinic Management</h2>
-        <p class="lead text-muted">Review and manage vet clinic registrations</p>
+        <h2 class="display-5 font-weight-bold">Vet Clinic Management</h2>
+        <!-- <p class="lead text-muted">Review and manage vet clinic registrations</p> -->
     </div>
 
     <!-- Section 1: Pending Approvals -->
     <div class="mb-5">
-        <h4 class="mb-3 border-bottom pb-2">🕒 Pending Approval</h4>
+        <h4 class="mb-3 pb-2">🕒 Pending Approval</h4>
+        <hr>
         {% if pending_clinics %}
             <div class="row">
                 {% for clinic in pending_clinics %}
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card shadow-sm border-left border-warning">
                         <div class="card-body">
-                            <h5 class="card-title text-warning font-weight-bold">{{ clinic.clinic_name }}</h5>
-                            <ul class="list-unstyled text-muted mb-3">
-                                <li><strong>License #:</strong> {{ clinic.license_number }}</li>
-                                <li><strong>Email:</strong> {{ clinic.social_email }}</li>
-                                <li><strong>Contact:</strong> {{ clinic.contact_number }}</li>
-                                <li><strong>Location:</strong> {{ clinic.location }}</li>
-                            </ul>
-                            <form method="post" action="{% url 'approve-clinic' clinic.id %}">
+                            <h5 class="card-title font-weight-bold"><i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}</h5>
+                      
+                            <a href="{% url 'clinic-details' clinic.id %}">
+                                <button type="submit" class="btn btn-view btn-sm w-100">View</button>
+                            </a>
+                            <!-- <form method="post" action="{% url 'approve-clinic' clinic.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success btn-sm w-100">Approve Clinic</button>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>
@@ -40,21 +43,24 @@
 
     <!-- Section 2: Registered Clinics -->
     <div>
-        <h4 class="mb-3 border-bottom pb-2">✅ Approved Vet Clinics</h4>
+        <h4 class="mb-3 pb-2 h4-approve">✅ Approved Vet Clinics</h4>
+        <hr>
         {% if approved_clinics %}
             <div class="row">
                 {% for clinic in approved_clinics %}
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card shadow-sm border-left border-success">
                         <div class="card-body">
-                            <h5 class="card-title text-success font-weight-bold">{{ clinic.clinic_name }}</h5>
-                            <ul class="list-unstyled text-muted mb-3">
+                            <h5 class="card-title font-weight-bold d-inline"><i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}</h5>
+                            <!-- <ul class="list-unstyled text-muted mb-3">
                                 <li><strong>License #:</strong> {{ clinic.license_number }}</li>
-                                <li><strong>Email:</strong> {{ clinic.social_email }}</li>
                                 <li><strong>Contact:</strong> {{ clinic.contact_number }}</li>
                                 <li><strong>Location:</strong> {{ clinic.location }}</li>
-                            </ul>
-                            <span class="badge badge-success float-right">Approved</span>
+                            </ul> -->
+                            <span class="badge float-right">Approved</span>
+                            <a href="{% url 'clinic-details' clinic.id %}">
+                                <button type="submit" class="btn btn-view btn-sm w-100 mt-3">View</button>
+                            </a>
                         </div>
                     </div>
                 </div>

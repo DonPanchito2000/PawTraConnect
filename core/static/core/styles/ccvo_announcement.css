@@ -8,15 +8,21 @@ hr{
   color: red !important;
 }
 
+
 .create-room-btn{
-  background-color: #f77f00;
-  color: #273e47;
-  transition: 0.80s ease;
+ width: 230px;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      margin-right: 1rem;
 }
 
-.create-room-btn:hover {
-  background-color: #be620d;
+
+
+.create-room-btn:hover{
+  background-color:#be620d;
   color: #eae2b7;
+      transform: scale(1.03);
 }
 
 .form-control{
@@ -82,10 +88,10 @@ hr{
   bottom: 30px;
   right: 30px;
   z-index: 999;
-  background-color: #343a40;
-  border: none;
+  background: transparent;
+  border: 1px solid #be620d;
   outline: none;
-  color: white;
+  color: #be620d !important;
   cursor: pointer;
   padding: 12px;
   border-radius: 12px;
@@ -96,6 +102,10 @@ hr{
   transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.3s ease;
 }
 
+#backToTop svg{
+  fill: #be620d !important;
+}
+
 #backToTop.show {
   opacity: 1;
   pointer-events: auto;
@@ -103,7 +113,7 @@ hr{
 }
 
 #backToTop:hover {
-  background-color: #495057;
+  background-color: rgba(0,0,0,0.2);
   transform: translateY(-3px);
 }
 

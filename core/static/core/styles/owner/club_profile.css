@@ -32,6 +32,20 @@
   border: none;
 }
 
+.btn-leave{
+  background-color: red;
+  color: #273e47;
+  transition: 0.80s ease;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border: none;
+}
+
+.btn-leave:hover{
+    background-color: red;
+  color: #eae2b7;
+}
+
 
 .btn-join:hover{
   background-color: #be620d;

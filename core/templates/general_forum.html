@@ -16,12 +16,14 @@
     <!-- Forum Room Section -->
     <div class="col-lg-8 mb-4 d-none d-lg-block">
       <div class="card forum-container shadow rounded-3 p-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-              <a href="{% url 'user-forum-profile' request.user.id %}" class="btn btn-outline-primary btn-sm d-flex">
-  <i class="fas fa-user"></i> My Profile
-</a>
-          <h5 class="mb-0">Forum Rooms</h5>
-          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn"><i class="fas fa-plus"></i> Create Room</a>
+        <div class="d-flex align-items-center mb-3">
+            <h5 class="mb-0">General Forum</h5>
+
+        
+          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto"><i class="fas fa-plus"></i> Create Room</a>
+                        <a href="{% url 'user-forum-profile' request.user.id %}" class="btn btn-profile-nav btn-outline-none btn-sm d-flex align-items-center">
+                          <i class="fas fa-user mr-2"></i> My Profile
+                        </a>
         </div>
 
         <!-- Search Bar -->
@@ -121,6 +123,9 @@
                   <div class="d-flex justify-content-between align-items-center mb-3">
           <!-- <h5 class="mb-0">Forum Rooms</h5> -->
           <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto">+ Create Room</a>
+                         <a href="{% url 'user-forum-profile' request.user.id %}" class="btn btn-profile-nav btn-outline-none btn-sm d-flex align-items-center">
+  <i class="fas fa-user mr-2">  </i> My Profile
+</a>
         </div>
         
               <!-- Search Bar -->
