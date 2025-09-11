@@ -20,7 +20,7 @@
             <h5 class="mb-0">General Forum</h5>
 
         
-          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto"><i class="fas fa-plus"></i> Create Room</a>
+          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto"><i class="fas fa-plus mr-2"></i> Create Room</a>
                         <a href="{% url 'user-forum-profile' request.user.id %}" class="btn btn-profile-nav btn-outline-none btn-sm d-flex align-items-center">
                           <i class="fas fa-user mr-2"></i> My Profile
                         </a>
@@ -115,27 +115,28 @@
 
 
 <!-- Tabs content for small/mobile screens -->
-    <div class="col-12 d-lg-none">
+    <div class="col-12 d-lg-none p-0">
+      <h6 class="mb-3">Member Forum</h6>
       <div class="tab-content" id="forumTabsContent" style="min-height: 400px;">
         <div class="tab-pane fade show active" id="forum-rooms" role="tabpanel" aria-labelledby="forum-rooms-tab">
           
-          <div class="card forum-container shadow rounded-3 p-4">
+          <div class="card forum-container shadow rounded-3 p-lg-4 p-2">
                   <div class="d-flex justify-content-between align-items-center mb-3">
           <!-- <h5 class="mb-0">Forum Rooms</h5> -->
-          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto">+ Create Room</a>
+          <a href="{% url 'general-forum-form' %}" class="btn create-room-btn ml-auto"><i class="fas fa-plus mr-2"></i> Create Room</a>
                          <a href="{% url 'user-forum-profile' request.user.id %}" class="btn btn-profile-nav btn-outline-none btn-sm d-flex align-items-center">
   <i class="fas fa-user mr-2">  </i> My Profile
 </a>
         </div>
         
-              <!-- Search Bar -->
+             
         <form method="get" action="" class="mb-3">
           <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
 
         </form>
 
 
-            <!-- Forum Rooms content (same as large screen) -->
+  
              <div class="forum-post">
               {% for room in rooms %}
           <a href="{% url 'room' room.id %}" class="text-decoration-none text-white forum-room-link">
@@ -166,8 +167,8 @@
         </div>
 
         
-        <div class="tab-pane fade" id="recent-activities" role="tabpanel" aria-labelledby="recent-activities-tab">
-          <div class="card recent-act-card shadow rounded-3 p-4">
+        <div class="tab-pane fade p-0" id="recent-activities" role="tabpanel" aria-labelledby="recent-activities-tab">
+          <div class="card recent-act-card shadow rounded-3 p-lg-4 p-2">
             <!-- Recent Activities content (same as large screen) -->
              {% for message in room_comments %}
             <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">

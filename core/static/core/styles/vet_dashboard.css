@@ -1,7 +1,7 @@
 
 
 .container  h5{
-    color: #f77f00 !important;
+    color: #eae2b7 !important;
   }
 
 
@@ -42,7 +42,8 @@
 }
 
 .owner-card:hover {
-   transform: translateY(-2px);
+   box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  transform: scale(1.01);
 }
 
   .form-control{

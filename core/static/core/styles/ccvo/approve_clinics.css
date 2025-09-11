@@ -7,7 +7,7 @@
   }
 
   h2{
-    color: #be620d;
+    color: #eae2b7;
   }
   
   .card:hover {
@@ -52,5 +52,9 @@ h4{
 }
 
 .fa-hospital{
+color: #be620d;
+}
+
+.fa-stethoscope{
 color: #be620d;
 }

@@ -122,11 +122,11 @@
 }
 #forumTabs .nav-link {
   border-radius: 20px;
-  color: #495057;
+  color: #eae2b7;
   transition: all 0.3s ease;
   padding: 0.6rem 1.2rem;
   font-weight: 500;
-  background-color: #f77f00;
+  background-color: transparent;
     border: none; /* Remove existing borders */
     transition: 0.80s ease;
 
@@ -188,14 +188,19 @@ hr{
 }
 
 .create-room-btn{
-  background-color: #f77f00;
-  color: #273e47;
-  transition: 0.80s ease;
+ width: 230px;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      margin-right: 1rem;
+      background-color: transparent;
 }
 
-.create-room-btn:hover {
-  background-color: #be620d;
+
+.create-room-btn:hover{
+  background-color:#be620d;
   color: #eae2b7;
+      transform: scale(1.03);
 }
 
 .form-control{

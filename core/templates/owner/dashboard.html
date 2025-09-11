@@ -11,7 +11,9 @@
 <!-- Pet Sidebar -->
 <div class="col-md-4 registered-pets-section pt-3">
     <a href="{% url 'register-dog' %}">
-        <button class="btn btn-register btn-block mb-3 col-md-9" >Register New Pet</button>
+      <div class="w-100 text-center mb-2">
+        <button class="btn btn-register mb-3 col-md-9" ><i class="fas fa-plus mr-2"></i> Register New Pet</button>
+        </div>
     </a>
 
 
@@ -22,11 +24,11 @@
   </div>
 
 
-    <div class="registered-pets">
+    <div class="registered-pets p-3">
     {% for dog in registered_dogs %}
     <a href="{% url 'dog-profile' dog.id %}">
         <div class="sidebar-pets">
-            <div class="card mb-2 clickable">
+            <div class="card mb-3 clickable">
                 <div class="card-body d-flex align-items-center">
                     <img src="{{ dog.pet_profile.url }}" class="rounded-circle me-2 mr-4" width="72" height="72" style="object-fit: cover;">
                     <div>

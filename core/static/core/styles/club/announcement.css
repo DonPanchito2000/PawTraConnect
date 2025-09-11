@@ -9,15 +9,21 @@ hr{
 }
 
 .create-room-btn{
-  background-color: #f77f00;
-  color: #273e47;
-  transition: 0.80s ease;
+ width: 230px;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      margin-right: 1rem;
 }
 
-.create-room-btn:hover {
-  background-color: #be620d;
+
+
+.create-room-btn:hover{
+  background-color:#be620d;
   color: #eae2b7;
+      transform: scale(1.03);
 }
+
 
 .form-control{
   background-color: rgba(0, 0, 0, 0.2);
@@ -59,6 +65,10 @@ hr{
     pointer-events: none; /* So clicks go through */
   }
 
+  
+  .forum-container:hover {
+ transform: translateY(-2px);
+}
 .forum-room {
   border-radius: 20px;
   overflow: hidden;
@@ -119,7 +129,9 @@ hr{
 }
 
 .card.room-card:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  transform: scale(1.03);
 }
+
 
 

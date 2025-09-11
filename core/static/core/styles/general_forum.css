@@ -1,6 +1,7 @@
 /* Forum Room Card */
 
-h5{
+h5,
+h6{
   color: #eae2b7;
 }
 
@@ -8,16 +9,6 @@ hr{
   color: red !important;
 }
 
-/* .create-room-btn{
-  background-color: #f77f00;
-  color: #273e47;
-  transition: 0.80s ease;
-}
-
-.create-room-btn:hover {
-  background-color: #be620d;
-  color: #eae2b7;
-} */
 
 
 .create-room-btn{
@@ -74,6 +65,11 @@ hr{
     z-index: 2;
     pointer-events: none; /* So clicks go through */
   }
+
+
+  .forum-container:hover {
+ transform: translateY(-2px);
+}
 
 .forum-room {
   border-radius: 20px;
@@ -150,7 +146,6 @@ hr{
   border-radius: 4px;
 }
 
-/* Community Forum Cards */
 .card.room-card {
   background-color: rgba(0, 0, 0, 0.2); 
   border: none;
@@ -164,17 +159,12 @@ hr{
   box-shadow: 0 6px 12px rgba(0,0,0,0.4);
   transform: scale(1.03);
 }
-/* 
-.card-body img.rounded-circle {
-  border: 2px solid #dee2e6;
-} */
-
 
 .recent-activity-fixed {
   position: sticky;
-  top: 100px;          /* same offset as inner scroll */
-  align-self: flex-start; /* prevent stretching in flex/grid layouts */
-  max-height: calc(100vh - 120px); /* full viewport height minus offset */
+  top: 100px;          
+  align-self: flex-start; 
+  max-height: calc(100vh - 120px); 
 }
 
 
@@ -196,10 +186,10 @@ hr{
     pointer-events: none; /* So clicks go through */
   }
 
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  }
+  .card.recent-act-card:hover {
+  transform: translateY(-2px);
+}
+  
 
 
 .recent-act-inner-card{
@@ -235,7 +225,7 @@ hr{
 }
 
 .nav-tabs .nav-link {
-  color: #be620d !important;
+  color: #eae2b7 !important;
   font-weight: 600;
   padding: 12px 20px;
   border: none;

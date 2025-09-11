@@ -1,5 +1,5 @@
 h5{
-  color: #f77f00
+  color: #eae2b7
 }
 /* .card {
    background-color: rgba(0, 0, 0, 0.2) !important; 
@@ -61,6 +61,11 @@ h5{
     z-index: 2;
     pointer-events: none; /* So clicks go through */
   }
+ .requests-card:hover {
+ transform: translateY(-2px);
+}
+
+
 .request-card {
   background-color: rgba(0, 0, 0, 0.2); 
   border: none;
@@ -71,8 +76,10 @@ h5{
 }
 
 .request-card:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+   box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  transform: scale(1.03);
 }
+
 .requests {
   max-height: 80vh;    /* optional, keeps internal scroll */
   overflow-y: auto;
