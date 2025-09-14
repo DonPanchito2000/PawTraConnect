@@ -48,7 +48,6 @@ hr{
 
 .forum-container{
   background-color: #273e47;
-  z-index: 1; 
   color: #eae2b7;
 
 }
@@ -62,7 +61,7 @@ hr{
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.2); /* Transparent black */
-    z-index: 2;
+    z-index: 1;
     pointer-events: none; /* So clicks go through */
   }
 

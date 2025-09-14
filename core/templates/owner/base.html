@@ -40,6 +40,12 @@
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
            <ul class="navbar-nav">
+            {% if request.user.profile_picture %}
+                <li class="nav-item d-lg-none mt-3 text-center">
+                    <img src="{{ request.user.profile_picture.url }}" class="rounded-circle" alt="Profile" width="40" height="40" style="object-fit: cover;">
+                    <span class="nav-link text-muted"><i class="fas fa-user"></i> {{ request.user.username }}</span>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'pet-owner-dashboard' %}">Dashboard</a>
                 </li>
@@ -54,12 +60,7 @@
                 </li>
 
              
-                {% if request.user.profile_picture %}
-                <li class="nav-item d-lg-none mt-3">
-                    <img src="{{ request.user.profile_picture.url }}" class="rounded-circle" alt="Profile" width="40" height="40" style="object-fit: cover;">
-                    <span class="nav-link text-muted"><i class="fas fa-user"></i> {{ request.user.username }}</span>
-                </li>
-                {% endif %}
+          
                 <li class="nav-item d-lg-none">
                     <a class="nav-link" href="{% url 'account-page' %}">Profile</a>
                 </li>

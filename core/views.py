@@ -850,6 +850,7 @@ def service_form(request, selected_pet_id):
         return redirect('services-page')
 
     return render(request, 'ccvo/add_service_record_page.html', context)
+
 def service_report(request, service_id):
     service = get_object_or_404(Service, id=service_id)
 
