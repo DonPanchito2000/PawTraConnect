@@ -395,7 +395,15 @@ def vet_clinic_dashboard(request):
     if user.role == 'vet':
         try:
             vet_profile = VetClinicProfile.objects.get(user = request.user)
-            regular_clients = vet_profile.regular_clients.all()
+
+            query = request.GET.get('p') if request.GET.get('p') else ''
+            print(f"Query: {query}")
+            regular_clients = vet_profile.regular_clients.filter(
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
+            )
+
+            # regular_clients = vet_profile.regular_clients.all()
             context = {'pet_owners':pet_owners,'regular_clients':regular_clients}
             # vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:
