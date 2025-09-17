@@ -146,3 +146,16 @@ hr{
 }
 
 
+@media (max-width: 768px) {
+  .forum-container {
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important;        
+  }
+
+  .forum-container::before {
+    display: none !important; /* remove the overlay effect */
+  }
+  
+  
+}

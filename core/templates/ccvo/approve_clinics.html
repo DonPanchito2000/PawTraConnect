@@ -6,69 +6,145 @@
 {% block title %}Clinic Management{% endblock %}
 {% block content %}
 <div class="container py-5">
+
     <!-- Page Header -->
     <div class="text-center mb-5">
-        <h2 class="display-5 font-weight-bold"><i class="fas fa-stethoscope mr-2"></i> Vet Clinic Management</h2>
-        <!-- <p class="lead text-muted">Review and manage vet clinic registrations</p> -->
+        <h2 class="display-5 font-weight-bold">
+            <i class="fas fa-stethoscope mr-2"></i> Vet Clinic Management
+        </h2>
     </div>
 
-    <!-- Section 1: Pending Approvals -->
-    <div class="mb-5">
-        <h4 class="mb-3 pb-2">🕒 Pending Approval</h4>
-        <hr>
-        {% if pending_clinics %}
-            <div class="row">
-                {% for clinic in pending_clinics %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm border-left border-warning">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold"><i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}</h5>
-                      
-                            <a href="{% url 'clinic-details' clinic.id %}">
-                                <button type="submit" class="btn btn-view btn-sm w-100">View</button>
-                            </a>
-                            <!-- <form method="post" action="{% url 'approve-clinic' clinic.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success btn-sm w-100">Approve Clinic</button>
-                            </form> -->
+    <!-- ---------------- DESKTOP VIEW ---------------- -->
+    <div class="d-none d-lg-block">
+        <!-- Section 1: Pending Approvals -->
+        <div class="mb-5">
+            <h4 class="mb-3 pb-2">🕒 Pending Approval</h4>
+            <hr>
+            {% if pending_clinics %}
+                <div class="row">
+                    {% for clinic in pending_clinics %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-sm border-left border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold">
+                                    <i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}
+                                </h5>
+                                <a href="{% url 'clinic-details' clinic.id %}">
+                                    <button type="submit" class="btn btn-view btn-sm w-100">View</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-warning text-center">There are no clinics waiting for approval.</div>
-        {% endif %}
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    There are no clinics waiting for approval.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Section 2: Registered Clinics -->
+        <div>
+            <h4 class="mb-3 pb-2 h4-approve">✅ Approved Vet Clinics</h4>
+            <hr>
+            {% if approved_clinics %}
+                <div class="row">
+                    {% for clinic in approved_clinics %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-sm border-left border-success">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold d-inline">
+                                    <i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}
+                                </h5>
+                                <span class="badge float-right">Approved</span>
+                                <a href="{% url 'clinic-details' clinic.id %}">
+                                    <button type="submit" class="btn btn-view btn-sm w-100 mt-3">View</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-secondary text-center">
+                    No approved clinics found yet.
+                </div>
+            {% endif %}
+        </div>
     </div>
 
-    <!-- Section 2: Registered Clinics -->
-    <div>
-        <h4 class="mb-3 pb-2 h4-approve">✅ Approved Vet Clinics</h4>
-        <hr>
-        {% if approved_clinics %}
-            <div class="row">
-                {% for clinic in approved_clinics %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm border-left border-success">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold d-inline"><i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}</h5>
-                            <!-- <ul class="list-unstyled text-muted mb-3">
-                                <li><strong>License #:</strong> {{ clinic.license_number }}</li>
-                                <li><strong>Contact:</strong> {{ clinic.contact_number }}</li>
-                                <li><strong>Location:</strong> {{ clinic.location }}</li>
-                            </ul> -->
-                            <span class="badge float-right">Approved</span>
-                            <a href="{% url 'clinic-details' clinic.id %}">
-                                <button type="submit" class="btn btn-view btn-sm w-100 mt-3">View</button>
-                            </a>
+    <!-- ---------------- MOBILE VIEW ---------------- -->
+    <div class="d-lg-none">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="clinicTabs" role="tablist"
+            style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pending-tab" data-toggle="tab" href="#pending" 
+                   role="tab" aria-controls="pending" aria-selected="true">
+                   Waiting Approval
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="approved-tab" data-toggle="tab" href="#approved" 
+                   role="tab" aria-controls="approved" aria-selected="false">
+                   Approved
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="clinicTabsContent">
+            <!-- Pending Clinics -->
+            <div class="tab-pane fade show active" id="pending" role="tabpanel">
+                {% if pending_clinics %}
+                    <div class="d-flex flex-column">
+                        {% for clinic in pending_clinics %}
+                        <div class="card shadow-sm border-left border-warning mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold">
+                                    <i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}
+                                </h5>
+                                <a href="{% url 'clinic-details' clinic.id %}">
+                                    <button type="submit" class="btn btn-view btn-sm w-100">View</button>
+                                </a>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
-                </div>
-                {% endfor %}
+                {% else %}
+                    <div class="alert alert-warning text-center">
+                        There are no clinics waiting for approval.
+                    </div>
+                {% endif %}
             </div>
-        {% else %}
-            <div class="alert alert-secondary text-center">No approved clinics found yet.</div>
-        {% endif %}
+
+            <!-- Approved Clinics -->
+            <div class="tab-pane fade" id="approved" role="tabpanel">
+                {% if approved_clinics %}
+                    <div class="d-flex flex-column">
+                        {% for clinic in approved_clinics %}
+                        <div class="card shadow-sm border-left border-success mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold">
+                                    <i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}
+                                </h5>
+                                <span class="badge float-right">Approved</span>
+                                <a href="{% url 'clinic-details' clinic.id %}">
+                                    <button type="submit" class="btn btn-view btn-sm w-100 mt-3">View</button>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-secondary text-center">
+                        No approved clinics found yet.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
+
 </div>
 {% endblock content %}

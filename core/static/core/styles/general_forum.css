@@ -279,3 +279,19 @@ strong{
   border: none !important;
 
 }
+@media (max-width: 768px) {
+  .forum-container,
+  .card.recent-act-card {
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important;        
+  }
+
+  .forum-container::before,
+  .card.recent-act-card::before {
+    display: none !important; /* remove the overlay effect */
+  }
+  
+  
+}
+

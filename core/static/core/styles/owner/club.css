@@ -130,3 +130,38 @@
 a:hover{
   text-decoration: none;
 }
+
+/* Tabs styling */
+.nav-tabs {
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.nav-tabs .nav-link {
+  color: #eae2b7 !important;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link.active {
+  color: #eae2b7 !important;
+  background: #be620d;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  color: #f8f9fa;
+  background-color: #495057;
+}
+
+/* Adjust tab content min height for better UX */
+.tab-content > .tab-pane {
+  min-height: 400px; /* or adjust as needed */
+}

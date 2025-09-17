@@ -111,6 +111,7 @@
   background-color:#be620d;
   color: #eae2b7;
       transform: scale(1.03);
+        transition: 0.2s ease-in-out;
 }
 
 .edit-profile a{
@@ -118,4 +119,18 @@
   border: 1px solid #eae2b7;
   padding: 5px 20px;
   border-radius: 30px;
+}
+
+@media (max-width: 768px) {
+
+  .btn-details{
+    width: 90%;
+  
+  }
+
+  .btn-view-history{
+    margin-right: 0 !important;
+    margin-bottom: 5px !important;
+    width: 100%;;
+  }
 }

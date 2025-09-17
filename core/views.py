@@ -1217,44 +1217,47 @@ def vaccine_information_form_page_update(request, old_vaccination_record_id):
         
 
 
-
 def vaccine_information_form_page_new(request, pet_id):
-     user = request.user
-     vet_clinic = VetClinicProfile.objects.get(user=user)
-     pet = Dog.objects.get(id = pet_id)
-     if request.method == "POST":
-        try:
+    user = request.user
+    try:
+        pet = Dog.objects.get(id=pet_id)
+    except Dog.DoesNotExist:
+        return HttpResponse("Pet not found", status=404)
+
+    if user.role == 'vet':
+        vet_clinic = VetClinicProfile.objects.get(user=user)
+
+        if request.method == "POST":
             next_due_date_raw = request.POST.get('next_due_date')
             next_due_date = next_due_date_raw if next_due_date_raw else None
             VaccinationRecord.objects.create(
-                pet = pet,
-                vaccine_name = request.POST.get('vaccine_name'),
-                vaccine_brand = request.POST.get('vaccine_brand'),
-                date_administered = request.POST.get('date_administered'),
-                next_due_date = next_due_date,
-                veterinarian_name = request.POST.get('veterinarian_name'),
-                license_number = request.POST.get('license_number'),
-                vet_clinic = vet_clinic,
-                notes = request.POST.get('notes')
+                pet=pet,
+                vaccine_name=request.POST.get('vaccine_name'),
+                vaccine_brand=request.POST.get('vaccine_brand'),
+                date_administered=request.POST.get('date_administered'),
+                next_due_date=next_due_date,
+                veterinarian_name=request.POST.get('veterinarian_name'),
+                license_number=request.POST.get('license_number'),
+                vet_clinic=vet_clinic,
+                notes=request.POST.get('notes')
             )
-            return redirect('dog-profile', pk = pet_id)
-        except Dog.DoesNotExist:  
-             return HttpResponse("Pet not found", status=404)
-         
-     if user.role == 'vet':
+            return redirect('dog-profile', pk=pet_id)
+
         try:
             vet_profile = VetClinicProfile.objects.get(user=user)
-            context = {'vet_profile':vet_profile,'pet':pet}
+            context = {'vet_profile': vet_profile, 'pet': pet}
             if vet_profile.is_city_vet:
-                return render(request, 'ccvo/vaccine_information_form.html',context)
+                return render(request, 'ccvo/vaccine_information_form.html', context)
             elif vet_profile.is_approved:
-                return render(request, 'vet/vaccine_information_form.html',context)
+                return render(request, 'vet/vaccine_information_form.html', context)
             else:
                 return HttpResponse('You are not allowed here!')
 
         except VetClinicProfile.DoesNotExist:
             return HttpResponse('You are not allowed here!')
-        
+
+ 
+    return HttpResponse("Only vets can access this page", status=403)
 
 
 

@@ -21,11 +21,20 @@ h3{
   
 
 .services-container:hover {
-        transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+     transform: translateY(-2px);
+
   }
 
+.services{
+    max-height: 80vh;    /* optional, keeps internal scroll */
+  overflow-y: auto;
+  padding-right: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #f77f00 transparent;
+}
 
+
+  
   
 .owner-card {
   background-color: rgba(0, 0, 0, 0.2); 
@@ -38,7 +47,7 @@ h3{
 
 .owner-card:hover {
 box-shadow: 0 6px 12px rgba(0,0,0,0.4) !important;
-    transform: scale(1.03);
+    transform: scale(1.00);
 
 }
 
@@ -105,6 +114,21 @@ box-shadow: 0 6px 12px rgba(0,0,0,0.4) !important;
 .add-btn{
   width: 100%;
   margin-right: 0 !important;
- 
+  margin-bottom: 5px  !important;
 }
+}
+
+@media (max-width: 768px) {
+.services-container {
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important; 
+    padding: 0 !important;       
+  }
+
+.services-container ::before {
+    display: none !important; /* remove the overlay effect */
+  }
+  
+  
 }
