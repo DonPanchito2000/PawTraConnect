@@ -29,6 +29,12 @@ h2{
   
 }
 
+@media (max-width: 768px) {
+  .form-control{
+    width: 80px;
+  }
+}
+
 
 .table-responsive{
     max-height: 500px !important;

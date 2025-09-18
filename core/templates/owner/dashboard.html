@@ -6,136 +6,281 @@
 {% block title %}Dashboard - PawTraConnect{% endblock %}
 {% block content %}
 
+<div class="container-fluid py-4">
 
-<div class="row mt-4">
+  <!-- Tabs for small screens -->
+  <ul class="nav nav-tabs d-lg-none mb-3" id="dashboardTabs" role="tablist" 
+      style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="pets-tab" data-toggle="tab" href="#pets" role="tab" 
+         aria-controls="pets" aria-selected="true">Registered Pets</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" 
+         aria-controls="overview" aria-selected="false">Dashboard</a>
+    </li>
+  </ul>
 
+  <div class="row">
+    <!-- ✅ Registered Pets Sidebar (desktop only) -->
+    <div class="col-lg-4 d-none d-lg-block">
+      <div class="registered-pets-section pt-3">
+        <a href="{% url 'register-dog' %}">
+          <div class="w-100 text-center mb-2">
+            <button class="btn btn-register mb-3 col-md-9">
+              <i class="fas fa-plus mr-2"></i> Register New Pet
+            </button>
+          </div>
+        </a>
 
-  
-<!-- Pet Sidebar -->
-<div class="col-md-4 registered-pets-section pt-3">
-    <a href="{% url 'register-dog' %}">
-      <div class="w-100 text-center mb-2">
-        <button class="btn btn-register mb-3 col-md-9" ><i class="fas fa-plus mr-2"></i> Register New Pet</button>
+        <div class="search-bar mx-lg-4 mr-md-3 m-sm-0">
+          <form method="get" action="" class="mb-3">
+            <input type="text" name="q" class="form-control" 
+                   placeholder="Search for pets..." value="{{ request.GET.q }}">
+          </form>
         </div>
-    </a>
+
+        <div class="registered-pets p-3">
+          {% for dog in registered_dogs %}
+          <a href="{% url 'dog-profile' dog.id %}">
+            <div class="sidebar-pets">
+              <div class="card mb-3 clickable">
+                <div class="card-body d-flex align-items-center">
+                  <img src="{{ dog.pet_profile.url }}" class="rounded-circle me-2 mr-4" 
+                       width="72" height="72" style="object-fit: cover;">
+                  <div>
+                    <strong><span>Name:</span> {{ dog.name }}</strong><br>
+                    <strong><span>Breed:</span> {{ dog.breed }}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Dashboard (desktop only) -->
+    <div class="col-lg-8 d-none d-lg-block mt-4">
+      <div class="row dashboard-overview mb-4">
+        <div class="col-md-4 mb-3">
+          <div class="card card-view text-center p-3">
+            <h5>Total Registered Pets</h5>
+            <h3>{{ all_dogs.count }}</h3>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card card-view text-center p-3">
+            <h5>Overdue Vaccinations</h5>
+            <h3>{{ overdue_vaccinations.count }}</h3>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card card-view text-center p-3">
+            <h5>Upcoming Vaccinations</h5>
+            <h3>{{ upcoming_vaccinations.count }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overdue Table -->
+      <h5 class="tag">Overdue Vaccinations</h5>
+      <div class="table-responsive mb-4">
+        <table class="table table-bordered text-center vaccine-table">
+          <thead class="thead-custom">
+            <tr>
+              <th>Pet Name</th>
+              <th>Vaccine</th>
+              <th>Due Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for overdue_vaccination in overdue_vaccinations %}
+            <tr>
+              <td><strong>{{ overdue_vaccination.pet.name }}</strong></td>
+              <td>{{ overdue_vaccination.vaccine_name }}</td>
+              <td>{{ overdue_vaccination.next_due_date }}</td>
+              <td>
+                <a href="{% url 'vaccination-details-page' overdue_vaccination.id 'false' %}">
+                  <button class="btn btn-details">Details</button>
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No Overdue Vaccinations Yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Upcoming Table -->
+      <h5 class="tag">Upcoming Vaccinations</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center vaccine-table">
+          <thead class="thead-custom">
+            <tr>
+              <th>Pet Name</th>
+              <th>Vaccine</th>
+              <th>Due Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for upcoming_vaccination in upcoming_vaccinations %}
+            <tr>
+              <td><strong>{{ upcoming_vaccination.pet.name }}</strong></td>
+              <td>{{ upcoming_vaccination.vaccine_name }}</td>
+              <td>{{ upcoming_vaccination.next_due_date }}</td>
+              <td>
+                <a href="{% url 'vaccination-details-page' upcoming_vaccination.id 'false' %}">
+                  <button class="btn btn-details">Details</button>
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No Upcoming Vaccinations Yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-   <div class="search-bar mx-lg-4 mr-md-3 m-sm-0">
-            <form method="get" action="" class="mb-3">
-              <input type="text" name="q" class="form-control" placeholder="Search for pets..." value="{{ request.GET.q }}">
-            </form>
+
+
+<!-- ✅ Tab content for small screens -->
+<div class="tab-content d-lg-none" id="dashboardTabsContent">
+
+  <!-- Registered Pets Tab -->
+  <div class="tab-pane fade show active" id="pets" role="tabpanel" aria-labelledby="pets-tab">
+    <div class="registered-pets-section pt-3">
+      <a href="{% url 'register-dog' %}">
+        <div class="w-100 text-center mb-2">
+          <button class="btn btn-register mb-3 col-md-9">
+            <i class="fas fa-plus mr-2"></i> Register New Pet
+          </button>
+        </div>
+      </a>
+
+      <div class="search-bar mx-lg-4 mr-md-3 m-sm-0">
+        <form method="get" action="" class="mb-3">
+          <input type="text" name="q" class="form-control"
+                 placeholder="Search for pets..." value="{{ request.GET.q }}">
+        </form>
+      </div>
+
+      <div class="registered-pets p-3">
+        {% for dog in registered_dogs %}
+        <a href="{% url 'dog-profile' dog.id %}">
+          <div class="sidebar-pets">
+            <div class="card mb-3 clickable">
+              <div class="card-body d-flex align-items-center">
+                <img src="{{ dog.pet_profile.url }}" class="rounded-circle me-2 mr-4"
+                     width="72" height="72" style="object-fit: cover;">
+                <div>
+                  <strong><span>Name:</span> {{ dog.name }}</strong><br>
+                  <strong><span>Breed:</span> {{ dog.breed }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 
-
-    <div class="registered-pets p-3">
-    {% for dog in registered_dogs %}
-    <a href="{% url 'dog-profile' dog.id %}">
-        <div class="sidebar-pets">
-            <div class="card mb-3 clickable">
-                <div class="card-body d-flex align-items-center">
-                    <img src="{{ dog.pet_profile.url }}" class="rounded-circle me-2 mr-4" width="72" height="72" style="object-fit: cover;">
-                    <div>
-                        <strong><span>Name:</span> {{ dog.name }}</strong><br>
-                        <strong><span>Breed:</span> {{ dog.breed }}</strong>
-                    </div>
-                </div>
-            </div>
+  <!-- Dashboard Tab -->
+  <div class="tab-pane fade" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+    <div class="row dashboard-overview mb-4">
+      <div class="col-md-4 mb-3">
+        <div class="card card-view text-center p-3">
+          <h5>Total Registered Pets</h5>
+          <h3>{{ all_dogs.count }}</h3>
         </div>
-    </a>
-    {% endfor %}
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card card-view text-center p-3">
+          <h5>Overdue Vaccinations</h5>
+          <h3>{{ overdue_vaccinations.count }}</h3>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card card-view text-center p-3">
+          <h5>Upcoming Vaccinations</h5>
+          <h3>{{ upcoming_vaccinations.count }}</h3>
+        </div>
+      </div>
     </div>
-</div>
-    <!-- Main Dashboard Content -->
-    <div class="col-md-8 mt-5">
-        <div class="row dashboard-overview mb-4">
-    
-            <div class="col-md-4 mb-3">
-                <div class="card card-view text-center p-3">
-                    <h5>Total Registered Pets</h5>
-                    <h3>{{all_dogs.count}}</h3>
-                </div>
-            </div>
 
-            <div class="col-md-4 mb-3">
-                <div class="card card-view text-center p-3">
-                    <h5>Overdue Vaccinations</h5>
-                    <h3>{{overdue_vaccinations.count}}</h3>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card card-view text-center p-3">
-                    <h5>Upcoming Vaccinations</h5>
-                    <h3>{{upcoming_vaccinations.count}}</h3>
-                </div>
-            </div>
-        </div>
-
-        <h5 class="tag">Overdue Vaccinations</h5>
-        <div class="table-responsive mb-4">
-            <table class="table table-bordered text-center vaccine-table">
-                <thead class="thead-custom">
-                  <tr>
-                    <th>Pet Name</th>
-                    <th>Vaccine</th>
-                    <th>Due Date</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for overdue_vaccination in overdue_vaccinations %}
-                  <tr>
-                    <td><strong>{{overdue_vaccination.pet.name}}</strong></td>
-                    <td>{{overdue_vaccination.vaccine_name}}</td>
-                    <td>{{overdue_vaccination.next_due_date}}</td>
-                    <td> 
-                      <a href="{% url 'vaccination-details-page' overdue_vaccination.id 'false' %}">
-                        <button class="btn btn-details">Details</button>
-                      </a>
-                    </td>
-                  </tr>
-                  {% empty %}
-                  <tr>
-                    <td colspan="4">No Overdue Vaccinations Yet.</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-        </div>
-
-        <h5 class="tag">Upcoming Vaccinations</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered text-center vaccine-table">
-                <thead class="thead-custom">
-                  <tr>
-                    <th>Pet Name</th>
-                    <th>Vaccine</th>
-                    <th>Due Date</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 {% for upcoming_vaccination in upcoming_vaccinations %}
-                  <tr>
-                    <td><strong>{{upcoming_vaccination.pet.name}}</strong></td>
-                    <td>{{upcoming_vaccination.vaccine_name}}</td>
-                    <td>{{upcoming_vaccination.next_due_date}}</td>
-                    <td> <a href="{% url 'vaccination-details-page' upcoming_vaccination.id 'false' %}">
-                        <button class="btn btn-details">Details</button>
-                      </a></td>
-                  </tr>
-                    {% empty %}
-                  <tr>
-                    <td colspan="4">No Upcoming Vaccinations Yet.</td>
-                  </tr>
-                  {% endfor %}
-               
-                </tbody>
-              </table>
-        </div>
-
+    <!-- Overdue Table -->
+    <h5 class="tag">Overdue Vaccinations</h5>
+    <div class="table-responsive mb-4">
+      <table class="table table-bordered text-center vaccine-table">
+        <thead class="thead-custom">
+          <tr>
+            <th>Pet Name</th>
+            <th>Vaccine</th>
+            <th>Due Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for overdue_vaccination in overdue_vaccinations %}
+          <tr>
+            <td><strong>{{ overdue_vaccination.pet.name }}</strong></td>
+            <td>{{ overdue_vaccination.vaccine_name }}</td>
+            <td>{{ overdue_vaccination.next_due_date }}</td>
+            <td>
+              <a href="{% url 'vaccination-details-page' overdue_vaccination.id 'false' %}">
+                <button class="btn btn-details">Details</button>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">No Overdue Vaccinations Yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-</div>
 
+    <!-- Upcoming Table -->
+    <h5 class="tag">Upcoming Vaccinations</h5>
+    <div class="table-responsive">
+      <table class="table table-bordered text-center vaccine-table">
+        <thead class="thead-custom">
+          <tr>
+            <th>Pet Name</th>
+            <th>Vaccine</th>
+            <th>Due Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for upcoming_vaccination in upcoming_vaccinations %}
+          <tr>
+            <td><strong>{{ upcoming_vaccination.pet.name }}</strong></td>
+            <td>{{ upcoming_vaccination.vaccine_name }}</td>
+            <td>{{ upcoming_vaccination.next_due_date }}</td>
+            <td>
+              <a href="{% url 'vaccination-details-page' upcoming_vaccination.id 'false' %}">
+                <button class="btn btn-details">Details</button>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">No Upcoming Vaccinations Yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
 
 
 {% endblock content %}

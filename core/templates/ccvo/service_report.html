@@ -8,7 +8,13 @@
 
 {% block content %}
 
-
+<div class="container">
+  <div class="arrow-back mb-4 ml-5 mt-5">
+                    <a href="{% url 'services-page' %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
 <div class="service-name">
 <h2>{{ service.name }} Report</h2>
 </div>
@@ -58,10 +64,5 @@
 </table>
 </div>
 
-<div class="arrow-back mb-4 d-flex justify-content-center">
-                    <a href="{% url 'services-page' %}" class="arrow-back">
-                        <i class="fas fa-arrow-left mr-2"></i> Back
-                    </a>
-                
-                </div>
+</div>
 {% endblock content %}
