@@ -408,7 +408,7 @@ def vet_clinic_dashboard(request):
             # vet_profile = VetClinicProfile.objects.get(user=user)
             if vet_profile.is_city_vet:
                 return render(request, 'ccvo/dashboard.html',context)
-            elif vet_profile.is_approved:
+            elif vet_profile.is_approved and vet_profile.is_operating:
                 return render(request, 'vet/dashboard.html',context)
             else:
                 return HttpResponse('You are not allowed here!')
@@ -422,6 +422,11 @@ def vet_clinic_dashboard(request):
 @login_required(login_url='login')
 def pending_approval_page(request):
     return render(request, 'vet/pending_approval.html')
+
+
+@login_required(login_url='login')
+def not_operating_page(request):
+    return render(request, 'vet/clinic_not_operating_page.html')
 
 def add_past_client(request, owner_id):
     if request.method == 'POST':
@@ -449,6 +454,21 @@ def owner_pets_page(request, owner_id):
 
         except VetClinicProfile.DoesNotExist:
             return HttpResponse('You are not allowed here!')
+        
+
+def request_access(request, clinic_id):
+     if request.user.role == 'vet':
+       clinic = get_object_or_404(VetClinicProfile, id=clinic_id)
+    
+       if request.method == 'POST':
+            clinic.is_requesting_access=True
+            clinic.save()
+            return redirect('not-operating-page')
+     else:
+         HttpResponse('You are not allowed here')
+
+
+     return render(request,'vet/clinic_not_operating_page.html')
 
 # -----------------------
 # END VET_CLINIC VIEWS
@@ -787,13 +807,32 @@ def approve_clinic(request, pk):
 
     if request.method == 'POST':
         clinic.is_approved=True
+        clinic.is_operating = True
         clinic.save()
         return redirect('approve-clinics-page')
 
     return render(request,'ccvo/approve_clinics.html')
 
+def not_operating(request, pk):
+    clinic = get_object_or_404(VetClinicProfile, id=pk)
 
+    if request.method == 'POST':
+        clinic.is_operating = False
+        clinic.save()
+        return redirect('approve-clinics-page')
 
+    return render(request,'ccvo/approve_clinics.html')
+
+def mark_as_operating_clinic(request, clinic_id):
+    clinic = get_object_or_404(VetClinicProfile, id=clinic_id)
+
+    if request.method == 'POST':
+        clinic.is_operating= True
+        clinic.is_requesting_access = False
+        clinic.save()
+        return redirect('approve-clinics-page')
+
+    return render(request, 'ccvo/approve_clinics.html')
 
 def services_page(request):
     services = Service.objects.all()

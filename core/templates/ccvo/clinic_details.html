@@ -13,6 +13,10 @@
         <div class="card-header text-center border-0">
           <h3 class="mb-0 p-4">📋 {{vet_clinic.user.username|upper}} DETAILS</h3>
         </div>
+        {% if vet_clinic.is_requesting_access %}
+        <span class="text-center"><strong class="request-message text-danger">This clinic is operating again and is requesting access to use PawtraConnect.</strong></span>
+        {% endif %}
+        
         <hr>
         <div class="card-body text-center">
             <div class="mb-2">
@@ -28,7 +32,7 @@
                <span><strong class="mr-1">Business Permit #:  </strong>{{vet_clinic.business_permit_number}}</span>  
             </div>
             <div class="mb-2">
-               <span><strong class="mr-1">Business Permit #:  </strong>{{vet_clinic.issuing_office}}</span>  
+               <span><strong class="mr-1">Issuing Office:  </strong>{{vet_clinic.issuing_office}}</span>  
             </div>
             <div class="mb-2">
                <span><strong class="mr-1">Business Permit Document:  </strong>
@@ -41,10 +45,21 @@
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-approve btn-sm mt-4">Approve Clinic</button>
               </form>
+              {% elif vet_clinic.is_approved and vet_clinic.is_operating %}
+               <form method="post" action="{% url 'marked-not-operating' vet_clinic.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-approve btn-sm mt-4">Not Operating</button>
+              </form>
+               {% elif vet_clinic.is_approved and not vet_clinic.is_operating and vet_clinic.is_requesting_access %}
+               <form method="post" action="{% url 'marked-as-operating-clinic' vet_clinic.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-approve btn-sm mt-4">Approve Request</button>
+              </form>
+           
               {% endif %}
         </div>
 
-        {% if user_is_vet and not is_history%}
+        <!-- {% if user_is_vet and not is_history%}
         <div class="card-footer text-center border-0">
           <a href="{% url 'vaccine-information-form-page-update' vaccination_record.id %}" class="">
             <button class="btn btn-mark-complete mb-3">
@@ -52,7 +67,7 @@
             </button>
         </a>
         </div>
-        {% endif %}
+        {% endif %} -->
 
             <div class="arrow-back mb-4 text-center">
                     <a href="javascript:history.back()" class="arrow-back">

@@ -76,8 +76,10 @@ def user_login(request):
                             return redirect('ccvo-announcement')
                         elif not vet_profile.is_approved:
                             return redirect('pending-approval-page')  # this should match your URL name
-                        else:
+                        elif vet_profile.is_approved and vet_profile.is_operating:
                             return redirect('vet-clinic-dashboard')
+                        elif not vet_profile.is_operating:
+                            return redirect('not-operating-page')
                     else:
                         messages.error(request, 'Vet clinic profile not found.')
                         return redirect('login')

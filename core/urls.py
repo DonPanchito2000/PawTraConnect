@@ -42,8 +42,11 @@ urlpatterns = [
     # -----------------------
     # VET URLS
     # -----------------------
+    
     path('vet-clinic-dashboard/', views.vet_clinic_dashboard,name='vet-clinic-dashboard'),
     path('pending-approval-page/', views.pending_approval_page, name="pending-approval-page"),
+    path('not-operating-page/', views.not_operating_page, name="not-operating-page"),
+    path('request-access/<str:clinic_id>', views.request_access, name="request-access"),
     path('add-past-client/<str:owner_id>', views.add_past_client, name='add-past-client'),
     path('owner-pets-page/<str:owner_id>', views.owner_pets_page, name='owner-pets-page'),
     # -----------------------
@@ -56,6 +59,8 @@ urlpatterns = [
     # path('ccvo-dashboard/', views.ccvo_dashboard,name='ccvo-dashboard'),
     path('ccvo-announcement/', views.ccvo_announcement,name='ccvo-announcement'),
     path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
+    path('marked-not-operating/<str:pk>', views.not_operating, name="marked-not-operating"),
+    path('marked-as-operating-clinic/<str:clinic_id>/',views.mark_as_operating_clinic, name='marked-as-operating-clinic'),
     path('clinic-details/<str:clinic_id>/', views.view_clinic_details, name="clinic-details"),
     path('approve-clinic/<str:pk>/',views.approve_clinic, name='approve-clinic'),
     path('ccvo-announcement-form/',views.ccvo_announcement_form,name='ccvo-announcement-form'),

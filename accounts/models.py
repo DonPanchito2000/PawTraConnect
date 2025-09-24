@@ -67,7 +67,8 @@ class VetClinicProfile(models.Model):
     contact_number = models.CharField(max_length=20)
     bp_document = models.FileField(upload_to='bp_documents/', null=True, blank=True)
     location = models.CharField(max_length=255)
-
+    is_operating = models.BooleanField(default=False)
+    is_requesting_access = models.BooleanField(default= False)
     is_city_vet = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
 

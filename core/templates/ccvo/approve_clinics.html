@@ -16,7 +16,7 @@
 
     <!-- ---------------- DESKTOP VIEW ---------------- -->
     <div class="d-none d-lg-block">
-        <!-- Section 1: Pending Approvals -->
+
         <div class="mb-5">
             <h4 class="mb-3 pb-2">🕒 Pending Approval</h4>
             <hr>
@@ -57,7 +57,14 @@
                                 <h5 class="card-title font-weight-bold d-inline">
                                     <i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}
                                 </h5>
-                                <span class="badge float-right">Approved</span>
+    
+                                          {% if clinic.is_approved and clinic.is_operating %}
+                                <span class="badge float-right">Oparating</span>
+                                {% elif not clinic.is_operating and not clinic.is_requesting_access %}
+                                <span class="badge not-operating float-right">Not Operating</span>
+                                {% elif clinic.is_requesting_access %}
+                                 <span class="badge requesting-access float-right">Requesting Access</span>
+                                {% endif %}
                                 <a href="{% url 'clinic-details' clinic.id %}">
                                     <button type="submit" class="btn btn-view btn-sm w-100 mt-3">View</button>
                                 </a>
@@ -129,7 +136,14 @@
                                 <h5 class="card-title font-weight-bold">
                                     <i class="fas fa-hospital mr-3"></i>{{ clinic.clinic_name }}
                                 </h5>
-                                <span class="badge float-right">Approved</span>
+                    
+                                {% if clinic.is_approved and clinic.is_operating %}
+                                <span class="badge float-right">Oparating</span>
+                                {% elif not clinic.is_operating and not clinic.is_requesting_access %}
+                                <span class="badge not-operating float-right">Not Operating</span>
+                                  {% elif clinic.is_requesting_access %}
+                                 <span class="badge requesting-access float-right">Requesting Access</span>
+                                {% endif %}
                                 <a href="{% url 'clinic-details' clinic.id %}">
                                     <button type="submit" class="btn btn-view btn-sm w-100 mt-3">View</button>
                                 </a>
