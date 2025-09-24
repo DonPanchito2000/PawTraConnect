@@ -235,3 +235,13 @@
   background-color: #adb5bd;
   border-radius: 4px;
 }
+
+@media (max-width: 768px) {
+
+
+  .room-container{
+    padding: 17px !important;
+  }
+  
+  
+}

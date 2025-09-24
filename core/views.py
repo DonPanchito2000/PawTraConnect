@@ -1174,7 +1174,30 @@ def user_forum_profile(request, user_id):
     user = Account.objects.get(id = user_id)
     user_rooms = ForumRoom.objects.filter(host = user)
     context = {'user':user,'user_rooms':user_rooms}
-    return render(request, 'owner/user_forum_profile.html', context)
+
+    if user.role == 'owner':
+        return render(request, 'owner/user_forum_profile.html',context)
+
+    elif user.role == 'vet':
+        try:
+            vet_profile = VetClinicProfile.objects.get(user=user)
+            if vet_profile.is_city_vet:
+                return render(request, 'ccvo/user_forum_profile.html',context)
+            elif vet_profile.is_approved:
+                return render(request, 'vet/user_forum_profile.html',context)
+            else:
+                return HttpResponse('You are not allowed here!')
+
+        except VetClinicProfile.DoesNotExist:
+            # fallback in case vet profile is missing
+            return HttpResponse('You are not allowed here!')
+
+    elif user.role == 'club':
+        return render(request, 'club/user_forum_profile.html',context)
+
+    else:
+        # optional fallback if role is not recognized
+         return HttpResponse('You are not allowed here!')
 
 # -----------------------
 # END GENERAL FORUM VIEWS

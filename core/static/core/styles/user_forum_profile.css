@@ -75,3 +75,26 @@ a:hover{
   color: #eae2b7;
 }
 
+
+@media (max-width: 768px) {
+  .rooms-container{
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important;  
+    padding: 0 !important;      
+  }
+
+  .rooms-container::before{
+    display: none !important; /* remove the overlay effect */
+  }
+
+  .container{
+    padding: 0 !important;
+  }
+
+  .card-body{
+    margin-bottom: 0px !important;  
+  }
+  
+  
+}

@@ -1,0 +1,11 @@
+{% extends 'ccvo/base.html' %}
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'core/styles/user_forum_profile.css' %}">
+{% endblock extra_css %}
+{% block title %}User Forum Profile{% endblock %}
+{% block content %}
+
+{% include 'user_forum_profile.html' %}
+
+{% endblock content %}
