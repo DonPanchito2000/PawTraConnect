@@ -20,13 +20,13 @@
 </ul>
 </div>
 
-<
 
-       <div class="row mt-5">
+
+       <div class="row mt-5 d-none d-lg-flex">
         <!-- MY CLUBS -->
         <div class="col-lg-5 mb-sm-5 mb-lg-0"> 
             <div class="card myclubs-card shadow rounded-3 p-4 h-100">
-                <h5 class="mb-4">My Clubs</h5>
+                <h5 class="">My Clubs</h5>
                 <div class="clubs">
                        {% for user_club in user_clubs %}
                        <a href="{% url 'club-profile-page' user_club.club.id %}">
@@ -54,7 +54,7 @@
         <!-- CLUBS -->
           <div class="col-lg-7"> 
             <div class="card clubs-container shadow rounded-3 p-4 h-100">
-                <h5 class="mb-4">Clubs</h5>
+                <h5 class="">Clubs</h5>
 
             <!-- Search Bar -->
              <div class="search-bar">
@@ -74,32 +74,13 @@
                                 {% endif %}
                                 
                                 <span class="ml-2">{{ club.club_name }}</span>
-                                   <!-- <div class="club-description ml-4">
-                                 <small>Thisis a description. Club is good. Join our club to get free dog foods! hisis a description. Club is good. Join our club to get free dog foodsr club to get free dog foodsr club to get free dog foods</small>
-                                 </div> -->
-                                <!-- <div class="club-description mb-auto">
-                                    <small>Thisis a description. Club is good. Join our club to get free dog foods!</small>
-                                </div> -->
+                           
                                 <div class="ml-auto">
 
                                     <span><i class="fas fa-users"></i> {{ club.approved_members_count }} Members</span>
             
 
-                               <!-- {% if club.id in joined_club_ids %}
-                                
-                                    
-                           
-                                    <input type="submit" value="JOINED" disabled class="ml-2 btn btn-secondary">
-                           
-                               {% elif club.id in banned_club_ids %}
-                                    <input type="button" value="BANNED" class="btn btn-danger float-right" disabled>
-                                {% else %}
-                                    <form action="{% url 'join-club' club.id %}" method="POST">
-                                        {% csrf_token %}
-                                        <input type="submit" value="JOIN" class="btn btn-primary float-right">
-                                    </form>
-                                   
-                               {% endif %} -->
+                    
                                </div>
                             
                             
@@ -118,4 +99,81 @@
     </div>
     
   
+<!-- ✅ Tab content for small screens -->
+<div class="tab-content d-lg-none" id="dashboardTabsContent">
+
+  <!-- Registered Pets Tab -->
+  <div class="tab-pane fade show active" id="my-clubs" role="tabpanel" aria-labelledby="pets-tab">
+        <div class="card myclubs-card shadow rounded-3 p-4 h-100">
+                <h5 class="mb-1">My Clubs</h5>
+                <div class="clubs">
+                       {% for user_club in user_clubs %}
+                       <a href="{% url 'club-profile-page' user_club.club.id %}">
+                   <div class="card club-card m-3 text-dark">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                {% if user_club.club.user.profile_picture %}
+                                <img src="{{ user_club.club.user.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="ml-2">{{ user_club.club.club_name }}</span>
+                                <!-- <span class="text-light">{{ user_club.joined_at }}</span> -->
+                                <!-- <small class="ms-auto text-light">{{ room.created|timesince }} ago</small> -->
+                            </div>
+                        </div>
+                   </div>
+                   </a>
+                   {% empty %}
+                     <p class="text-light">You are not a member of any club.</p>
+                   {% endfor %}
+                </div>
+             
+            </div>
+  </div>
+
+  <!-- Dashboard Tab -->
+  <div class="tab-pane fade" id="clubs" role="tabpanel" aria-labelledby="overview-tab">
+ <div class="card clubs-container shadow rounded-3 p-4 h-100">
+                <h5 class="mb-1">Clubs</h5>
+
+            <!-- Search Bar -->
+             <div class="search-bar">
+                    <form method="get" action="" class="mb-3">
+                    <input type="text" name="q" class="form-control" placeholder="Search for rooms..." value="{{ request.GET.q }}">
+                    </form>
+             </div>
+
+                <div class="clubs">
+                       {% for club in clubs %}
+                   <div class="card club-card club m-3">
+                        <a href="{% url 'club-profile-page' club.id %}">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center mb-2 flex-wrap w-100">
+                                {% if club.user.profile_picture %}
+                                <img src="{{ club.user.profile_picture.url }}" 
+                                    alt="avatar" 
+                                    class="rounded-circle me-2 mb-2 mb-sm-0" 
+                                    width="72" height="72" 
+                                    style="object-fit: cover;">
+                                {% endif %}
+
+                                <div class="d-flex justify-content-between align-items-center flex-grow-1 flex-wrap">
+                                    <span class="ml-2 font-weight-bold text-truncate">
+                                        {{ club.club_name }}
+                                    </span>
+                                    <small class="ml-auto text-muted mt-1 mt-sm-0">
+                                        <i class="fas fa-users"></i> {{ club.approved_members_count }} Members
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                   </div>
+                   {% endfor %}
+                </div>
+             
+            </div>
+  </div>
+
+</div>
+
 {% endblock content %}

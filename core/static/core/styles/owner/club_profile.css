@@ -100,7 +100,7 @@
   color:#eae2b7 ;
 }
 
-.tab-content ::before {
+.tab-content::before {
     content: "";
     position: absolute;
     top: 0;
@@ -109,7 +109,8 @@
     height: 100%;
     z-index: 2;
     pointer-events: none; 
-  }
+}
+  
 
 
 .card {
@@ -145,6 +146,41 @@
   color: #eae2b7;
 }
 
+
+/* Tabs styling */
+#forumTabs .nav-tabs {
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+#forumTabs .nav-tabs .nav-link {
+  color: #eae2b7 !important;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+#forumTabs .nav-tabs .nav-link.active {
+  color: #eae2b7 !important;
+  background: #be620d;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+#forumTabs .nav-tabs .nav-link:hover:not(.active) {
+  color: #f8f9fa;
+  background-color: #495057;
+}
+
+#forumTabs .tab-content > .tab-pane {
+  /* Let the content define the height naturally */
+  min-height: auto;
+}
 /* Tab content box */
 /* #nestedTabContent {
   border: 1px solid #dee2e6;
@@ -257,39 +293,41 @@ hr{
 } */
 
 
-
 /* Back to Top Button */
 #backToTop {
-  position: fixed;
   bottom: 30px;
   right: 30px;
-  z-index: 999;
-  background-color: #343a40;
-  border: none;
+  z-index: 99999;
+  position: fixed;
+  background: transparent;
+  border: 1px solid #be620d;
   outline: none;
   color: white;
   cursor: pointer;
   padding: 12px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  opacity: 0;
-  pointer-events: none;
+
+  opacity: 0;              /* hidden by default */
+  pointer-events: none;    /* prevent clicks when hidden */
   transform: translateY(20px);
   transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.3s ease;
 }
 
+#backToTop svg{
+  fill: #be620d !important;
+}
+
 #backToTop.show {
-  opacity: 1;
+  opacity: 4;
   pointer-events: auto;
   transform: translateY(0);
 }
 
 #backToTop:hover {
-  background-color: #495057;
-   transform: translateY(-3px);;
+    background-color: rgba(0,0,0,0.2);
+  transform: translateY(-3px);
 }
-
-
 
 /* Recent Activities Fixed Scroll Panel */
 .recent-activities {
@@ -359,6 +397,7 @@ hr{
   }
 
 
+
 .recent-act-inner-card{
   background-color: rgba(0, 0, 0, 0.2); 
   border: none;
@@ -379,13 +418,30 @@ hr{
 }
 
 
+  .main-content-container{
+    padding-left: 80px !important;
+      padding-right: 80px !important;
+  }
 
+@media (max-width: 768px) {
+  .main-content-container,
+  .forum-container,
+  .card.recent-act-card {
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important;      
+    padding: 0px !important;  
+  }
 
-/* club forum end */
+  .forum-container::before,
+  .card.recent-act-card::before {
+    display: none !important; /* remove the overlay effect */
+  }
 
-
-/* recent-activities start*/
-
-/* recent-activities end*/
-
+  .container{
+    padding: 0px !important;
+  }
+  
+  
+}
 

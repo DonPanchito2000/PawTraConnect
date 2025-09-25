@@ -165,3 +165,36 @@ a:hover{
 .tab-content > .tab-pane {
   min-height: 400px; /* or adjust as needed */
 }
+
+
+@media (max-width: 768px) {
+  .myclubs-card {
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important;    
+      padding: 0px !important;    
+  }
+
+  .myclubs-card::before {
+    display: none !important; /* remove the overlay effect */
+  }
+  
+
+   .clubs-container {
+    background-color: transparent !important; 
+    box-shadow: none !important;     
+    border: none !important;        
+    padding: 0px !important;
+  }
+
+     .clubs-container::before {
+    display: none !important; /* remove the overlay effect */
+  }
+
+  h5{
+    margin-left: 10px;
+  
+  }
+  
+  
+}
