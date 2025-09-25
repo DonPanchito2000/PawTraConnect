@@ -1,4 +1,13 @@
 
+  h3{
+    color: #eae2b7;
+    font-style: italic;
+  }
+hr{
+  background-color: #be620d;
+}
+
+  
   .card {
     background-color: rgba(0, 0, 0, 0.2)  !important; 
   border: none;

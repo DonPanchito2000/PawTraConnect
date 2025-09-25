@@ -1,7 +1,7 @@
 {% extends 'ccvo/base.html' %}
 {% load static %}
 {% block extra_css %} 
-<link rel="stylesheet" href="{% static 'core/styles/announcement_form.css' %}">
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/announcement_form.css' %}">
 {% endblock extra_css %}
 {% block title %}CCVO - Announcement Form{% endblock %}
 
@@ -12,7 +12,8 @@
     <div class="col-lg-8 col-md-10">
       <div class="card shadow-lg rounded-lg bg-dark text-white">
         <div class="card-header text-center border-0">
-          <h3 class="mb-0">Create a New Announcement</h3>
+          <h3 class="mb-0">Announcement</h3>
+          <hr>
         </div>
         <div class="card-body">
           <form method="POST" enctype="multipart/form-data">
@@ -32,7 +33,7 @@
           
             <!-- Custom File Upload -->
             <div class="form-group mb-3 text-center">
-              <label for="image" class="btn btn-outline-light">
+              <label for="image" class="btn btn-upload-image">
                 Upload Room Image (Optional)
               </label>
               {{ form.image }}
@@ -44,12 +45,14 @@
             </div>
           
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary w-100">Create Room</button>
+            <button type="submit" class="btn create-room-btn w-100">Create Room</button>
           </form>
           
         </div>
-        <div class="card-footer text-center border-0">
-          <a href="" class="text-light small">← Back to Forum</a>
+       <div class="arrow-back m-auto">
+          <a href="{% url 'ccvo-announcement' %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
         </div>
       </div>
     </div>
