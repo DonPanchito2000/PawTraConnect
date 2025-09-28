@@ -162,7 +162,7 @@
           <div class="card recent-act-card shadow rounded-3 p-lg-4 p-2">
             <!-- Recent Activities content (same as large screen) -->
              {% for message in room_comments %}
-            <a href="{% url 'room' message.room.id %}" class="text-decoration-none text-white">
+            <a href="{% url 'club-room-page' message.room.id %}" class="text-decoration-none text-white">
               <div class="card recent-act-inner-card mb-3">
                 <div class="card-body">
                   <div class="d-flex align-items-center mb-2">

@@ -628,7 +628,7 @@ def club_form(request):
 
     context ={'form':form, 'club':club}
 
-    return render(request, 'owner/club_forum_form.html',context)
+    return render(request, 'club/club_forum_form.html',context)
 
 
 @login_required(login_url='login')

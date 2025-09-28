@@ -452,7 +452,7 @@ hr{
   font-style: italic;
 }
 
-a {
+.doc {
   text-decoration: none;
   color: #eae2b7 !important;
 }
