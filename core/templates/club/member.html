@@ -6,7 +6,90 @@
 <title>{% block title %}Forum{% endblock %}</title>
 {% block content %}
 
-    <div class="row mt-5">
+
+<div class="container mt-5">
+<!-- Tabs for small screens -->
+<ul class="nav nav-tabs d-lg-none mb-3" id="clubTabs" role="tablist" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="my-clubs-tab" data-toggle="tab" href="#requests" role="tab" aria-controls="my-clubs" aria-selected="true">Requests</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="clubs-tab" data-toggle="tab" href="#members" role="tab" aria-controls="clubs" aria-selected="false">Members</a>
+  </li>
+</ul>
+</div>
+
+<!-- ✅ Tab content for small screens -->
+<div class="tab-content d-lg-none" id="dashboardTabsContent">
+
+  <!-- Registered Pets Tab -->
+  <div class="tab-pane fade show active" id="requests" role="tabpanel" aria-labelledby="pets-tab">
+       <div class="card requests-card shadow rounded-3 p-4 h-100">
+                <h5 class="mb-4">Membership Request</h5>
+                <div class="scroll">
+                 
+                       {% for membership_request in membership_requests %}
+                   <div class="card request-card m-3">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap align-items-center mb-2">
+                                {% if membership_request.member.profile_picture %}
+                                <img src="{{ membership_request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="user-name ml-3">{{ membership_request.member.petownerprofile.first_name }} {{ membership_request.member.petownerprofile.last_name }}</span>
+                                    <div class=" d-flex action-container ml-auto">
+                                        <form  action="{% url 'accept-membership-request' membership_request.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input class="mr-3 action-btn btn-sm accept" type="submit" value="Accept">
+                                        </form>
+
+                                          <form action="{% url 'reject-membership-request' membership_request.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="submit" value="Reject" class="mr-3 action-btn btn-sm reject">
+                                          </form>
+                                    </div>
+                                </div>
+                        </div>
+                   </div>
+                   {% endfor %}
+                </div>
+         
+             
+            </div>
+  </div>
+
+  <!-- Dashboard Tab -->
+  <div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="overview-tab">
+    <div class="card  requests-card text-white shadow  p-4 h-100">
+                <h5 class="mb-4">Members</h5>
+                <div class="scroll">
+                       {% for approved_request in approved_requests %}
+                   <div class="card request-card  m-3">
+                        <div class="card-body">
+                            <div class="d-flex  flex-wrap align-items-center mb-2">
+                                {% if approved_request.member.profile_picture %}
+                                <img src="{{ approved_request.member.profile_picture.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
+                                {% endif %}
+                                <span class="user-name ml-3">{{ approved_request.member.petownerprofile.first_name }} {{ approved_request.member.petownerprofile.last_name }}</span>
+                                
+                                <div class="ml-auto">
+                              
+                        
+                                        <a href="{% url 'kick-member-confirmation-page' approved_request.id %}"><button class="action-btn btn-sm reject">Kick Member</button></a>
+
+                               </div>
+
+                            </div>
+                        </div>
+                   </div>
+                   {% endfor %}
+                </div>
+             
+            </div>
+  </div>
+
+</div>
+
+    <div class="row mt-5 d-none d-lg-flex">
         <!-- REQUESTS -->
         <div class="col-lg-6 col-md-6"> 
             <div class="card requests-card shadow rounded-3 p-4 h-100">
@@ -24,12 +107,12 @@
                                     <div class=" d-flex action-container ml-auto">
                                         <form  action="{% url 'accept-membership-request' membership_request.id %}" method="POST">
                                             {% csrf_token %}
-                                            <input class="mr-3 action-btn accept" type="submit" value="Accept">
+                                            <input class="mr-3 action-btn btn-sm accept" type="submit" value="Accept">
                                         </form>
 
                                           <form action="{% url 'reject-membership-request' membership_request.id %}" method="POST">
                                             {% csrf_token %}
-                                            <input type="submit" value="Reject" class="mr-3 action-btn reject">
+                                            <input type="submit" value="Reject" class="mr-3 action-btn btn-sm reject">
                                           </form>
                                     </div>
                                 </div>
@@ -59,7 +142,7 @@
                                 <div class="ml-auto">
                               
                         
-                                        <a href="{% url 'kick-member-confirmation-page' approved_request.id %}"><button class="action-btn reject">Kick Member</button></a>
+                                        <a href="{% url 'kick-member-confirmation-page' approved_request.id %}"><button class="action-btn btn-sm reject">Kick Member</button></a>
 
                                </div>
 
@@ -76,6 +159,6 @@
     </div>
     
   
-    
+</div>
 
 {% endblock content %}

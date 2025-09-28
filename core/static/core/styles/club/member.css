@@ -147,6 +147,35 @@ h5{
   color: #eae2b7;
 }
 
+/* Tabs styling */
+.nav-tabs {
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.nav-tabs .nav-link {
+  color: #eae2b7 !important;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link.active {
+  color: #eae2b7 !important;
+  background: #be620d;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  color: #f8f9fa;
+  background-color: #495057;
+}
 
 @media (max-width: 768px) {
   .action-container{
@@ -154,4 +183,49 @@ h5{
     display: flex !important;
     justify-content: center;
   }
+
+  .card{
+    padding: 10px !important;
+  }
+
+  .request-card{
+    padding: 0px !important;
+  }
+
+  h5{
+    margin-bottom: 0px !important;
+  }
+}
+
+
+
+
+/* Make user info and buttons stack nicely on small screens */
+.request-card .card-body .d-flex {
+  flex-wrap: wrap; /* allow wrapping */
+}
+
+.request-card .user-name {
+  font-size: 1rem;  /* scale text properly */
+  flex: 1 1 auto;   /* let name shrink/grow */
+  min-width: 150px; /* prevent name from being too small */
+}
+
+.action-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: flex-end;
+  margin-top: 10px; /* spacing when buttons wrap below name */
+}
+
+.action-container form,
+.action-container a {
+  margin: 3px;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem; 
+  border-radius: 6px;
+  white-space: nowrap; /* keep text inside button */
 }
