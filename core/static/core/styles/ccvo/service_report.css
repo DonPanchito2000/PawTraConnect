@@ -33,6 +33,10 @@ h2{
   .form-control{
     width: 80px;
   }
+
+  .arrow-back{
+    margin-left: 0px !important;
+  }
 }
 
 

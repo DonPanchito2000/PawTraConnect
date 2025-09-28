@@ -445,3 +445,14 @@ hr{
   
 }
 
+
+
+.about-strong{
+  color: #be620d;
+  font-style: italic;
+}
+
+a {
+  text-decoration: none;
+  color: #eae2b7 !important;
+}

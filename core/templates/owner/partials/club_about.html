@@ -1,24 +1,27 @@
  
+<p><strong class="about-strong">Club Name: </strong><span class="span-about">{{club.club_name}}</span></p>
+<p><strong class="about-strong">Club Description: </strong><span class="span-about">{{club.description}}</span></p>
 
+
+  <p><strong class="about-strong">Admin Email: </strong><span class="span-about">{{club.admin_email}}</span></p>
+   
       
   {% if club.cpc_document %}
-    <p><strong>CPC Document:</strong> 
-      <a href="{{ club.cpc_document.url }}" target="_blank" rel="noopener noreferrer">
+    <p><strong class="about-strong">CPC Document:</strong> 
+      <a class="doc" class="link" href="{{ club.cpc_document.url }}" target="_blank" rel="noopener noreferrer">
         View CPC Document
       </a>
     </p>
-  {% else %}
-    <p><strong>CPC Document:</strong> Not uploaded</p>
+
   {% endif %}
 
   {% if club.ptr_document %}
-    <p><strong>PTR Document:</strong> 
-      <a href="{{ club.ptr_document.url }}" target="_blank" rel="noopener noreferrer">
+    <p><strong class="about-strong">PTR Document:</strong> 
+      <a class="doc" href="{{ club.ptr_document.url }}" target="_blank" rel="noopener noreferrer">
         View PTR Document
       </a>
     </p>
-  {% else %}
-    <p><strong>PTR Document:</strong> Not uploaded</p>
+
   {% endif %}
 
 

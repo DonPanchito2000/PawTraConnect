@@ -167,6 +167,10 @@ a:hover{
 }
 
 
+.member-count{
+  color: #be620d !important;
+}
+
 @media (max-width: 768px) {
   .myclubs-card {
     background-color: transparent !important; 
@@ -196,5 +200,8 @@ a:hover{
   
   }
   
+  small{
+    color: #be620d !important;
+  }
   
 }
