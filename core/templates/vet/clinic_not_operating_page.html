@@ -23,9 +23,24 @@
 
 
 <div class="container py-5" >
+
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10">
       <div class="card shadow-lg rounded-lg">
+        {% if messages %}
+  {% for message in messages %}
+    {% if 'request' in message.tags %}
+      <div class="alert 
+          {% if message.tags == 'error' %}alert-danger
+          {% elif message.tags == 'success' %}alert-success
+          {% elif message.tags == 'warning' %}alert-warning
+          {% else %}alert-info
+          {% endif %}">
+        {{ message }}
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
     
           <h3 class="mb-0 p-4"><i class="fas fa-clock mr-3"></i>Your clinic is marked as Not Operating</h3>
             <hr>

@@ -7,6 +7,18 @@
 
 {% block content %}
 <div class="container py-5">
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert 
+        {% if message.tags == 'error' %}alert-danger
+        {% elif message.tags == 'success' %}alert-success
+        {% elif message.tags == 'warning' %}alert-warning
+        {% else %}alert-info
+        {% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
     <!-- Search Client Section -->
     <div class="text-center search-pet-container rounded mb-5 p-4">
       <h5 class=" mb-3  font-weight-bold">🔍 Pet</h5>

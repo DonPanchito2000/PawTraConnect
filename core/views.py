@@ -461,9 +461,17 @@ def request_access(request, clinic_id):
        clinic = get_object_or_404(VetClinicProfile, id=clinic_id)
     
        if request.method == 'POST':
-            clinic.is_requesting_access=True
-            clinic.save()
-            return redirect('not-operating-page')
+            if clinic.is_operating and not clinic.is_requesting_access:
+                messages.info(request, "Your request has already been approved by the City Vet. Please log out and log in again to continue.", extra_tags="request")
+                return redirect('not-operating-page')
+            elif  clinic.is_requesting_access:
+                messages.success(request, "You already sent a request", extra_tags="request")
+                return redirect('not-operating-page')
+            else:
+                clinic.is_requesting_access=True
+                clinic.save()
+                messages.success(request, "Request Sent", extra_tags="request")
+                return redirect('not-operating-page')
      else:
          HttpResponse('You are not allowed here')
 
@@ -886,15 +894,24 @@ def service_form(request, selected_pet_id):
 
     if request.method == 'POST':
         service_name = request.POST.get("service")
-        service = Service.objects.get(name = service_name)
         date_administered = request.POST.get("date-administered")
-        pet = request.POST.get("selected_pet")
+
+        # ✅ validate service
+        try:
+            service = Service.objects.get(name=service_name)
+        except Service.DoesNotExist:
+            messages.error(request, f"Service '{service_name}' is not valid. Please select from the list.")
+            return render(request, 'ccvo/add_service_record_page.html', context)
+
+        # save if valid
         ServiceRecord.objects.create(
-            pet = selected_pet,
-            service = service,
-            date_avail = date_administered
+            pet=selected_pet,
+            service=service,
+            date_avail=date_administered
         )
+        messages.success(request, "Service record added successfully!")
         return redirect('services-page')
+
 
     return render(request, 'ccvo/add_service_record_page.html', context)
 
