@@ -910,7 +910,7 @@ def service_form(request, selected_pet_id):
             date_avail=date_administered
         )
         messages.success(request, "Service record added successfully!")
-        return redirect('services-page')
+        return redirect('add-service-record')
 
 
     return render(request, 'ccvo/add_service_record_page.html', context)

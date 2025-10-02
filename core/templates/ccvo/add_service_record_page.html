@@ -7,16 +7,26 @@
 
 {% block content %}
 <div class="container py-5">
-{% if messages %}
+    <div class="arrow-back mb-4">
+                    <a href="{% url 'services-page' %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </a>
+                
+                </div>
+
+
+                            {% if messages %}
   {% for message in messages %}
-    <div class="alert 
-        {% if message.tags == 'error' %}alert-danger
-        {% elif message.tags == 'success' %}alert-success
-        {% elif message.tags == 'warning' %}alert-warning
-        {% else %}alert-info
-        {% endif %}">
-      {{ message }}
-    </div>
+    {% if "logged in" not in message.message|lower %}
+      <div class="alert 
+          {% if message.tags == 'error' %}alert-danger
+          {% elif message.tags == 'success' %}alert-success
+          {% elif message.tags == 'warning' %}alert-warning
+          {% else %}alert-info
+          {% endif %}">
+        {{ message }}
+      </div>
+    {% endif %}
   {% endfor %}
 {% endif %}
     <!-- Search Client Section -->
@@ -28,9 +38,11 @@
         </form>
       </div>
       <div id="clientResult" class=" text-center">
+
         {% if pet %}
              <div class="card owner-card m-3">
                         <div class="card-body">
+                                  
                             <div class="searched-pet mb-2">
                                 {% if pet.pet_profile %}
                                 <div class="img-container mb-3">
@@ -90,7 +102,7 @@
             {% endfor %}
         </datalist>
          <label for="date-administered">Date Administered:</label>
-            <input type="date" id="date-administered" name="date-administered" class="form-control">
+            <input type="date" id="date-administered" name="date-administered" class="form-control mb-4">
 
         <div class="d-flex justify-content-center">
         <button type="submit" class="btn submit-btn mb-4 mt-4 mr-0"><i class="fa-solid fa-check"></i> Add Record</button>

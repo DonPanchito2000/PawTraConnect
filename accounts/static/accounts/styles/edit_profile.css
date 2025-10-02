@@ -88,15 +88,13 @@ select.form-control {
      transform: scale(1.03);
 }
 
-
-      .form-control{
+.form-control{
   background-color: rgba(0, 0, 0, 0.2);
   border: none !important;
   box-shadow: none !important;
    border-radius: 10px;
   transition: box-shadow 0.2s ease;
-   color: #eae2b7;
-      height: 40px;
+
 }
 
 .form-control:focus{
@@ -105,7 +103,8 @@ select.form-control {
   border: none !important;
   background-color: rgba(0, 0, 0, 0.2);
   color: #eae2b7;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4) !important;
+   transform: scale(1.03);
 }
 
 
