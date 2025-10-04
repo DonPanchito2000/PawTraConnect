@@ -59,6 +59,7 @@ urlpatterns = [
     # path('ccvo-dashboard/', views.ccvo_dashboard,name='ccvo-dashboard'),
     path('ccvo-announcement/', views.ccvo_announcement,name='ccvo-announcement'),
     path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
+    path('not-operating-confirmation-page/<str:clinic_id>', views.not_operating_confirmation_page, name="not-operating-confirmation-page"),
     path('marked-not-operating/<str:pk>', views.not_operating, name="marked-not-operating"),
     path('marked-as-operating-clinic/<str:clinic_id>/',views.mark_as_operating_clinic, name='marked-as-operating-clinic'),
     path('clinic-details/<str:clinic_id>/', views.view_clinic_details, name="clinic-details"),

@@ -991,6 +991,12 @@ def service_report(request, service_id):
     }
 
     return render(request, "ccvo/service_report.html", context)
+
+
+def not_operating_confirmation_page(request, clinic_id):
+    clinic = VetClinicProfile.objects.get(id =clinic_id)
+    context ={'clinic':clinic}
+    return render(request, 'ccvo/not_operating_confirmation.html', context)
 # -----------------------
 # END CCVO VIEWS
 # -----------------------

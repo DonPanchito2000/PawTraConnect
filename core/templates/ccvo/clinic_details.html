@@ -46,10 +46,11 @@
                                 <button type="submit" class="btn btn-approve btn-sm mt-4">Approve Clinic</button>
               </form>
               {% elif vet_clinic.is_approved and vet_clinic.is_operating %}
-               <form method="post" action="{% url 'marked-not-operating' vet_clinic.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-approve btn-sm mt-4">Not Operating</button>
-              </form>
+              <div class="arrow-back text-center">
+                    <a href="{% url 'not-operating-confirmation-page' vet_clinic.id %}" class="arrow-back">
+                        <button class="btn btn-approve btn-sm mt-4" >Not Operating</button>
+                    </a>
+                </div>
                {% elif vet_clinic.is_approved and not vet_clinic.is_operating and vet_clinic.is_requesting_access %}
                <form method="post" action="{% url 'marked-as-operating-clinic' vet_clinic.id %}">
                                 {% csrf_token %}
@@ -59,15 +60,7 @@
               {% endif %}
         </div>
 
-        <!-- {% if user_is_vet and not is_history%}
-        <div class="card-footer text-center border-0">
-          <a href="{% url 'vaccine-information-form-page-update' vaccination_record.id %}" class="">
-            <button class="btn btn-mark-complete mb-3">
-              Mark Complete
-            </button>
-        </a>
-        </div>
-        {% endif %} -->
+   
 
             <div class="arrow-back mb-4 text-center">
                     <a href="javascript:history.back()" class="arrow-back">
