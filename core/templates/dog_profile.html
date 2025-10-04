@@ -1,7 +1,7 @@
 <div class="container my-5">
             <div class="arrow-back mb-4">
               {% if user_is_vet %}
-                    <a href="{% url 'owner-pets-page' dog.owner.id %}" class="arrow-back">
+                    <a href="javascript:history.back()" class="arrow-back">
                         <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>
                     {% else %}

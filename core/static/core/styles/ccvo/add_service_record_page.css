@@ -153,10 +153,33 @@ input[type="date"] {
 }
 
 .submit-btn:focus,
-.submit-btn:active {
+.submit-btn:active,
+.cancel-btn:focus,
+.cancel-btn:active {
   outline: none !important;
   box-shadow: none !important;
 }
+
+
+
+.cancel-btn{
+     width: 300px;
+      transition: 0.2s ease-in-out;
+      color: #be620d;
+      border: 1px solid #be620d;
+      background-color: transparent;
+      
+      
+}
+
+
+.cancel-btn:hover{
+  background-color:red;
+  color: #eae2b7;
+  transform: scale(1.03);
+}
+
+
 
 @media (max-width: 1000px) {
   .action-btn{
