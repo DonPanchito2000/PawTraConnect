@@ -49,17 +49,26 @@
                                 <img src="{{ pet.pet_profile.url }}" alt="avatar" class="rounded-circle me-2" width="72" height="72" style="object-fit: cover;">
                                 </div>
                                 {% endif %}
-                                <div>
-                                <span class="">{{ pet.name }} </span>
-                                </div>
                                 <div class="">
                                 <span class="badge badge-info">{{pet.dog_id}}</span>
                                 </div>
-                                <div class="mb-3">
-                                <span class="">{{pet.barangay}}</span>
+                                <div>
+                                <span class=""><strong>Name:</strong> {{ pet.name }} </span>
+                                </div>
+                                  <div class="">
+                                <span class=""><strong>Age:</strong> {{pet.age}}</span>
+                                </div>
+                                 <div class="">
+                                <span class=""><strong>Sex:</strong> {{pet.sex}}</span>
+                                </div>
+                                <div class="">
+                                <span class=""><strong>Owner:</strong> {{pet.owner.first_name}} {{pet.owner.last_name}}</span>
+                                </div>
+                                 <div class="mb-3">
+                                <span class=""><strong>Barangay:</strong> {{pet.barangay}}</span>
                                 </div>
                                 <div class="ml-auto action-btn">
-                               <a href="{% url 'dog-profile' pet.id %}"><button class="view mb-2">View</button></a>
+                               <!-- <a href="{% url 'dog-profile' pet.id %}"><button class="view mb-2">View</button></a> -->
                                <a href="{% url 'add-service-record-form' pet.id %}"><button class="view">Select</button></a>
                                </div>
                             </div>
@@ -79,20 +88,28 @@
                                 <img src="{{ selected_pet.pet_profile.url }}" alt="avatar" class="rounded-circle me-2" width="40%"  style="object-fit: cover;">
                                 {% endif %}
                                 </div>
-                                <span class="">{{ selected_pet.name }} </span>
-                                <div class="">
+                               <div class="">
                                   <span class="badge badge-info">{{selected_pet.dog_id}}</span>
                                 </div>
+                                <span class=""><strong>Name:</strong> {{ selected_pet.name }} </span>
                                 <div class="">
-                                    <span class="">{{ selected_pet.barangay }} </span>
+                                    <span class=""><strong>Age:</strong> {{ selected_pet.age }} </span>
                                 </div>
-                                
+                                 <div class="">
+                                    <span class=""><strong>Sex:</strong> {{ selected_pet.sex }} </span>
+                                </div>
+                                 <div class="">
+                                    <span class=""><strong>Owner:</strong> {{ selected_pet.owner.first_name }} {{ selected_pet.owner.last_name }} </span>
+                                </div>
+                                 <div class="">
+                                    <span class=""><strong>Barangay:</strong> {{ selected_pet.barangay }} </span>
+                                </div>
                             </div>
                         </div>
                    </div>
                          <form action="" method="POST" class="text-center mt-5">
         {% csrf_token %}
-        <input type="hidden" name="selected_pet" value="{{selected_pet.id}}">
+        <input type="hidden" name="selected_pet" value="{{selected_pet.id}}" required>
         <label for="service">Service:</label>
         <input list="service_list" id="service" name="service" class="form-control" placeholder="Type or select service">
 
@@ -126,5 +143,18 @@
   </div>
 
 
+
+  
+<script>
+  // Auto-remove messages after 5 seconds
+  setTimeout(function() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+      alert.style.transition = "opacity 0.5s ease";
+      alert.style.opacity = "0";
+      setTimeout(() => alert.remove(), 500); // Remove from DOM after fade
+    });
+  }, 5000); // 5 seconds
+</script>
 
 {% endblock content %}

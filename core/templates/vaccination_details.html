@@ -21,10 +21,12 @@
             <div class="mb-2">
                 <span><strong class="mr-1">Vaccine Name:  </strong>{{vaccination_record.vaccine_name}}</span>  
             </div>
+            {% if not is_history %}
             {% if vaccination_record.next_due_date %}
             <div class="mb-2">
                <span><strong class="mr-1">Due Date:  </strong>{{vaccination_record.next_due_date}}</span>  
             </div>
+            {% endif %}
             {% endif %}
 
              {% if is_history %}
@@ -34,6 +36,11 @@
               <div class="mb-2">
                <span><strong class="mr-1">Date Administered: </strong>{{vaccination_record.date_administered}}</span>  
               </div>
+                {% if vaccination_record.next_due_date %}
+            <div class="mb-2">
+               <span><strong class="mr-1">Due Date:  </strong>{{vaccination_record.next_due_date}}</span>  
+            </div>
+            {% endif %}
               <div class="mb-2">
                <span><strong class="mr-1">Vet Clinic: </strong>{{vaccination_record.vet_clinic.clinic_name}}</span>  
               </div>
@@ -43,9 +50,11 @@
               <div class="mb-2">
                <span><strong class="mr-1">License #: </strong>{{vaccination_record.license_number}}</span>  
               </div>
+              {% if vaccination_record.notes %}
                 <div class="mb-2">
                <span><strong class="mr-1">Note: </strong>{{vaccination_record.notes}}</span>  
               </div>
+              {% endif %}
             {% endif %} 
 
             <div class="mb-2">    
