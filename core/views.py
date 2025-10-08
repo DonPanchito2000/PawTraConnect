@@ -438,7 +438,18 @@ def add_past_client(request, owner_id):
 
 def owner_pets_page(request, owner_id):
     pet_owner = PetOwnerProfile.objects.get(id = owner_id)
-    pets = Dog.objects.filter(owner = pet_owner)
+    query = request.GET.get('q') if request.GET.get('q') else ''
+
+  
+
+    pets = Dog.objects.filter(
+                Q(name__icontains=query) | Q(breed__icontains=query) &
+                Q(owner = pet_owner)
+                )
+
+
+
+
     context = {'pet_owner':pet_owner,'pets':pets}
 
     user =request.user
@@ -843,7 +854,14 @@ def mark_as_operating_clinic(request, clinic_id):
     return render(request, 'ccvo/approve_clinics.html')
 
 def services_page(request):
-    services = Service.objects.all()
+    query = request.GET.get('q') if request.GET.get('q') else ''
+
+  
+
+    services = Service.objects.filter(
+                Q(name__icontains=query) | Q(description__icontains=query)
+                )
+
     context = {'services':services}
     return render(request, 'ccvo/services_page.html',context)
 
@@ -1290,6 +1308,7 @@ def vaccine_information_form_page_update(request, old_vaccination_record_id):
             )
             old_vaccination_record.is_completed = True
             old_vaccination_record.save()
+            messages.success(request, "New record added successfully!")
             return redirect('dog-profile', pk = pet_id)
         except Dog.DoesNotExist:  
              return HttpResponse("Pet not found", status=404)
@@ -1334,6 +1353,7 @@ def vaccine_information_form_page_new(request, pet_id):
                 vet_clinic=vet_clinic,
                 notes=request.POST.get('notes')
             )
+            messages.success(request, "New record added successfully!")
             return redirect('dog-profile', pk=pet_id)
 
         try:

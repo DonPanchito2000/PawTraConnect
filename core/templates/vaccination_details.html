@@ -26,6 +26,28 @@
                <span><strong class="mr-1">Due Date:  </strong>{{vaccination_record.next_due_date}}</span>  
             </div>
             {% endif %}
+
+             {% if is_history %}
+              <div class="mb-2">
+               <span><strong class="mr-1">Vaccine Brand: </strong>{{vaccination_record.vaccine_brand}}</span>  
+              </div>
+              <div class="mb-2">
+               <span><strong class="mr-1">Date Administered: </strong>{{vaccination_record.date_administered}}</span>  
+              </div>
+              <div class="mb-2">
+               <span><strong class="mr-1">Vet Clinic: </strong>{{vaccination_record.vet_clinic.clinic_name}}</span>  
+              </div>
+              <div class="mb-2">
+               <span><strong class="mr-1">Veterinarian Name: </strong>{{vaccination_record.veterinarian_name}}</span>  
+              </div>
+              <div class="mb-2">
+               <span><strong class="mr-1">License #: </strong>{{vaccination_record.license_number}}</span>  
+              </div>
+                <div class="mb-2">
+               <span><strong class="mr-1">Note: </strong>{{vaccination_record.notes}}</span>  
+              </div>
+            {% endif %} 
+
             <div class="mb-2">    
             {% if is_history %}
             <span><strong class="mr-1">Completed:  </strong>Yes</span>
@@ -34,14 +56,15 @@
             {% else %}
             <span><strong class="mr-1">Completed:  </strong>No</span>
             {% endif %}
-            </div>    
+            </div>   
+           
         </div>
 
         {% if user_is_vet and not is_history%}
         <div class="card-footer text-center border-0">
           <a href="{% url 'vaccine-information-form-page-update' vaccination_record.id %}" class="">
-            <button class="btn btn-mark-complete mb-3">
-              Mark Complete
+            <button class="btn btn-mark-complete btn-sm mb-3">
+             <i class="fa-solid fa-pen-to-square"></i> Update
             </button>
         </a>
         </div>

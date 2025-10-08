@@ -89,14 +89,14 @@ select.form-control {
 }
 
 
-      .form-control{
+.form-control{
   background-color: rgba(0, 0, 0, 0.2);
   border: none !important;
   box-shadow: none !important;
    border-radius: 10px;
   transition: box-shadow 0.2s ease;
-   color: #eae2b7;
-      height: 40px;
+  height: 40px;
+
 }
 
 .form-control:focus{
@@ -105,26 +105,16 @@ select.form-control {
   border: none !important;
   background-color: rgba(0, 0, 0, 0.2);
   color: #eae2b7;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4) !important;
+   transform: scale(1.03);
 }
 
-/* .form-control:-webkit-autofill,
-.form-control:-webkit-autofill:hover,
-.form-control:-webkit-autofill:focus,
-.form-control:-webkit-autofill:active {
-  background-color: rgba(0, 0, 0, 0.2) !important;
-  -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2) inset !important;
-  -webkit-text-fill-color: #eae2b7 !important;
-  color: #eae2b7 !important;
-  caret-color: #eae2b7;
-  transition: background-color 5000s ease-in-out 0s;
-} */
 
 
 
-/* Style the <select> box */
+
 .custom-select-style {
-  background-color: rgba(0, 0, 0, 0.2);; /* Light background */
+  background-color: rgba(0, 0, 0, 0.2);; 
   color:#eae2b7 ; /* Dark text */
   border: 1px solid #eae2b7 ;
   border-radius: 4px;
@@ -132,10 +122,10 @@ select.form-control {
   font-size: 1rem;
 }
 
-/* Style the dropdown options (some browsers may not fully support this) */
+
 .custom-select-style option {
- background-color: rgba(0, 0, 0, 0.2);  /* White option background */
-  color:  #273e47;           /* Option text color */
+ background-color: rgba(0, 0, 0, 0.2); 
+  color:  #273e47;           
 }
 
 .btn-save {

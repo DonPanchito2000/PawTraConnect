@@ -6,10 +6,12 @@
     <div class="col-lg-8 col-md-10">
       <div class="card shadow-lg rounded-lg">
         <div class="card-header text-center border-0">
-          <h3 class="mb-0 p-4">📋 VACCINE INFORMATION FORM</h3>
+
+          <h3 class="mb-0 p-4"><i class="fa-solid fa-clipboard mr-2"></i> VACCINE INFORMATION FORM</h3>
         </div>
         <hr>
         <div class="card-body text-center">
+         
          <form method="POST" action="">
             {% csrf_token %}
             
@@ -59,10 +61,12 @@
 
             <!-- Submit button -->
             <br>
-            <button type="submit" class="btn btn-done">Done</button>
+            <button type="submit" class="btn btn-done btn-sm"> <i class="fa-solid fa-check mr-1"></i> Done</button>
           </form>
+         
 
         </div>
+
 
         <!-- {% if user_is_vet %}
         <div class="card-footer text-center border-0">
@@ -73,12 +77,21 @@
         </a>
         </div>
         {% endif %} -->
-
-            <div class="arrow-back mb-4 mr-4 text-center">
-                    <a href="javascript:history.back()" class="arrow-back">
-                        <i class="fas fa-arrow-left mr-2"></i> Cancel
+        {% if messages %}
+    
+               <div class="arrow-back mb-4 mr-4 text-center">
+                    <a href="{% url 'dog-profile' pet.id %}" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>
                 </div>
+        {% else %}
+           <div class="arrow-back mb-4 mr-4 text-center">
+                    <a href="javascript:history.back()" class="arrow-back">
+                        <i class="fas fa-arrow-left mr-2"></i>  Back
+                    </a>
+                </div>
+        {% endif %}
+         
       </div>
     </div>
   </div>
