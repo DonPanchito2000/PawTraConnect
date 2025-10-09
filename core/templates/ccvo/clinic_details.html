@@ -52,10 +52,11 @@
                     </a>
                 </div>
                {% elif vet_clinic.is_approved and not vet_clinic.is_operating and vet_clinic.is_requesting_access %}
-               <form method="post" action="{% url 'marked-as-operating-clinic' vet_clinic.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-approve btn-sm mt-4">Approve Request</button>
-              </form>
+             <div class="arrow-back text-center">
+                    <a href="{% url 'approve-request-confirmation-page' vet_clinic.id %}" class="arrow-back">
+                        <button class="btn btn-approve btn-sm mt-4" >Approve Request</button>
+                    </a>
+                </div>
            
               {% endif %}
         </div>

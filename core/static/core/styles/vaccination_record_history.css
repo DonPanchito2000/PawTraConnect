@@ -1,5 +1,6 @@
 
 
+
 .arrow-back a{
     text-decoration: none;
     color: #eae2b7 ;
@@ -66,4 +67,39 @@
 
 .fa-check{
     color: green;
+}
+
+/* Back to Top Button */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+  background:transparent;
+  border: 1px solid #be620d;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.3s ease;
+}
+
+#backToTop svg{
+  fill: #be620d !important;
+}
+
+#backToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#backToTop:hover {
+    background-color: rgba(0,0,0,0.2);
+  transform: translateY(-3px);
 }

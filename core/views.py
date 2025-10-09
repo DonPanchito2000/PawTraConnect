@@ -1015,6 +1015,12 @@ def not_operating_confirmation_page(request, clinic_id):
     clinic = VetClinicProfile.objects.get(id =clinic_id)
     context ={'clinic':clinic}
     return render(request, 'ccvo/not_operating_confirmation.html', context)
+
+
+def approve_request_confirmation_page(request, clinic_id):
+    clinic = VetClinicProfile.objects.get(id =clinic_id)
+    context ={'clinic':clinic}
+    return render(request, 'ccvo/approve_request_confirmation_page.html', context)
 # -----------------------
 # END CCVO VIEWS
 # -----------------------

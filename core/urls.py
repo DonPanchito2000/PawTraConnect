@@ -61,6 +61,7 @@ urlpatterns = [
     path('approve-clinics-page/', views.approve_clinics_page, name="approve-clinics-page"),
     path('not-operating-confirmation-page/<str:clinic_id>', views.not_operating_confirmation_page, name="not-operating-confirmation-page"),
     path('marked-not-operating/<str:pk>', views.not_operating, name="marked-not-operating"),
+    path('approve-request-confirmation-page/<str:clinic_id>', views.approve_request_confirmation_page, name="approve-request-confirmation-page"),
     path('marked-as-operating-clinic/<str:clinic_id>/',views.mark_as_operating_clinic, name='marked-as-operating-clinic'),
     path('clinic-details/<str:clinic_id>/', views.view_clinic_details, name="clinic-details"),
     path('approve-clinic/<str:pk>/',views.approve_clinic, name='approve-clinic'),
