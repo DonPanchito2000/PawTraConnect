@@ -1,9 +1,9 @@
 {% extends 'ccvo/base.html' %}
 {% load static %}
 {% block extra_css %} 
-<link rel="stylesheet" href="{% static 'core/styles/ccvo/approve_request_confirmation_page.css' %}">
+<link rel="stylesheet" href="{% static 'core/styles/ccvo/approve_confirmation_page.css' %}">
 {% endblock extra_css %}
-{% block title %}Approve Request Confirmation{% endblock %}
+{% block title %}Approve Clinic Confirmation{% endblock %}
 {% block content %}
     <div class="container mt-5 text-center">
         <div class="row justify-content-center">
@@ -13,10 +13,10 @@
        
         <h3>Mark Clinic as Not Operating</h3>
         <hr>
-        <small class="mb-3">Are you sure you want to allow <strong>{{clinic.clinic_name}}</strong> to use PawTraConnect again?</small>
+        <small class="mb-3">Are you sure you want to allow <strong>{{clinic.clinic_name}}</strong> to use PawTraConnect?</small>
         
 
-        <form form method="post" action="{% url 'marked-as-operating-clinic' clinic.id %}">
+        <form form method="post" action="{% url 'approve-clinic' clinic.id %}">
             {% csrf_token %}
        
          <button class="action-btn mb-2" ><i class="fa-solid fa-check mr-2"></i>Confirm</button>
