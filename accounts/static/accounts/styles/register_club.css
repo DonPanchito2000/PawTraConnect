@@ -46,6 +46,23 @@ body {
    ;
 }
 
+.form-check {
+    margin-top: 5px;
+}
+
+.form-check-input {
+  margin-right: 6px !important; /* reduces the space between checkbox and label */
+  margin-top: 0 !important; /* vertically centers it better */
+    transform: scale(1.2); /* slightly bigger checkbox for visibility */
+    cursor: pointer;
+
+}
+
+.form-check-label {
+    color: #eae2b7;
+    cursor: pointer;
+}
+
 input, textarea, select {
     background-color: #eae2b7;
     border: none;
@@ -85,3 +102,4 @@ h3.card-title {
     margin-top: 30px;
     font-size: 1.25rem;
 }
+

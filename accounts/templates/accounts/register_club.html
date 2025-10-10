@@ -88,11 +88,13 @@
                         </div>
                     
                         <!-- HAS PRFESSIONAL SERVICES BOOLEAN-->
-                      <div class="form-group form-check">
-                            {{ form.has_professional_services }}
-                            {{ form.has_professional_services.label_tag }}
-                            <small class="text-danger">{{ form.has_professional_services.errors|striptags }}</small>
-                        </div>
+       <div class="form-group">
+    <div class="form-check d-flex align-items-center">
+        <input type="checkbox" class="form-check-input" id="id_has_professional_services" name="has_professional_services" {% if form.has_professional_services.value %}checked{% endif %}>
+        <label class="form-check-label ml-2" for="id_has_professional_services">Has professional services</label>
+    </div>
+    <small class="text-danger">{{ form.has_professional_services.errors|striptags }}</small>
+</div>
                             <!-- Professional Fields Container -->
                         <div id="professionalFields" style="display: none;">
                             <div class="form-group">

@@ -233,3 +233,110 @@ input[type="date"] {
 }
 
 
+
+
+
+/* Select2 single selection container */
+.select2-container .select2-selection--single {
+    background-color: rgba(0, 0, 0, 0.2); /* same as your form-control */
+    color: #eae2b7; /* same text color as your inputs */
+    height: 38px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    border: none !important;
+}
+
+
+/* Hover / focus */
+.select2-container--default.select2-container--focus .select2-selection--single {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    transform: scale(1.03);
+
+    color: #eae2b7;
+}
+
+/* Dropdown container (the part that opens) */
+.select2-container--default .select2-dropdown {
+    background-color: #273e47; /* dark/translucent like your card */
+    border: 1px solid #eae2b7;
+    border-radius: 10px;
+}
+
+/* Options inside dropdown */
+.select2-container--default .select2-results__option {
+    background-color:#273e47; 
+    color: #eae2b7;
+}
+
+/* Highlighted option */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #f77f00;
+    color: #eae2b7;
+}
+
+/* Selected value text in the input box */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #eae2b7; /* same as your card text */
+    line-height: 38px; /* vertically center text */
+}
+
+/* Placeholder text (before selecting anything) */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #eae2b7; /* same as card text */
+    opacity: 0.7; /* slightly lighter for placeholder */
+}
+
+/* Optional: arrow icon color */
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #eae2b7 transparent transparent transparent; /* match your theme */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    color: #f77f00;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear:hover {
+    color: #be620d;
+}
+
+/* Search box inside the Select2 dropdown */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: rgba(0, 0, 0, 0.2); /* match your card/input */
+    color: #eae2b7; /* light text */
+    border: 1px solid #eae2b7; /* optional border to match theme */
+  
+}
+
+/* Placeholder text inside search box */
+.select2-container--default .select2-search--dropdown .select2-search__field::placeholder {
+    color: #eae2b7;
+    opacity: 0.7; /* slightly lighter for placeholder */
+}
+
+
+
+/* Scrollbar for Select2 dropdown */
+.select2-container--default .select2-results__options::-webkit-scrollbar {
+    width: 6px; /* same as your other scrollbars */
+}
+
+.select2-container--default .select2-results__options::-webkit-scrollbar-track {
+    background: transparent; /* transparent track */
+}
+
+.select2-container--default .select2-results__options::-webkit-scrollbar-thumb {
+    background-color:#be620d !important;/* same as your .registered-pets */
+    border-radius: 4px; /* rounded corners */
+}
+
+/* Optional: hover effect on scrollbar thumb */
+.select2-container--default .select2-results__options::-webkit-scrollbar-thumb:hover {
+    background-color: #be620d !important; /* slightly darker on hover */
+}
+
+#id_service + .select2-container {
+    width: 60% !important; /* match other inputs */
+    min-width: 300px;
+    margin: auto; /* center it like other inputs */
+}

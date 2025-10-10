@@ -1,17 +1,25 @@
 from django import forms
-from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service, ServiceRecord
+from .models import Dog, ForumRoom, ClubForumRoom, VaccinationRecord, CCVOAnnouncement, ClubAnnouncement, Service, ServiceRecord, Barangay
 
 class DogRegistrationForm(forms.ModelForm):
+    barangay = forms.ModelChoiceField(
+        queryset=Barangay.objects.all().order_by('name'),
+        widget=forms.Select(attrs={
+            'class': 'form-control custom-select-style',
+            'id': 'id_barangay'
+        }),
+        empty_label="Select Barangay"
+    )
+
     class Meta:
         model = Dog
-        fields = ['pet_profile', 'name', 'breed', 'color', 'age', 'barangay','sex']
+        fields = ['pet_profile', 'name', 'breed', 'color', 'age', 'barangay', 'sex']
         widgets = {
             'pet_profile': forms.ClearableFileInput(attrs={'class': 'form-control-file', 'id': 'id_pet_profile'}),
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter dog name'}),
             'breed': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Breed (optional)'}),
             'color': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Color (optional)'}),
             'age': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Age'}),
-            'barangay': forms.Select(attrs={'class': 'form-control custom-select-style'}),
             'sex': forms.Select(attrs={'class': 'form-control custom-select-style'}),
         }
 

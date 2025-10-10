@@ -911,14 +911,14 @@ def service_form(request, selected_pet_id):
     context ={'selected_pet':selected_pet, 'pet':pet,'services':services}
 
     if request.method == 'POST':
-        service_name = request.POST.get("service")
+        service_id = request.POST.get("service")
         date_administered = request.POST.get("date-administered")
 
-        # ✅ validate service
+        # validate service by ID
         try:
-            service = Service.objects.get(name=service_name)
+            service = Service.objects.get(id=service_id)
         except Service.DoesNotExist:
-            messages.error(request, f"Service '{service_name}' is not valid. Please select from the list.")
+            messages.error(request, f"Service '{service_id}' is not valid. Please select from the list.")
             return render(request, 'ccvo/add_service_record_page.html', context)
 
         # save if valid
