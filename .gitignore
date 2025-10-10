@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 env/
+pawtra_env/
 
 # Ignore DB and OS files
 *.sqlite3
