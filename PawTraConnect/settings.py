@@ -77,7 +77,22 @@ WSGI_APPLICATION = 'PawTraConnect.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+
+
+import os
+if os.environ.get('DJANGO_ENV') == 'production':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pawtraconnect',
+        'USER': 'kim',
+        'PASSWORD': 'kimas',
+        'HOST': 'localhost',
+        'PORT': '',
+        }
+    }
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pawtraconnect',
@@ -85,8 +100,8 @@ DATABASES = {
         'PASSWORD': 'kimas',
         'HOST': 'localhost',
         'PORT': '5432',
+        }
     }
-}
 
 
 # Password validation
@@ -133,7 +148,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-import os
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    
