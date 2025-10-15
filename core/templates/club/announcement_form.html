@@ -12,7 +12,7 @@
     <div class="col-lg-8 col-md-10">
       <div class="card shadow-lg rounded-lg bg-dark text-white">
         <div class="card-header text-center border-0">
-          <h3 class="mb-0">Create a New Announcement</h3>
+          <h3 class="mb-0">Announcement</h3>
         </div>
         <div class="card-body">
           <form method="POST" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
             <!-- Custom File Upload -->
             <div class="form-group mb-3 text-center">
               <label for="image" class="btn btn-upload-image">
-                <i class="fa-solid fa-image mr-2"></i>Upload Room Image (Optional)
+                <i class="fa-solid fa-image mr-2"></i>Upload Image
               </label>
               {{ form.image }}
             </div>
@@ -49,7 +49,7 @@
           
         </div>
         <div class="card-footer arrow-back text-center border-0">
-          <a href="javascript:history.back()" class=" small ">← Cancel</a>
+          <a href="javascript:history.back()" class="arrow-back"> <i class="fas fa-arrow-left mr-2"></i> Back</a>
         </div>
       </div>
     </div>
