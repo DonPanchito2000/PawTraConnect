@@ -38,15 +38,24 @@
                                 <small class="text-danger">{{ form.email.errors|striptags }}</small>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-row">
+                            <div class="form-group col-md-6 password-container">
                                 {{ form.password1.label_tag }}
                                 {{ form.password1 }}
+                                <img src="{% static 'accounts/styles/images/visibilityoff.png' %}"
+                                     id="togglePassword1"
+                                     class="toggle-password"
+                                     alt="Toggle Password 1">
                                 <small class="text-danger">{{ form.password1.errors|striptags }}</small>
                             </div>
-                            <div class="form-group col-md-6">
+
+                            <div class="form-group col-md-6 password-container">
                                 {{ form.password2.label_tag }}
                                 {{ form.password2 }}
+                                <img src="{% static 'accounts/styles/images/visibilityoff.png' %}"
+                                     id="togglePassword2"
+                                     class="toggle-password"
+                                     alt="Toggle Password 2">
                                 <small class="text-danger">{{ form.password2.errors|striptags }}</small>
                             </div>
                         </div>
@@ -142,7 +151,34 @@
             toggleProfessionalFields(); // Run initially
         }
     });
+
+
+
+
+  const toggles = [
+    { btn: 'togglePassword1', field: 'id_password1' },
+    { btn: 'togglePassword2', field: 'id_password2' }
+  ];
+
+  toggles.forEach(item => {
+    const toggle = document.getElementById(item.btn);
+    const field = document.getElementById(item.field);
+
+    if (toggle && field) {
+      toggle.addEventListener('click', () => {
+        const isHidden = field.type === 'password';
+        field.type = isHidden ? 'text' : 'password';
+        toggle.src = isHidden
+          ? "{% static 'accounts/styles/images/visibilityon.png' %}"
+          : "{% static 'accounts/styles/images/visibilityoff.png' %}";
+      });
+    }
+  });
+
 </script>
+
+
+
 
 {% endblock content %}
 

@@ -55,3 +55,18 @@ body {
   p {
       color: #eae2b7;
   }
+
+.input-group-text{
+  background-color: #eae2b7;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.form-control:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: #eae2b7;
+  color: #eae2b7;
+  /* box-shadow: 0 6px 12px rgba(0,0,0,0.25) !important; */
+}
