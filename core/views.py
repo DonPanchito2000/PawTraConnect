@@ -443,10 +443,9 @@ def owner_pets_page(request, owner_id):
   
 
     pets = Dog.objects.filter(
-                Q(name__icontains=query) | Q(breed__icontains=query) &
-                Q(owner = pet_owner)
-                )
-
+        Q(owner=pet_owner),
+        Q(name__icontains=query) | Q(breed__icontains=query)
+    )
 
 
 
